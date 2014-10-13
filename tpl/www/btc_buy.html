@@ -1,0 +1,196 @@
+<!-- head title=$page_rs.title css="css/style.css,artdialog.css" html5=true close=false -->
+<script type="text/javascript">
+function my_account()
+{
+	$("#my_account").html('loading....');
+	var url = api_plugin_url('autoc','account');
+	$.ajax({
+		'url':url,
+		'cache':false,
+		'async':true,
+		'dataType':'json',
+		'success':function(rs){
+			$("#my_account").html(rs.content);
+		}
+	});
+}
+function get_orders()
+{
+	$("#my_order_list").html('loading....');
+	var url = api_plugin_url('autoc','my_orders');
+	$.ajax({
+		'url':url,
+		'cache':false,
+		'async':true,
+		'dataType':'json',
+		'success':function(rs){
+			if(rs.status == 'ok')
+			{
+				$("#my_order_list").html(rs.content);
+			}
+			else
+			{
+				$.dialog.alert(rs.content);
+				return false;
+			}
+		}
+	});
+}
+function buyOrder()
+{
+	var amount = $("#buy_amount").val();
+	var price = $("#buy_price").val();
+	if(!amount)
+	{
+		$.dialog.alert('数量不能为空');
+		return false;
+	}
+	if(!price)
+	{
+		$.dialog.alert('价格不能为空');
+		return false;
+	}
+	var url = api_plugin_url('autoc','buy_order','amount='+$.str.encode(amount)+"&price="+$.str.encode(price));
+	var rs = json_ajax(url);
+	if(rs.status == 'ok')
+	{
+		$.dialog.alert('下单成功',function(){
+			get_orders();
+			my_account();
+		});
+	}
+	else
+	{
+		$.dialog.alert(rs.content);
+		return false;
+	}
+}
+function sellOrder()
+{
+	var amount = $("#sell_amount").val();
+	var price = $("#sell_price").val();
+	if(!amount)
+	{
+		$.dialog.alert('数量不能为空');
+		return false;
+	}
+	if(!price)
+	{
+		$.dialog.alert('价格不能为空');
+		return false;
+	}
+	var url = api_plugin_url('autoc','sell_order','amount='+$.str.encode(amount)+"&price="+$.str.encode(price));
+	var rs = json_ajax(url);
+	if(rs.status == 'ok')
+	{
+		$.dialog.alert('下单成功',function(){
+			get_orders();
+			my_account();
+		});
+	}
+	else
+	{
+		$.dialog.alert(rs.content);
+		return false;
+	}
+}
+</script>
+</head>
+<body>
+<div class="main">
+	<h2 align="center">BTC-China 下单接口测试页</h2>
+	<div>
+	<table>
+	<tr>
+		<td><input type="button" value=" 刷新订单 " onclick="get_orders()" /></td>
+		<td><input type="button" value=" 刷新个人信息 " onclick="my_account()" /></td>
+	</tr>
+	</table>
+	</div>
+	<div id="my_account"></div>
+	<table width="100%">
+	<tr>
+		<td width="50%" valign="top">
+			<div class="box_top"><div class="box_right">
+				<table>
+				<tr>
+					<td><h3>我要买</h3></td>
+					<td class="more"></td>
+				</tr>
+				</table>
+			</div></div>
+			<div class="box_middle">
+				<div style="padding:10px;">
+					<table>
+					<tr>
+						<td>数量：</td>
+						<td><input type="text" id="buy_amount" class="default" value="" /> 支持小数，如0.001</td>
+					</tr>
+					<tr>
+						<td>单价</td>
+						<td><input type="text" id="buy_price" class="default" value="" /> 即1BTC需要多少CNY</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="button" value=" 购买 " onclick="buyOrder()" /></td>
+					</tr>
+					</table>
+				</div>
+			</div>
+			<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		</td>
+		<td valign="top">
+			<div class="box_top"><div class="box_right">
+				<table>
+				<tr>
+					<td><h3>我要卖</h3></td>
+					<td class="more"></td>
+				</tr>
+				</table>
+			</div></div>
+			<div class="box_middle">
+				<div style="padding:10px;">
+					<table>
+					<tr>
+						<td>数量：</td>
+						<td><input type="text" id="sell_amount" class="default" value="" /> 支持小数，如0.001</td>
+					</tr>
+					<tr>
+						<td>单价</td>
+						<td><input type="text" id="sell_price" class="default" value="" /> 即1BTC需要多少CNY</td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input type="button" value=" 卖了 " onclick="sellOrder()" /></td>
+					</tr>
+					</table>
+				</div>
+			</div>
+			<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		</td>
+	</tr>
+	</table>
+	
+	<div class="box_top"><div class="box_right">
+		<table>
+		<tr>
+			<td><h3>已下订单列表查询</h3></td>
+			<td class="more"></td>
+		</tr>
+		</table>
+	</div></div>
+	<div class="box_middle">
+		<div style="padding-top:7px;">
+			<div class="table_lc" id="my_order_list"></div>
+		</div>
+	</div>
+	<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	get_orders();
+	my_account();
+})
+</script>
+</body>
+</html>

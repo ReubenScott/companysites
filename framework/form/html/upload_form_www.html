@@ -1,0 +1,40 @@
+<script type="text/javascript">
+var obj_{$upload_rs.identifier};
+$(document).ready(function(){
+	obj_{$upload_rs.identifier} = new $.phpok_upload({
+		"is_multi"						: {if $upload_rs.is_multiple}true{else}false{/if},
+		"id"							: "{$upload_rs.identifier}",
+		"flash_url"						: "js/swfupload/swfupload.swf",
+		"upload_url"					: "{func api_url upload save}&_spam_id={$upload_rs.spam_id}&_spam={$upload_rs.spam}",
+		"file_size_limit"				: "{func get_cfg_var upload_max_filesize}B",	
+		"file_types"					: "{$upload_rs.upload_type.swfupload}",	
+		"file_types_description"		: "{$upload_rs.upload_type.name}",
+		'debug'							: true
+	});
+	obj_{$upload_rs.identifier}.swfupload();
+	obj_{$upload_rs.identifier}.preview_res();
+});
+</script>
+<input type="hidden" name="{$upload_rs.identifier}" id="{$upload_rs.identifier}" value="{$upload_rs.content}" />
+<input type="hidden" id="{$upload_rs.identifier}_cateid" value="{$upload_rs.cate_id}" />
+<table class="ext_upload">
+<tr>
+	<td>
+		<table class="ext_upload">
+		<tr>
+			<td valign="top"><div id="{$upload_rs.identifier}_spanButtonPlaceHolder"></div></td>
+			<td valign="top"><input id="{$upload_rs.identifier}_btnSubmit" type="button" class="submit" value="开始上传" onclick="obj_{$upload_rs.identifier}.swfupload_submit('{func session_name}','{func session_id}');" /></td>
+			<td valign="top"><input id="{$upload_rs.identifier}_btnCancel" type="button" class="button" value="取消上传" onclick="obj_{$upload_rs.identifier}.swfu.cancelQueue();" disabled="disabled" /></td>
+			<td id="{$upload_rs.identifier}_div_status" class="hide"></td>
+			<td valign="top" id="{$upload_rs.identifier}_sort" style="display:none"><input type="button" value="排序" class="button" onclick="obj_{$upload_rs.identifier}.sort()" /></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td coslapn="99"><div id="{$upload_rs.identifier}_progress"></div></td>
+</tr>
+<tr>
+	<td coslapn="99" id="{$upload_rs.identifier}_attrlist"></td>
+</tr>
+</table>

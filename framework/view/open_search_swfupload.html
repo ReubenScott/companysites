@@ -1,0 +1,198 @@
+<script type="text/javascript" src="{func add_js swfupload/swfupload.js}"></script>
+<div class="tips">搜索</div>
+<div>
+	<table>
+	<tr>
+		<form method="post" action="{echo admin_url('open','input')}">
+		<input type="hidden" name="type" id="type" value="{$type}">
+		<input type="hidden" id="id" name="id" value="{$id}" />
+		<input type="hidden" name="tpl" value="{$tplfile}" />
+		<input type="hidden" name="is_multiple" value="{$is_multiple}" />
+		<td>关键字：</td>
+		<td><input type="text" id="keywords" name="keywords" value="{$keywords}" /></td>
+		<td>&nbsp; 分类：</td>
+		<td><select id="cate_id" name="cate_id">
+				<option value="0">不限</option>
+				<!-- $catelist AS $key=>$value -->
+				<option value="{$value.id}"{if $value.id == $cate_id} selected="selected"{/if}>{$value.title}</option>
+				<!-- end -->
+			</select>
+		</td>
+		<td><input type="submit" value="搜索" class="search" /></td>
+		</form>
+	</tr>
+	</table>
+</div>
+<div class="tips">上传</div>
+<script type="text/javascript">
+function get_attr_type()
+{
+	return $("#attr").val();
+}
+function get_attr_name()
+{
+	var txt=$("#attr").find("option:selected").text();
+	txt = txt.replace(/（.*）/g,"");
+	return txt;
+}
+
+//更新附件类型
+function attr_change()
+{
+	var val = get_attr_type();
+	var txt= get_attr_name();
+	swfu.setFileTypes(val,txt + " ("+val+")");
+}
+//单个文件上传成功后触发的函数
+function swfupload_success(file,serverData)
+{
+	//客户端关闭显示
+	var progress = new FileProgress(file, this.customSettings.progressTarget);
+	progress.setComplete();
+	progress.setStatus("上传完成！");
+	progress.toggleCancel(false);
+	var rs =  $.parseJSON(serverData);
+	var url = get_url("res","ajax_one") + "&id="+rs.id;
+	ajax_async(url,attrlist_append);
+}
+
+function attrlist_append(rs)
+{
+	if(rs.status == "ok")
+	{
+		//window.location.href = window.location.href;
+	}
+	else
+	{
+		alert(rs.content);
+		return false;
+	}
+}
+
+//上传完成后操作
+function swfupload_complete(file)
+{
+	if (this.getStats().files_queued === 0)
+	{
+		document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+		window.location.href = window.location.href;
+		//$("#btnSubmit").attr("disabled",false);
+	}
+}
+
+//文件选择完毕后动作
+function swfupload_file_dialog_complete(numFilesSelected, numFilesQueued)
+{
+	if (numFilesSelected > 0)
+	{
+		document.getElementById(this.customSettings.cancelButtonId).disabled = false;
+		//$("#btnSubmit").attr("disabled",true);
+	}
+}
+
+//统计总进度
+function swfupload_queue_complete(numFilesUploaded)
+{
+	$("#div_status").html("已上传文件数量："+numFilesUploaded+"");
+}
+
+//开始上传
+function swfupload_submit()
+{
+	var cate_id = $("#attr_cate_id").val();
+	if(cate_id)
+	{
+		swfu.addPostParam("cateid",cate_id);
+	}
+	swfu.addPostParam("{func session_name}","{func session_id}");
+	swfu.startUpload();
+	//$("#btnSubmit").attr("disabled",true);
+}
+
+</script>
+<div class="table">
+	<div class="title">
+		附件分类：
+		<span class="note">请选择附件分类</span>
+	</div>
+	<div class="content">
+		<select id="attr_cate_id" name="cate_id">
+			<!-- loop from=$catelist key=$key value=$value -->
+			<option value="{$value.id}" {if $value.is_default} selected{/if}>{$value.title}</option>
+			<!-- /loop -->
+		</select>
+	</div>
+</div>
+
+
+<div class="table"{if $type_s} style="display:none;"{/if}>
+	<div class="title">
+		附件类型：
+		<span class="note">请选择要上传的附件类型</span>
+	</div>
+	<div class="content">
+		<select id="attr" name="attr" onchange="attr_change()">
+			<!-- loop from=$attr_list key=$key value=$value -->
+			<option value="{$value.swfupload}"{if $key == $type_s} selected{/if}>{$value.title}（{$value.swfupload}）</option>
+			<!-- /loop -->
+		</select>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		选择要上传的文件：
+		<span class="note">单个文件上传不能超过：<span class="red">{echo get_cfg_var("upload_max_filesize")}</span></span>
+	</div>
+	<div class="content">
+		<table>
+		<tr>
+			<td><div style="padding-top:3px;"><div id="spanButtonPlaceHolder"></div></div></td>
+			<td>&nbsp;</td>
+			<td><input id="btnSubmit" type="button" class="submit" value="开始上传" onclick="swfupload_submit();" /></td>
+			<td>&nbsp;</td>
+			<td><input id="btnCancel" type="button" class="btn" value="取消上传" onclick="swfu.cancelQueue();" disabled="disabled" /></td>
+			<td>&nbsp;</td>
+			<td id="div_status"></td>
+		</tr>
+		</table>
+	</div>
+</div>
+
+<div class="table">
+	<div class="content" id="progress"></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var setting = {
+		"flash_url"						: "js/swfupload/swfupload.swf",
+		"upload_url"					: "{echo admin_url('upload')}",
+		"post_params"					: {},
+		"file_size_limit"				: "{echo get_cfg_var('upload_max_filesize')}B",	
+		"file_types"					: get_attr_type(),	
+		"file_types_description"		: get_attr_name(),	
+		"file_upload_limit"				: "0",	
+		"file_queue_limit"				: "0",	
+		"button_window_mode"			: "transparent",
+		"custom_settings"				: {
+			"progressTarget"	: "progress",
+			"cancelButtonId"	: "btnCancel"
+		},
+		"debug"							: false,	
+		"button_image_url"				: "images/swfupload.png",	
+		"button_placeholder_id"			: "spanButtonPlaceHolder",	
+		"button_width"					: "92",	
+		"button_height"					: "23",	
+		"file_queued_handler"			: fileQueued,	
+		"file_queue_error_handler"		: fileQueueError,	
+		"file_dialog_complete_handler"	: swfupload_file_dialog_complete,	
+		"upload_start_handler"			: uploadStart,	
+		"upload_progress_handler"		: uploadProgress,	
+		"upload_error_handler"			: uploadError,	
+		"upload_success_handler"		: swfupload_success,	
+		"upload_complete_handler"		: swfupload_complete,	
+		"queue_complete_handler"		: swfupload_queue_complete	
+	};
+	swfu = new SWFUpload(setting);
+});
+</script>

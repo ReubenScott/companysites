@@ -1,0 +1,254 @@
+<!-- include tpl=head -->
+<div class="tips">
+	<table width="100%">
+	<tr>
+		<td><a href="{echo admin_url('ad')}" title="广告管理">广告管理</a>
+	&raquo; 广告 <span class="red">{$rs.title}</span> 点击统计</td>
+		<td align="right">
+			<table>
+			<form method="post" action="{echo admin_url('ad','stat')}&id={$id}">
+			<tr>
+				<td><select name="type" id="type" onchange="action_time(this.value)">
+					<option value="year"{if $type == "year"} selected{/if}>年</option>
+					<option value="month"{if $type == "month"} selected{/if}>月</option>
+					<option value="date"{if $type == "date"} selected{/if}>日</option>
+					<option value="hour"{if $type == "hour"} selected{/if}>时</option>
+				</select></td>
+				<td id="date_html"><input type="text" id="date" name="date" value="{$date}" onfocus="update_time('date')" style="width:120px;" /></td>
+				<td><input type="submit" value=" 提交 " class="button" /></td>
+			</tr>
+			</form>
+			</table>
+		</td>
+	</tr>
+	</table>
+</div>
+<style type="text/css">
+.white{background:#FFFFFF;}
+.white:hover{color:#000}
+</style>
+<div class="list2" style="background:#ccc">
+<table width="100%" cellpadding="0" cellspacing="1">
+<tr>
+	<th>
+		<!-- if $type == "year" -->
+		年份
+		<!-- elseif $type == "month" -->
+		月份
+		<!-- elseif $type == "date" -->
+		日期
+		<!-- else -->
+		时间
+		<!-- /if -->
+	</th>
+	<th>页面浏览（PV）</th>
+	<th>点击次数</th>
+	<th>IP数</th>
+	<th>独立用户（UV）</th>
+</tr>
+<!-- loop from=$tlist key=$key value=$value -->
+<tr>
+	<td class="center white">{$key}</td>
+	<td class="center white">{$value.pv}</td>
+	<td class="center white">{$value.hits}</td>
+	<td class="center white">{$value.ip}</td>
+	<td class="center white">{$value.uv}</td>
+</tr>
+<!-- /loop -->
+</table>
+</div>
+
+<script type="text/javascript">
+function action_time(val)
+{
+	$("#date_html").show();
+	if(val == "year")
+	{
+		$("#date_html").hide();
+	}
+}
+function update_time(v)
+{
+	var type = $("#type").val();
+	if(type == "month")
+	{
+		var datetype = "%Y";
+	}
+	else if(type == "date")
+	{
+		var datetype = "%Y-%m";
+	}
+	else if(type == "hour")
+	{
+		var datetype = "%Y-%m-%d";
+	}
+	$("#"+v).dynDateTime({
+		showsTime: false,
+		ifFormat: datetype
+	});
+}
+</script>
+<style type="text/css">
+.demo-container {
+	box-sizing: border-box;
+	width: 780px;
+	height: 450px;
+	padding: 20px 15px 15px 15px;
+	margin: 15px auto 30px auto;
+	border: 1px solid #ddd;
+	background: #fff;
+	background: linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
+	background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+	box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+	-o-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+.demo-placeholder {
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	line-height: 1.2em;
+}
+</style>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/flot/excanvas.min.js"></script><![endif]-->
+<script language="javascript" type="text/javascript" src="js/flot/jquery.flot.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var datasets = {
+		"hits": {
+			label: "点击次数",
+			data: [
+				<!-- loop from=$rslist key=$key value=$value -->
+					{if $rslist_id.num>1},{/if}
+					[{$value.title},{$value.hits}]
+				<!-- /loop -->
+			]
+		},
+		"ip": {
+			label: "IP",
+			data: [
+				<!-- loop from=$rslist key=$key value=$value -->
+					{if $rslist_id.num>1},{/if}
+					[{$value.title},{$value.hits}]
+				<!-- /loop -->
+			]
+		},
+		"uv": {
+			label: "UV",
+			data: [
+				<!-- loop from=$rslist key=$key value=$value -->
+					{if $rslist_id.num>1},{/if}
+					[{$value.title},{$value.hits}]
+				<!-- /loop -->
+			]
+		},
+		"pv": {
+			label: "PV",
+			data: [
+				<!-- loop from=$pvlist key=$key value=$value -->
+					{if $pvlist_id.num>1},{/if}
+					[{$value.title},{$value.pv}]
+				<!-- /loop -->
+			]
+		}
+	};
+
+	// hard-code color indices to prevent them from shifting as
+	// countries are turned on/off
+
+	var i = 0;
+	$.each(datasets, function(key, val) {
+		val.color = i;
+		++i;
+	});
+
+	// insert checkboxes 
+	var choiceContainer = $("#choices");
+	$.each(datasets, function(key, val) {
+		choiceContainer.append("<br/><input type='checkbox' name='" + key +
+			"' checked='checked' id='id" + key + "'></input>" +
+			"<label for='id" + key + "'>"
+			+ val.label + "</label>");
+	});
+
+	choiceContainer.find("input").click(plotAccordingToChoices);
+
+	function showTooltip(x, y, contents) {
+		$("<div id='tooltip'>" + contents + "</div>").css({
+			position: "absolute",
+			display: "none",
+			top: y + 5,
+			left: x + 5,
+			border: "1px solid #fdd",
+			padding: "2px",
+			"background-color": "#fee",
+			opacity: 0.80
+		}).appendTo("body").fadeIn(200);
+	}
+
+	var previousPoint = null;
+	$("#placeholder").bind("plothover", function (event, pos, item) {
+		if (item){
+			if (previousPoint != item.dataIndex) {
+				previousPoint = item.dataIndex;
+				$("#tooltip").remove();
+				var x = item.datapoint[0].toFixed(0),
+				y = item.datapoint[1].toFixed(0);
+				showTooltip(item.pageX, item.pageY,y);
+			}
+		} else {
+			$("#tooltip").remove();
+			previousPoint = null;            
+		}
+	});
+
+
+
+	function plotAccordingToChoices() {
+
+		var data = [];
+
+		choiceContainer.find("input:checked").each(function () {
+			var key = $(this).attr("name");
+			if (key && datasets[key]) {
+				data.push(datasets[key]);
+			}
+		});
+
+		if (data.length > 0) {
+			$.plot("#placeholder", data, {
+				series: {
+					lines: {
+						show: true
+					},
+					points: {
+						show: true
+					}
+				},
+				yaxis: {
+					min: 0
+				},
+				grid: {
+					hoverable: true,
+					clickable: true
+				},
+				xaxis: {
+					tickDecimals: 0
+				}
+			});
+		}
+	}
+	plotAccordingToChoices();
+});
+</script>
+<div class="demo-container">
+	<div id="placeholder" class="demo-placeholder" style="float:left; width:600px;"></div>
+	<div id="choices" style="float:right; width:120px;"></div>
+</div>
+<!-- include tpl=foot -->

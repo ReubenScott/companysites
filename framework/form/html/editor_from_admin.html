@@ -1,0 +1,160 @@
+<!-- php:$local_domain = strtolower($_SERVER["SERVER_NAME"]) -->
+<textarea name="{$edit_rs.identifier}" id="{$edit_rs.identifier}" style="{$edit_rs.form_style}">{$edit_rs.content}</textarea>
+<script type="text/javascript">
+var editor_{$edit_rs.identifier};
+function pageInit_{$edit_rs.identifier}()
+{
+	//自定义工具
+	var mytools_{$edit_rs.identifier} = "Source,Fullscreen,Paste,Pastetext,|,";
+	mytools_{$edit_rs.identifier} += "Img,Flash,Media,phpok_code,|,";
+	mytools_{$edit_rs.identifier} += "Bold,Italic,Underline,Strikethrough,|,";
+	mytools_{$edit_rs.identifier} += "phpok_left,phpok_center,phpok_right,|,";
+	mytools_{$edit_rs.identifier} += "List,Outdent,Indent,|,";
+	mytools_{$edit_rs.identifier} += "Blocktag,Fontface,FontSize,FontColor,BackColor,Table,|,";
+	mytools_{$edit_rs.identifier} += "Link,Unlink,Hr,|,";
+	//mytools += "phpok_page,phpok_img,phpok_attach,phpok_video,|,";
+	mytools_{$edit_rs.identifier} += "phpok_special,phpok_date,phpok_time,|,";
+	mytools_{$edit_rs.identifier} += "Removeformat,About";
+	var allPlugin_{$edit_rs.identifier}={
+		phpok_date:{c:'plugin plugin_date',t:'插入日期',e:function(){this.pasteHTML(phpjs_fck_date())}},
+		phpok_time:{c:'plugin plugin_time',t:'插入时间',e:function(){this.pasteHTML(phpjs_fck_time())}},
+		phpok_left:{c:'plugin plugin_left',t:'居左',e:function(){this.pasteHTML(this._exec('justifyleft'))}},
+		phpok_center:{c:'plugin plugin_center',t:'居中',e:function(){this.pasteHTML(this._exec('justifycenter'))}},
+		phpok_right:{c:'plugin plugin_right',t:'居右',e:function(){this.pasteHTML(this._exec('justifyright'))}},
+		phpok_code:{c:'plugin plugin_code',t:'插入代码',h:1,e:function(){
+			var _this=this;
+			var htmlCode='<div><select id="xheCodeType"><option value="html">HTML/XML</option><option value="javascript">Javascript</option><option value="css">CSS</option><option value="php">PHP</option><option value="java">Java</option><option value="python">Python</option><option value="ruby">Ruby</option><option value="csharp">C#</option><option value="cpp">C++/C</option><option value="vb">VB/ASP</option><option value="sql">SQL</option><option value="other">其它</option></select></div><div><textarea id="xheCodeValue" wrap="soft" spellcheck="false" style="width:400px;height:180px;" /></div><div style="text-align:right;"><input type="button" id="xheSave" value="确定" /></div>';
+			var jCode=$(htmlCode),jType=$('#xheCodeType',jCode),jValue=$('#xheCodeValue',jCode),jSave=$('#xheSave',jCode);
+			jSave.click(function(){
+				_this.loadBookmark();
+				var sLan = jType.val();
+				var sTxt = jValue.val();
+				if(sTxt.length>0)
+				{
+					var registered = new Object();
+					for(var brush in dp.sh.Brushes)
+					{
+						var aliases = dp.sh.Brushes[brush].Aliases;
+						if(aliases == null) continue;
+						for(var i=0;i<aliases.length;i++) registered[aliases[i]] = brush;
+					};
+					var ht = new dp.sh.Brushes[registered[sLan]]();
+					ht.Highlight(sTxt);
+					_this.pasteHTML('<div><pre>'+ht.div.innerHTML+'</pre></div><div>&nbsp;</div>');
+				}
+				_this.hidePanel();
+				return false;	
+			});
+			_this.showDialog(jCode);
+		}},
+		phpok_special:{c:'plugin plugin_special',t:'特殊符号',h:1,e:function(){
+			var _this=this;
+			var s_char = "&pound;<>英镑,";s_char += "&yen;<>人民币,";s_char += "&cent;<>美分,";
+			s_char += "&#36;<>美元,";s_char += "&euro;<>欧元,";
+			s_char += "&trade;<>商标,";s_char += "&copy;<>版权,";s_char += "&reg;<>已注册,";
+			s_char += "&#215;<>乘号,";s_char += "&#247;<>除号,";s_char += "&plusmn;<>正负,";
+			s_char += "&deg;<>度数,";s_char += "&ne;<>不等于,";s_char += "&le;<>小于等于,";
+			s_char += "&ge;<>大于等于,";s_char += "&perp;<>垂直,";s_char += "&infin;<>无限大,";
+			s_char += "&permil;<>千分比";s_char += "&pi;<>圆周率,";s_char += "&larr;<>向左箭头,";
+			s_char += "&uarr;<>向上箭头,";s_char += "&rarr;<>向右箭头,";s_char += "&darr;<>向下箭头,";
+			s_char += "&harr;<>双向箭头,";s_char += "&spades;<>黑桃,";s_char += "&clubs;<>梅花,";
+			s_char += "&hearts;<>红心,";s_char += "&diams;<>方块,";s_char += "&Omega;<>欧姆,";
+			s_char += "&iquest;<>倒问号,";s_char += "&sect;<>章节,";s_char += "&laquo;<>双左箭头,";
+			s_char += "&raquo;<>双右箭头,";
+			var char_array = s_char.split(",");
+			var char_length = char_array.length;
+			var char_html = "<table><tr>";
+			var i_m = 0;
+			for(var i=0;i<char_length;i++)
+			{
+				var val = char_array[i].length>0 ? char_array[i] : "";
+				if(val)
+				{
+					i_m++;
+					var val_array = val.split("<>");
+					var val_value = val_array[0];
+					var val_title = val_array[1];
+					char_html += '<td><a id="special_charset_'+i+'" special_value="'+val_value+'" ';
+					char_html += 'href="javascript:;void(0);"';
+					if(val_title && val_title != "undefined")
+					{
+						char_html += ' title="'+val_title+'"';
+					}
+					char_html += '>';
+					char_html += val_value + "</a></td>";
+					if(i_m%8 === 0)
+					{
+						char_html += "</tr><tr>";
+					}
+				}
+			}
+			char_html += "</tr></table>";
+			var jHtml = $('<div class="char_p"></div>');
+			var jList = $(char_html).click(function(ev){
+				ev=ev.target;
+				var jA=$(ev);
+				if(!$.nodeName(ev,'A'))return;
+				_this.pasteText(jA.attr('special_value'));
+				_this.hidePanel();return false;
+			}).mousedown(_this.returnFalse);
+			jHtml.append(jList);
+			_this.showPanel(jHtml);
+		}}
+	};
+	editor_{$edit_rs.identifier} = $('#{$edit_rs.identifier}').xheditor({
+		plugins:allPlugin_{$edit_rs.identifier}
+		,width:{$edit_rs.width}
+		,height:{$edit_rs.height}
+		,tools:mytools_{$edit_rs.identifier}
+		,internalScript:true
+		,inlineScript:true
+		,linkTag:true
+		,loadCSS:"js/editor/xheditor_plugins/highlight/style.css"
+		,localUrlTest:/^https?:\/\/[^\/]*?(<?php echo str_replace('.','\.',$local_domain);?>)\//i
+		,remoteImgSaveUrl: get_url("xheditor","remote")
+		,cleanPaste: 2
+		,forcePtag: true
+		,editorRoot:'{$sys.url}js/editor/'
+	});
+}
+$(document).ready(function(){
+	$(pageInit_{$edit_rs.identifier});
+	var sMode = "{$edit_rs.is_code ? 'true' : 'false'}";
+	if(sMode == "true")
+	{
+		window.setTimeout(function(){
+			editor_{$edit_rs.identifier}.toggleSource(true)
+		}, 700);
+	}
+});
+</script>
+<div style="margin-top:2px;">
+<table cellpadding="0" cellspacing="0" width="{$edit_rs.width}">
+<tr>
+	<td align="left" style="color:gray;font-style:Italic;">快捷键：CTRL+X 剪切，CTRL+C 复制，CTRL+V 粘贴，CTRL+A 全选</td>
+	<td align="right">
+		<table>
+		<tr>
+			<!-- if $edit_rs.btn_page && $edit_rs.identifier == 'content' -->
+			<td><input type="button" value="分页" class="btn" onclick="editor_{$edit_rs.identifier}.pasteHTML('[:page:]')" /></td>
+			<!-- /if -->
+			<!-- if $edit_rs.btn_info -->
+			<td><input type="button" value="资料" class="btn" onclick="editor_{$edit_rs.identifier}.showIframeModal('站内资料内容',get_url('edit','info','id={$edit_rs.identifier}'),function(v){},760,450)" /></td>
+			<!-- /if -->
+			<!-- if $edit_rs.btn_image -->
+			<td><input type="button" value="图片" class="btn" onclick="editor_{$edit_rs.identifier}.showIframeModal('服务器图片',get_url('edit','picture','input={$edit_rs.identifier}'),function(v){},760,450)" /></td>
+			<!-- /if -->
+			<!-- if $edit_rs.btn_video -->
+			<td><input type="button" value="视频" class="btn" onclick="editor_{$edit_rs.identifier}.showIframeModal('服务器视频',get_url('edit','video','input={$edit_rs.identifier}'),function(v){},760,450)" /></td>
+			<!-- /if -->
+			<!-- if $edit_rs.btn_file -->
+				<!-- loop from=$btn_file_list key=$key value=$value -->
+				<td><input type="button" value="{$value.name}" class="btn" onclick="editor_{$edit_rs.identifier}.showIframeModal('服务器{$value.name}',get_url('edit','file','input={$edit_rs.identifier}&type={$key}'),function(v){},760,450)" /></td>
+				<!-- /loop -->
+			<!-- /if -->
+		</tr>
+		</table>
+	</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,53 @@
+<!-- include tpl=head -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#top_menu li").removeClass("selected");
+	$("#top_menu li").eq(1).addClass("selected");
+});
+</script>
+<div class="miniBanner"><a href="http://www.phpok.com" title="{$config.title}" target="_blank"></a></div>
+<div class="body">
+	<div class="left">
+		<!-- include tpl=block/login_cp -->
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$page_rs.title}</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<ul class="list">
+				<!-- subcate cateid=$page_rs.cate -->
+				<!-- loop from=$list key=$key value=$value -->
+				<li><a href="{func listurl $page_rs.identifier $value.identifier}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$cate_rs ? $cate_rs.title : $page_rs.title}</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:0;">
+			<div class="artlist">
+			<ul>
+				<!-- loop from=$rslist key=$key value=$value -->
+				<li><a href="index.php?id={$value.identifier}" title="{$value.title}"><span class="arrow"></span><span class="date">{func date Y-m-d $value.dateline}</span>{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+			</div>
+		</div>
+		<div class="box_bottom"><div class="box_right"></div></div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<!-- include tpl=foot -->

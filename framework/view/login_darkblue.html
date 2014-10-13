@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>管理员登录</title>
+<link href="css/artdialog.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{echo admin_url('js')}"></script>
+<style type="text/css">
+body{
+	font-size: 12px;
+	background-color: #011e3b;
+	line-height: 1.8em;
+}
+#username {}
+.login div ul form {
+	margin: 0px;
+	padding: 0px;
+}
+#username,#password ,#code_id{
+	color: #CCC;
+	background-color: #000;
+	border: 1px solid #458BD1;
+	line-height: 24px;
+	height: 24px;
+	width: 240px;
+}
+#code_id {
+	width: 100px;
+}
+.login div ul form li {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	display: block;
+}
+</style>
+<!-- if $config.adm_logo180 -->
+<style type="text/css">
+.login{position:absolute;top:39%;left:50%;width:764px;height:260px;background:#215386 url('images/bg_login2.jpg') left top no-repeat;margin:-130px 0 0 -382px;}
+.logo{position:absolute;left:10px;top:110px;}
+.login div ul {padding:80px 0 0 350px;list-style: none;margin: 0px;}
+</style>
+<!-- else -->
+<style type="text/css">
+.login{position:absolute;top:39%;left:50%;width:464px;height:260px;background:#215386 url('images/bg_login2.jpg') no-repeat top right;margin:-130px 0 0 -232px;}
+.login div ul {padding:80px 0 0 59px;list-style: none;margin: 0px;}
+</style>
+<!-- /if -->
+<script type="text/javascript">
+// 防止被嵌入
+if (self.location != top.location) top.location = self.location;
+function login_code()
+{
+	var src_url = "{echo admin_url('ajax','exit','filename=vcode')}&rand="+Math.random();
+	$("#src_code").attr("src",src_url);
+}
+
+function chk_code()
+{
+	var chk = $("#code_id").val();
+	if(!chk)
+	{
+		alert("验证码不能为空！");
+		return false;
+	}
+	var url = "{echo admin_url('ajax','exit','filename=code_check')}&val="+chk;
+	var rs = json_ajax(url);
+	if(rs.status != "ok")
+	{
+		alert(rs.content);
+		return false;
+	}
+	return true;
+}
+
+function phpok_chklogin()
+{
+	// 检测管理员账号
+	var username = $("#username").val();
+	if(!username)
+	{
+		alert("管理员账号不能为空");
+		return false;
+	}
+	var u_url = "{echo admin_url('ajax','exit','filename=adminer_check')}&username="+rawurlencode(username);
+	var rs = json_ajax(u_url);
+	if(rs.status != 'ok')
+	{
+		alert(rs.content);
+		return false;
+	}
+	// 检测密码
+	var pass = $("#password").val();
+	if(!pass)
+	{
+		alert("密码不能为空！");
+		return false;
+	}
+	
+	// 检测验证码
+	var chk = chk_code();
+	if(!chk) return false;
+	return true;
+}
+
+$(document).ready(function(){
+	login_code();
+});
+</script>
+
+</head>
+<body>
+
+<div class="login">
+	<div style="position:relative;">
+		<!-- if $config.adm_logo180 -->
+		<div class="logo"><div><img src="{$config.adm_logo180}" border="0" /></div></div>
+		<!-- /if -->
+		<ul>
+			<form method="post" action="{func admin_url login ok}" onsubmit="return phpok_chklogin()">
+				<li>用户名：<input name="username" id="username" type="text"  tabindex="1" /></li>
+				<li> 密　码：<input name="password" id="password" type="password"  tabindex="2" /></li>
+				<!-- if $vcode -->
+				<li>验证码：<input name="code_id" id="code_id" type="text" tabindex="3" />
+					<img src="" border="0" align="absmiddle" style="cursor:pointer;" onclick="login_code()" id="src_code">
+				</li>
+				<!-- /if -->
+				<li><input type="image" class="button" value=" 登录 " src="images/login_btn2.gif"></li>
+			</form>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

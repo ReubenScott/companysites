@@ -1,0 +1,12 @@
+<!-- include tpl=head -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#top_menu li").removeClass("selected");
+	$("#top_menu li").eq(1).addClass("selected");
+});
+</script>
+<div class="body">
+	<h1>{$rs.title}</h1>
+	<div class="content">{$rs.content}</div>
+</div>
+<!-- include tpl=foot -->

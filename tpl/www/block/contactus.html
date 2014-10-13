@@ -1,0 +1,56 @@
+<!-- if $config.contactus -->
+<div class="contactus {$extclass}">
+	<div class="box_top"><div class="box_right">
+		<table>
+		<tr>
+			<td><h3>联系我们</h3></td>
+			<td class="more"><a href="{func phpok_decode $config.contactus.link url}" title="更多联系我们">more</a></td>
+		</tr>
+		</table>
+	</div></div>
+	<div class="box_middle pd0">
+		<ul class="contact">
+			<!-- if $config.contactus.thumb -->
+			<li><img src="{$config.contactus.thumb}" border="0" alt="联系我们" /></li>
+			<!-- /if -->
+			<!-- if $config.contactus.fullname -->
+			<li class="arrow">
+				<span></span>
+				联系人：{$config.contactus.fullname}
+			</li>
+			<!-- /if -->
+			<!-- if $config.contactus.tel -->
+			<li class="arrow"><span></span>电话：{$config.contactus.tel}</li>
+			<!-- /if -->
+			<!-- if $config.contactus.address -->
+			<li class="arrow">
+				<span></span>
+				地址：{$config.contactus.address}
+			</li>
+			<!-- /if -->
+			<!-- if $config.contactus.zipcode -->
+			<li class="arrow">
+				<span></span>
+				邮编：{$config.contactus.zipcode}
+			</li>
+			<!-- /if -->
+			<!-- if $config.contactus.email -->
+			<li class="arrow">
+				<span></span>
+				E-mail：{$config.contactus.email}
+			</li>
+			<!-- /if -->
+			<!-- if $config.contactus.qq -->
+				<!-- php:$tqq = explode(',',$config['contactus']['qq']) -->
+			<li class="arrow">
+				<span style="background:none;"></span>
+				<!-- loop from=$tqq key=$key value=$value -->
+				<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin={$value}&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:{$value}:51" alt="点击这里给我发消息" title="点击这里给我发消息"/></a>
+				<!-- /loop -->
+			</li>
+			<!-- /if -->
+		</ul>
+	</div>
+	<div class="box_bottom"><div class="box_right"></div></div>
+</div>
+<!-- /if -->

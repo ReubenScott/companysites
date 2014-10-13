@@ -1,0 +1,192 @@
+<!-- if $rs.form_btn == "date" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#{$rs.identifier}").dynDateTime({
+		showsTime: false,
+		ifFormat: "%Y-%m-%d"
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "datetime" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#{$rs.identifier}").dynDateTime({
+		showsTime: true,
+		ifFormat: "%Y-%m-%d %H:%M",
+		timeFormat:"24"
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "file" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_phpok_button_file_{$rs.identifier}").click(function(){
+		var url = get_url("open","input") + "&id={$rs.identifier}";
+		$.dialog.open(url,{
+			title: "附件管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			resize: false
+		});
+	});
+
+	$("#_phpok_button_file_download_{$rs.identifier}").click(function(){
+		var url = get_url("res_action","download");
+		var file = $("#{$rs.identifier}").val();
+		if(!file)
+		{
+			$.dialog.alert("没有可下载的附件");
+			return false;
+		}
+		url += "&file="+$.str.encode(file);
+		window.open(url);
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "image" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_phpok_button_image_{$rs.identifier}").click(function(){
+		var url = get_url("open","input") + "&id={$rs.identifier}&type=image";
+		$.dialog.open(url,{
+			title: "图片管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			resize: false
+		});
+	});
+
+	$("#_phpok_button_image_view_{$rs.identifier}").click(function(){
+		var url = get_url("res_action","view");
+		var file = $("#{$rs.identifier}").val();
+		if(!file)
+		{
+			$.dialog.alert("没有指定图片");
+			return false;
+		}
+		url += "&file="+$.str.encode(file);
+		$.dialog.open(url,{
+			title: '预览图片',
+			lock: true,
+			width: '700px',
+			height: '70%',
+			resize: false,
+			ok: function(){}
+		});
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "video" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_phpok_button_video_{$rs.identifier}").click(function(){
+		var url = get_url("open","input") + "&id={$rs.identifier}&type=video";
+		$.dialog.open(url,{
+			title: "视频管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			resize: false
+		});
+	});
+
+	$("#_phpok_button_video_play_{$rs.identifier}").click(function(){
+		var url = get_url("res_action","video");
+		var file = $("#{$rs.identifier}").val();
+		if(!file)
+		{
+			$.dialog.alert("没有指定视频");
+			return false;
+		}
+		url += "&file="+$.str.encode(file);
+		$.dialog.open(url,{
+			title: '试播',
+			lock: true,
+			width: '700px',
+			height: '430px',
+			resize: false,
+			ok: function(){}
+		});
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "url" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_phpok_button_url_{$rs.identifier}").click(function(){
+		var url = get_url("open","url") + "&id={$rs.identifier}";
+		$.dialog.open(url,{
+			title: "网址管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			resize: false
+		});
+	});
+
+	$("#_phpok_button_url_play_{$rs.identifier}").click(function(){
+		var url = $("#{$rs.identifier}").val();
+		if(!url || url == "http://" || url == "https://")
+		{
+			$.dialog.alert("未指定网址");
+			return false;
+		}
+		window.open(url);
+		var url = get_url("res_action","video");
+		var file = $("#{$rs.identifier}").val();
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == "user" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#_phpok_button_user_{$rs.identifier}").click(function(){
+		var url = get_url("open","user2") + "&id={$rs.identifier}";
+		$.dialog.open(url,{
+			title: "会员列表",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			resize: false
+		});
+	});
+});
+</script>
+<!-- elseif $rs.form_btn == 'color' -->
+<script type="text/javascript" src="js/jscolor/jscolor.js"></script>
+<!-- /if -->
+<table class="ext_text">
+<tr>
+	<td><input type="text" id="{$rs.identifier}" name="{$rs.identifier}" style="{$rs.form_style};width:{$rs.width}px;" value="{$rs.content}"{if $rs.form_btn == 'color'} class="color {pickerClosable:true}"{/if} /></td>
+	<!-- if $rs.form_btn == "file" -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="文件" class="btn" id="_phpok_button_file_{$rs.identifier}" /></td>
+	<td>&nbsp;</td>
+	<td><input type="button" value="下载" class="btn" id="_phpok_button_file_download_{$rs.identifier}" /></td>
+	<!-- elseif $rs.form_btn == "image" -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="图片" class="btn" id="_phpok_button_image_{$rs.identifier}" /></td>
+	<td>&nbsp;</td>
+	<td><input type="button" value="预览" class="btn" id="_phpok_button_image_view_{$rs.identifier}" /></td>
+	<!-- elseif $rs.form_btn == "video" -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="视频" class="btn" id="_phpok_button_video_{$rs.identifier}" /></td>
+	<td>&nbsp;</td>
+	<td><input type="button" value="试播" class="btn" id="_phpok_button_video_play_{$rs.identifier}" /></td>
+	<!-- elseif $rs.form_btn == "url" -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="网址库" class="btn" id="_phpok_button_url_{$rs.identifier}" /></td>
+	<td>&nbsp;</td>
+	<td><input type="button" value="访问" class="btn" id="_phpok_button_url_play_{$rs.identifier}" /></td>
+	<!-- elseif $rs.form_btn == "user" -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="会员" class="btn" id="_phpok_button_user_{$rs.identifier}" /></td>
+	<!-- /if -->
+	<!-- if $rs.form_btn -->
+	<td>&nbsp;</td>
+	<td><input type="button" value="清除" class="btn" onclick="$('#{$rs.identifier}').val('');" /></td>
+	<!-- /if -->
+</tr>
+</table>

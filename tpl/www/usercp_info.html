@@ -1,0 +1,100 @@
+<!-- include tpl=head title="修改个人资料 - 个人中心" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	//提交表单信息
+	$("#userinfo_submit").submit(function(){
+		$(this).ajaxSubmit({
+			type:'post',
+			url: api_url('usercp','info'),
+			dataType:'json',
+			success: function(rs){
+				if(rs.status == 'ok')
+				{
+					$.dialog.alert("您的信息更新成功",function(){
+						$.phpok.reload();
+					},'succeed');
+				}
+				else
+				{
+					if(!rs.content) rs.content = '信息更新失败';
+					$.dialog.alert(rs.content);
+					return false;
+				}
+			}
+		});
+		return false;
+	});
+});
+
+//附件上传后执行的JS动作
+function update_avatar(rs)
+{
+	if(!rs || rs.status != 'ok')
+	{
+		alert("上传失败");
+		return false;
+	}
+	$("#avatar").val(rs.filename);
+	$("#avatar_view").attr('src',rs.ico);
+	//更新头像ID
+	$.ajax({
+		'url': api_url('usercp','avatar','data='+$.str.encode(rs.filename)),
+		'dataType': 'json',
+		'success': function(rs) {
+			return true;
+		}
+	});
+}
+</script>
+<div class="cp">
+	<div class="left">
+		<!-- include tpl=block/cp_left -->
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>修改个人资料</h3></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:10px;">
+			<form method="post" id="userinfo_submit">
+			<div class="table">
+				<input type="hidden" name="avatar" id="avatar" value="{$rs.avatar}" />
+				<div class="l" style="line-height:100px;">会员头像：</div>
+				<table cellspacing="0" cellpadding="0">
+				<tr>
+					<td><img src="{$rs.avatar ? $rs.avatar : 'images/user_default.png'}" width="80px" border="0" id="avatar_view"></td>
+				</tr>
+				<tr>
+					<td>{func button_swf_upload my_avatar picture update_avatar}</td>
+				</tr>
+				</table>
+			</div>
+			<div class="table">
+				<div class="l"><span class="red">*</span> 邮箱：</div>
+				<input type="text" name="email" id="email" value="{$rs.email}" class="input" />
+			</div>
+			<div class="table">
+				<div class="l">手机或电话：</div>
+				<input type="text" name="mobile" id="mobile" value="{$rs.mobile}" class="input" />
+			</div>
+			<!-- loop from=$extlist key=$key value=$value -->
+			<div class="table">
+				<div class="l">{$value.title}：</div>
+				{$value.html}
+			</div>
+			<!-- /loop -->
+			<div class="table">
+				<div class="l">&nbsp;</div>
+				<input type="submit" value=" 修改资料 " />
+			</div>
+			</form>
+
+		</div>
+		<div class="box_bottom"><div class="box_right"></div></div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

@@ -1,0 +1,30 @@
+<!-- if $rs.is_multiple -->
+<select name="{$rs.identifier}[]" id="{$rs.identifier}" multiple="true" style="{$rs.style};width:300px;">
+	<!-- foreach($rslist AS $key=>$value) -->
+	<option value="{$value.val}"{if in_array($value["val"],$rs["content"])} selected{/if}>{$value.title}</option>	
+	<!-- /foreach -->
+</select>
+<!-- else -->
+	<!-- if $is_step -->
+	<div id="{$rs.identifier}_html"></div>
+	<script type="text/javascript">
+	function opt_{$rs.identifier}_onchange(val)
+	{
+		var url = api_url("opt","index",'identifier={$rs.identifier}&group_id={$group_id}');
+		if(val) url += '&val='+$.str.encode(val);
+		var html = get_ajax(url);
+		$("#{$rs.identifier}_html").html(html);
+	}
+	$(document).ready(function(){
+		opt_{$rs.identifier}_onchange("{$rs.content}");
+	});
+	</script>
+	<!-- else -->
+	<select id="{$rs.identifier}" name="{$rs.identifier}">
+		<option value="">……</option>
+		<!-- foreach($rslist AS $key=>$value) -->
+		<option value="{$value.val}"{if $value.val == $rs.content.id || $value.val == $rs.content} selected{/if}>{$value.title}</option>
+		<!-- /foreach -->
+	</select>
+	<!-- /if -->
+<!-- /if -->

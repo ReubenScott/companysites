@@ -1,0 +1,38 @@
+<!-- include tpl=head title=$keywords -->
+<script type="text/javascript">
+function search_check()
+{
+	var k = $("#search_keywords").val();
+	if(!k)
+	{
+		$.dialog.alert("关键字不能为空");
+		return false;
+	}
+	return true;
+}
+</script>
+<div class="main">
+	<div class="left">
+		<!-- include tpl=block/contactus -->
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>全站搜索</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:10px;">
+			<form method="post" action="{url ctrl=search/}" onsubmit="return search_check()">
+			<input type="text" name="keywords" id="search_keywords" style="width:500px;height:26px;line-height:26px;" />
+			<br />
+			<input type="submit" value="搜索" />
+			</form>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- include tpl=foot -->

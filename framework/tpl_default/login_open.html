@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="expires" content="wed, 26 feb 1997 08:21:57 gmt"> 
+	<title>会员登录</title>
+	<base href="{$sys.url}">
+	<meta name="author" content="phpok.com" />
+	{$config.meta}
+	<style type="text/css">
+	body{font-size:12px;margin:0;}
+	.red{color:red;}
+	.fsize16{font-size:16px;}
+	ul.login{list-style:none;margin:10px;padding:0;width:550px;}
+	ul.login li{height:40px;line-height:40px;display:block}
+	ul.login li:after{clear:both;display: block;visibility: hidden;content:".";}
+	ul.login li input.input{width:180px;}
+	ul.login li input.vcode{width:90px;margin:0;padding:0;height:26px;line-height:26px;}
+	ul.login li .login_title{float:left;text-align:right;width:90px;height:30px;line-height:30px;}
+	</style>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#update_vcode").click(function(){
+		var src_url = "{echo web_url('ajax','exit','filename=vcode')}&tmp="+Math.random();
+		$(this).attr("src",src_url);
+	});
+});
+function check_login()
+{
+	var user = $("#user").val();
+	if(!user)
+	{
+		parent.$.dialog.alert("会员账号不能为空");
+		return false;
+	}
+	var password = $("#pass").val();
+	if(!password)
+	{
+		parent.$.dialog.alert("密码不能为空");
+		return false;
+	}
+	var login_url = get_url("ajax","json","filename=login_ok")+"&user="+$.str.encode(user);
+	login_url += "&pass="+$.str.encode(password);
+	//通过ajax判断是否有启用验证码功能
+	url = get_url("ajax","json")+"&filename=code_is";
+	var chk  = get_ajax(url);
+	if(chk == "ok")
+	{
+		var code = $("#sys_check").val();
+		if(!code)
+		{
+			parent.$.dialog.alert("验证码不能空");
+			return false;
+		}
+		url = get_url("ajax","json")+"&filename=code_check&code="+$.str.encode(code);
+		var rs = json_ajax(url);
+		if(rs.status != "ok")
+		{
+			parent.$.dialog.alert(rs.content);
+			return false;
+		}
+		login_url += "&_code="+$.str.encode(code);
+	}
+	var rs = json_ajax(login_url);
+	if(rs && rs.status == "ok")
+	{
+		parent.$.dialog.alert("欢迎您，<span style='color:red;font-weight:bold;'>"+user+"</span>",function(){
+			parent.window.location.reload();
+		});
+	}
+	else
+	{
+		if(!rs.content) rs.content = '登录失败';
+		parent.$.dialog.alert(rs.content);
+		return false;
+	}
+	return false;
+}
+</script>
+
+</head>
+<body>
+<form method="post" action="javascript:void(0);" onsubmit="return check_login();">
+<ul class="login">
+	<li>
+		<div class="login_title">账号：</div>
+		<input type="text" name="user" id="user" class="input" />
+		<span class="red pl5 fsize16">*</span> 请填写会员账号，不能为空
+	</li>
+	<li>
+		<div class="login_title">密码：</div>
+		<input type="password" name="pass" id="pass" class="input" />
+		<span class="red pl5 fsize16">*</span> 会员密码不能为空
+	</li>
+	<!-- if $sys.is_vcode && function_exists("imagecreate") -->
+	<li>
+		<div class="login_title">验证码：</div>
+		<table cellpadding="0" cellspacing="0" width="180px">
+		<tr>
+			<td><input type="text" name="sys_check" id="sys_check" class="vcode" /></td>
+			<td align="right"><img src="{echo web_url('ajax','exit','filename=vcode')}" border="0" align="absmiddle" id="update_vcode" class="hand"></td>
+		</tr>
+		</table>
+	</li>
+	<!-- /if -->
+	<li>
+		<div class="login_title">&nbsp;</div>
+		<input type="submit" name="submit" id="reg_submit" class="input" value="会员登录" />
+	</li>
+</ul>
+</form>
+</body>
+</html>

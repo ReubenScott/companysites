@@ -1,0 +1,71 @@
+<!-- include tpl=head title=$page_rs.title -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#top_menu li a").each(function(i){
+		if($(this).text() == '{$page_rs.title}')
+		{
+			$(this).parent().addClass('selected');
+		}
+		else
+		{
+			$(this).parent().removeClass('selected');
+		}
+	});
+});
+</script>
+<div class="body">
+	<div class="left">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$page_rs.title}</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<!-- catelist:catelist pid=$page_rs.id cateid=$page_rs.cate -->
+			<ul class="usercp">
+				<!-- loop from=$catelist.sublist key=$key value=$value -->
+				<li{if $cate_rs.id == $value.id} class="red"{/if}><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		<!-- include tpl=block/contactus -->
+	</div>
+	<div class="right">
+		<!-- loop from=$catelist.sublist key=$key value=$value -->
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$value.title}</h3></td>
+				<td class="more"><a href="{url ctrl=$page_rs.identifier func=$value.identifier/}" title="{$value.title}">更多&raquo;</a></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:10px 3px;">
+			<div class="products">
+			<ul>
+				<!-- arclist pid=$page_rs.id cateid=$value.id psize=4 -->
+				<!-- loop from=$list key=$key value=$value -->
+				<li>
+					<table>
+					<tr>
+						<td class="pic"><a href="{$value.url}" title="{$value.title}"><img src="{$value.thumb.gd.thumb}" border="0" alt="{$value.title}" /></a></td>
+					</tr>
+					<tr>
+						<td><a href="{$value.url}" title="{$value.title}">{$value.title}</a></td>
+					</tr>
+					</table>
+				</li>
+				<!-- /loop -->
+			</ul>
+			</div>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		<!-- /loop -->
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- include tpl=foot -->

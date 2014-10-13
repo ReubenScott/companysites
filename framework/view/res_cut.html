@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title> 在线裁图 </title>
+<meta name="author" content="phpok.com" />
+<meta http-equiv="expires" content="wed, 26 feb 1997 08:21:57 gmt"> 
+<link href="css/open.css" rel="stylesheet" type="text/css" />
+<link href="js/imgareaselect/css/imgareaselect-animated.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{echo admin_url('js')}"></script>
+<script type="text/javascript" src="js/imgareaselect/jquery.imgareaselect.min.js"></script>
+<script type="text/javascript">
+function preview(img, selection)
+{
+	var scaleX = {$preview_width} / selection.width;
+	var scaleY = {$preview_height} / selection.height;
+
+	$('#preview_thumb > img').css({
+		width: Math.round(scaleX * {$file_width}) + 'px',
+		height: Math.round(scaleY * {$file_height}) + 'px',
+		marginLeft: '-' + Math.round(scaleX * selection.x1) + 'px',
+		marginTop: '-' + Math.round(scaleY * selection.y1) + 'px'
+	});
+	$('#x1').val(selection.x1);
+	$('#y1').val(selection.y1);
+	$('#x2').val(selection.x2);
+	$('#y2').val(selection.y2);
+	$('#w').val(selection.width);
+	$('#h').val(selection.height);
+}
+
+function preview2(img, selection)
+{
+	$('#x1').val(selection.x1);
+	$('#y1').val(selection.y1);
+	$('#x2').val(selection.x2);
+	$('#y2').val(selection.y2);
+	$('#w').val(selection.width);
+	$('#h').val(selection.height);
+}
+
+
+$(document).ready(function(){
+	$('#thumbnail').imgAreaSelect({
+		<!-- if $gd && is_array($gd) && $gd.width && $gd.height -->
+		"aspectRatio"	: '{$gd.width}:{$gd.height}',
+		"minWidth"		: "{$gd.width}",
+		"minHeight"		: "{$gd.height}",
+		"x1"			: "0",
+		"y1"			: "0",
+		"x2"			: "{$gd.width}",
+		"y2"			: "{$gd.height}",
+		"onSelectChange": preview,
+		<!-- else -->
+		"onSelectChange": preview2,
+		<!-- /if -->
+		"imageWidth"	: "{$rs.attr.width}",
+		"imageHeight"	: "{$rs.attr.height}",
+		"handles"		: true
+	});
+	$("#save_thumb").click(function(){
+		var x1 = $('#x1').val();
+		var y1 = $('#y1').val();
+		var x2 = $('#x2').val();
+		var y2 = $('#y2').val();
+		var w = $('#w').val();
+		var h = $('#h').val();
+		var thumb_id = $("#thumb_id").val();
+		if(x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h=="")
+		{
+			alert("未设置裁剪框！");
+			return false;
+		}
+		else
+		{
+			var url = "{$form_url}";
+			url += "&x1="+x1;
+			url += "&y1="+y1;
+			url += "&x2="+x2;
+			url += "&y2="+y2;
+			url += "&x1="+x1;
+			url += "&w="+w;
+			url += "&h="+h;
+			//存储并更新图片
+			var rs = json_ajax(url);
+			if(rs.status == "ok")
+			{
+				parent.window.location.href = parent.window.location.href;
+				return true;
+			}
+			else
+			{
+				alert(rs.content);
+			}
+		}
+	});
+
+});
+</script>
+</head>
+<body>
+<div class="table">
+<table width="100%">
+<tr>
+	<td align="center">
+		<img src="{$rs.filename}" width="{$file_width}px" alt="原图" id="thumbnail" />
+	</td>
+	<!-- if $gd && is_array($gd) && $gd.width && $gd.height -->
+	<td width="300px">
+		<div id="preview_thumb" style="position:relative; overflow:hidden; width:{$preview_width}px; height:{$preview_height}px;"><img src="{$rs.filename}" style="position: relative;" alt="缩略图预览" /></div>
+		<div></div>
+	</td>
+	<!-- end -->
+	<td align="center" width="100px">
+		<form name="thumbnail" action="{echo admin_url('res','cut_save')}" method="post" onsubmit="return false;">
+			<input type="hidden" name="x1" value="" id="x1" />
+			<input type="hidden" name="y1" value="" id="y1" />
+			<input type="hidden" name="x2" value="" id="x2" />
+			<input type="hidden" name="y2" value="" id="y2" />
+			<input type="hidden" name="w" value="" id="w" />
+			<input type="hidden" name="h" value="" id="h" />
+			<input type="button" class="submit" value="保存图片" id="save_thumb" />
+		</form>
+	</td>
+</tr>
+</table>
+</div>
+</body>
+</html>

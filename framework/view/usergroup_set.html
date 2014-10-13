@@ -1,0 +1,175 @@
+<!-- inc:head -->
+<script type="text/javascript">
+function to_submit()
+{
+	var title = $("#title").val();
+	if(!title)
+	{
+		$.dialog.alert("会员组名称不能为空");
+		return false;
+	}
+}
+</script>
+<div class="tips">
+	<a href="{echo admin_url('usergroup')}" title="会员组">会员组</a>
+	&raquo; {if $id}编辑{else}添加新{/if}会员组
+</div>
+
+<form method="post" action="{echo admin_url('usergroup','setok')}" onsubmit="return to_submit();">
+<input type="hidden" name="id" id="id" value="{$id}" />
+<div class="table">
+	<div class="title">
+		名称：
+		<span class="note">设置会员组的名称</span>
+	</div>
+	<div class="content">
+		<input type="text" id="title" name="title" class="default" value="{$rs.title}" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		注册审核：
+		<span class="note"></span>
+	</div>
+	<div class="content">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td><label><input type="radio" name="register_status" value="1" {if $rs.register_status == '1'} checked{/if} />免审核 </label></td>
+			<td><label><input type="radio" name="register_status" value="email" {if $rs.register_status == 'email'} checked{/if} />邮箱验证注册 </label></td>
+			<td><label><input type="radio" name="register_status" value="code" {if $rs.register_status == 'code'} checked{/if} />邀请码验证 </label></td>
+			<td><label><input type="radio" name="register_status" value="0" {if !$rs.register_status} checked{/if} />人工审核 </label></td>
+		</tr>
+		</table>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		验证库：
+		<span class="note">仅限启用验证后才有效，要求扩展表中必须有：<span class="red">account（即会员账号字段）</span></span>
+	</div>
+	<div class="content">
+		<ul class="layout">
+			<!-- loop from=$project_list key=$key value=$value -->
+			<!-- if $value.module -->
+			<li><label><input type="radio" name="tbl_id" value="{$value.id}"{if $rs.tbl_id == $value.id} checked{/if}>{$value.title}</label></li>
+			<!-- /if -->
+			<!-- /loop -->
+			<li><label><input type="radio" name="tbl_id" value="0"{if !$rs.tbl_id} checked{/if} />不使用</label></li>
+		</ul>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		开放供选择：
+		<span class="note">设置是否开放此组供用户选择（启用后允许用户自行选择会员组）</span>
+	</div>
+	<div class="content">
+		<ul class="layout">
+			<li><label><input type="radio" name="is_open"{if $rs.is_open} checked{/if} value="1" /> 是</label></li>
+			<li><label><input type="radio" name="is_open"{if !$rs.is_open} checked{/if} value="0" /> 否</label></li>
+		</ul>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		发布审核：
+		<span class="note">仅限有发布权限时，设置发布的主题是否需要审核</span>
+	</div>
+	<div class="content">
+		<ul class="layout">
+			<li><label><input type="radio" name="post_status"{if $rs.post_status} checked{/if} value="1" /> 免审核</label></li>
+			<li><label><input type="radio" name="post_status"{if !$rs.post_status} checked{/if} value="0" /> 需要审核</label></li>
+		</ul>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		回复审核：
+		<span class="note">回复信息时是否需要审核</span>
+	</div>
+	<div class="content">
+		<ul class="layout">
+			<li><label><input type="radio" name="reply_status"{if $rs.reply_status} checked{/if} value="1" /> 免审核</label></li>
+			<li><label><input type="radio" name="reply_status"{if !$rs.reply_status} checked{/if} value="0" /> 启用审核</label></li>
+		</ul>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		阅读权限：
+		<span class="note">各个项目的权限是独立的，没有继承功能。<span class="red">按钮CTRL可进行多选</span></span>
+	</div>
+	<div class="content">
+		<select name="read_popedom[]" id="read_popedom" multiple="true"  style="width:500px;height:200px;">
+		<option value="all"{if in_array('all',$read_popedom)} selected{/if}>不限制阅读</option>
+		<optgroup label="项目">
+			<!-- loop from=$project_list key=$key value=$value -->
+			<option value="{$value.id}"{if in_array($value.id,$read_popedom)} selected{/if}>{$value.space}{$value.title}</option>
+			<!-- /loop -->
+		</optgroup>
+		</select>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		发布权限：
+		<span class="note">只有启用了发布权限，客户才有相应权限进行发布。<span class="red">按钮CTRL可进行多选</span></span>
+	</div>
+	<div class="content">
+		<select name="post_popedom[]" id="post_popedom" multiple="true"  style="width:500px;height:200px;">
+		<option value="none"{if in_array('none',$post_popedom)} selected{/if}>全部都没有发布权限</option>
+		<optgroup label="项目">
+			<!-- loop from=$project_list key=$key value=$value -->
+			<option value="{$value.id}"{if in_array($value.id,$post_popedom)} selected{/if}>{$value.space}{$value.title}</option>
+			<!-- /loop -->
+		</optgroup>
+		</select>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		会员字段：
+		<span class="note">未定义会员字段将读取全取，<span class="red">按钮CTRL可进行多选</span>，注意全部项不要选中</span>
+	</div>
+	<div class="content">
+		<select name="fields_list[]" id="fields_list" multiple="true"  style="width:500px;height:200px;">
+		<option value="all"{if !$fields_list} selected{/if}>全部</option>
+		<optgroup label="会员字段">
+			<!-- loop from=$all_fields_list key=$key value=$value -->
+			<option value="{$value.identifier}"{if $fields_list && in_array($value.identifier,$fields_list)} selected{/if}>{$value.title}</option>
+			<!-- /loop -->
+		</optgroup>
+		</select>
+	</div>
+</div>
+
+<!-- php:$extlist = get_phpok_ext($ext_module,$ext_idstring) -->
+{$extlist.content.content}
+
+<div class="table">
+	<div class="title">
+		排序：
+		<span class="note">设置排序，最大值不超过255，最小值为0，值越小越往前靠</span>
+	</div>
+	<div class="content">
+		<input type="text" id="taxis" name="taxis" class="short" value="{$rs.taxis}" />
+	</div>
+</div>
+
+<div class="table">
+	<div class="content">
+		<input type="submit" value="提交" class="submit" />
+	</div>
+</div>
+
+</form>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//检测是否有自动保存的表单
+	autofill("{$ext_module}");
+	//通过Ajax加载自定义表单选项
+	ext_fields("{$ext_module}","{$extlist.content.words}","1","usergroup");
+});
+</script>
+<!-- inc:foot -->

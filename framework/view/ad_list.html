@@ -1,0 +1,108 @@
+<!-- inc:head -->
+<script type="text/javascript" src="{echo add_js('ad.js')}"></script>
+<div class="tips">
+	<table width="100%">
+	<tr>
+		<td><a href="{echo admin_url('ad')}" title="广告管理">广告管理</a>
+	&raquo; 广告 <span class="red">{$rs.title}</span> 点击统计</td>
+		<td align="center">
+			<table>
+			<form method="post" action="{echo admin_url('ad')}">
+			<tr>
+				<td><input type="text" id="date" name="date" value="{$date}" onfocus="show_date('date',false)" style="width:120px;" /></td>
+				<td><input type="submit" value=" 提交 " class="button" /></td>
+			</tr>
+			</form>
+			</table>
+		</td>
+		<td align="right"><div class="action"><a href="{echo admin_url('ad','set')}" title="添加广告">添加广告</a></div></td>
+	</tr>
+	</table>
+</div>
+<div class="list">
+<table width="100%" cellpadding="0" cellspacing="1">
+<tr>
+	<th rowspan="2" width="20px">&nbsp;</th>
+	<th rowspan="2" width="35px">ID</th>
+	<th rowspan="2" width="30px">状态</th>
+	<th rowspan="2">名称</th>
+	<th colspan="4">总统计</th>
+	<th colspan="4">{$date}统计</th>
+	<th rowspan="2" width="85px">操作</th>
+</tr>
+<tr>
+	<th>PV</th>
+	<th>点击</th>
+	<th>IP</th>
+	<th>UV</th>
+	<th>PV</th>
+	<th>点击</th>
+	<th>IP</th>
+	<th>UV</th>
+</tr>
+<!-- php:$t_pv = $t_ip = $t_hits = $t_uv = $n_pv = $n_hits = $n_ip = $n_uv = 0 -->
+<!-- foreach($rslist AS $key=>$value) -->
+<!-- php -->
+$t_pv += $value[pv];$t_hits += $value[hits];$t_ip += $value[ip];$t_uv += $value[uv];
+$n_pv += $value[today_pv];$n_hits += $value[today_hits];$n_ip += $value[today_ip];$n_uv += $value[today_uv];
+<!-- /php -->
+<tr{if $rslist_id.num%2 == ""} class="list"{/if}>
+	<td class="center"><input type="checkbox" value="{$value.id}" /></td>
+	<td class="center">{$value.id}</td>
+	<td class="center"><span class="status{$value.status}" id="status_{$value.id}" onclick="ad_status('{$value.id}')" value="{$value.status}"></span></td>
+	<td>{$value.title}</td>
+	<td class="center">{$value.pv}</td>
+	<td class="center">{$value.hits}</td>
+	<td class="center">{$value.ip}</td>
+	<td class="center">{$value.uv}</td>
+	<td class="center">{$value.today_pv}</td>
+	<td class="center">{$value.today_hits}</td>
+	<td class="center">{$value.today_ip}</td>
+	<td class="center">{$value.today_uv}</td>
+	<td class="center">
+		<a href="javascript:ad_code('{$value.id}');void(0);" title="代码"><img src="images/page_code.png" border="0" alt="代码" /></a>
+		<a href="javascript:ad_stat('{$value.id}');void(0);" title="明细"><img src="images/page_info.png" border="0" alt="明细" /></a>
+		<a href="javascript:ad_edit('{$value.id}');void(0);" title="编辑"><img src="images/page_edit.png" border="0" alt="编辑"/></a>
+		<a href="javascript:ad_delete('{$value.id}','{$value.title}');void(0);" title="删除"><img src="images/page_delete.png" border="0" alt="删除"/></a>
+	</td>
+</tr>
+<!-- /foreach -->
+<tr>
+	<td colspan="4" align="right">总计：</td>
+	<td class="center">{$t_pv}</td>
+	<td class="center">{$t_hits}</td>
+	<td class="center">{$t_ip}</td>
+	<td class="center">{$t_uv}</td>
+	<td class="center">{$n_pv}</td>
+	<td class="center">{$n_hits}</td>
+	<td class="center">{$n_ip}</td>
+	<td class="center">{$n_uv}</td>
+	<td>&nbsp;</td>
+</tr>
+</table>
+</div>
+
+<div class="table">
+	<table width="100%">
+	<tr>
+		<td>
+			<table>
+			<tr>
+				<td><input type="button" value="全选" class="btn" onclick="$.input.checkbox_all()" /></td>
+				<td><input type="button" value="不选" class="btn" onclick="$.input.checkbox_none()" /></td>
+				<td><input type="button" value="返选" class="btn" onclick="$.input.checkbox_anti()" /></td>
+				<td><img src="images/goal.png"></td>
+				<td><input type="button" value="代码" class="btn" onclick="ad_code_pl()" /></td>
+			</tr>
+			</table>
+		</td>
+		<td align="right"><!-- include tpl=pagelist --></td>
+	</tr>
+	</table>
+</div>
+<div class="help">
+	<p>本站所有广告均需要运行jquery.js和jquery.str.js，如果您的模板中未加载此两项，请添加以下代码</p>
+	<p>&lt;script type="text/javascript" src="index.php?{$app->config.ctrl_id}=tj&{$app->config.func_id}=include"&gt;&lt;/script&gt;</p>
+	<p>本站广告不支持跨站运行，主要用于站内投放的广告查看相应的统计</p>
+</div>
+<!-- inc:foot -->

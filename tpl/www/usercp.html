@@ -1,0 +1,34 @@
+<!-- include tpl=head title=个人中心 -->
+<div class="cp">
+	<div class="left">
+		<!-- include tpl=block/cp_left -->
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>个人中心</h3></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<div class="cp_avatar">
+				<img src="{$session.user_rs.avatar ? $session.user_rs.avatar : 'images/user_default.png'}">
+			</div>
+			<div class="cp_info">
+				<ul>
+					<li><strong>账号：</strong>{$session.user_rs.user}</li>
+					<li><strong>邮箱：</strong>{$session.user_rs.email}</li>
+					<!-- php:$list = usercp_info() -->
+					<!-- loop from=$list key=$key value=$value -->
+					<li><strong>{$value.title}：</strong>{$value.val}</li>
+					<!-- /loop -->
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="box_bottom"><div class="box_right"></div></div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

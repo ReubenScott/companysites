@@ -1,0 +1,202 @@
+<!-- inc:head -->
+<script type="text/javascript" src="{func include_js res.js}"></script>
+<script type="text/javascript">
+function get_attr_type()
+{
+	return $("#attr").val();
+}
+function get_attr_name()
+{
+	var txt=$("#attr").find("option:selected").text();
+	txt = txt.replace(/（.*）/g,"");
+	return txt;
+}
+
+//更新附件类型
+function attr_change()
+{
+	var val = get_attr_type();
+	var txt= get_attr_name();
+	swfu.setFileTypes(val,txt + " ("+val+")");
+}
+//单个文件上传成功后触发的函数
+function swfupload_success(file,serverData)
+{
+	//客户端关闭显示
+	var progress = new FileProgress(file, this.customSettings.progressTarget);
+	progress.setComplete();
+	progress.setStatus("上传完成！");
+	progress.toggleCancel(false);
+	var rs =  $.parseJSON(serverData);
+	var url = get_url("res","ajax_one") + "&id="+rs.id;
+	ajax_async(url,attrlist_append);
+}
+
+function attrlist_append(rs)
+{
+	if(rs.status == "ok")
+	{
+		$("#attrlist").append(rs.content);
+	}
+	else
+	{
+		alert(rs.content);
+		return false;
+	}
+}
+
+//上传完成后操作
+function swfupload_complete(file)
+{
+	if (this.getStats().files_queued === 0)
+	{
+		document.getElementById(this.customSettings.cancelButtonId).disabled = true;
+		//$("#btnSubmit").attr("disabled",false);
+	}
+}
+
+//文件选择完毕后动作
+function swfupload_file_dialog_complete(numFilesSelected, numFilesQueued)
+{
+	if (numFilesSelected > 0)
+	{
+		document.getElementById(this.customSettings.cancelButtonId).disabled = false;
+		//$("#btnSubmit").attr("disabled",true);
+	}
+}
+
+//统计总进度
+function swfupload_queue_complete(numFilesUploaded)
+{
+	$("#div_status").html("已上传文件数量："+numFilesUploaded+"");
+}
+
+//开始上传
+function swfupload_submit()
+{
+	var cate_id = $("#cate_id").val();
+	if(cate_id)
+	{
+		swfu.addPostParam("cateid",cate_id);
+	}
+	swfu.addPostParam("{func session_name}","{func session_id}");
+	swfu.startUpload();
+	//$("#btnSubmit").attr("disabled",true);
+}
+</script>
+
+<div class="tips">
+	<!-- include tpl=res_btn -->
+	您当前的位置：
+	<a href="{echo admin_url('res')}">资源管理</a>
+	&raquo; 添加资源
+</div>
+
+<div class="table">
+	<div class="title">
+		附件分类：
+		<span class="note">请选择附件分类</span>
+	</div>
+	<div class="content">
+		<select id="cate_id" name="cate_id">
+			<!-- loop from=$catelist key=$key value=$value -->
+			<option value="{$value.id}" {if $value.is_default} selected{/if}>{$value.title}</option>
+			<!-- /loop -->
+		</select>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		附件类型：
+		<span class="note">请选择要上传的附件类型</span>
+	</div>
+	<div class="content">
+		<select id="attr" name="attr" onchange="attr_change()">
+			<!-- loop from=$attr_list key=$key value=$value -->
+			<option value="{$value.swfupload}">{$value.name}（{$value.swfupload}）</option>
+			<!-- /loop -->
+		</select>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		选择要上传的文件：
+		<span class="note">单个文件上传不能超过：<span class="red">{echo get_cfg_var("upload_max_filesize")}</span></span>
+	</div>
+	<div class="content">
+		<table>
+		<tr>
+			<td><div style="padding-top:3px;"><div id="spanButtonPlaceHolder"></div></div></td>
+			<td>&nbsp;</td>
+			<td><input id="btnSubmit" type="button" class="submit" value="开始上传" onclick="swfupload_submit();" /></td>
+			<td>&nbsp;</td>
+			<td><input id="btnCancel" type="button" class="button" value="取消上传" onclick="swfu.cancelQueue();" disabled="disabled" /></td>
+			<td>&nbsp;</td>
+			<td id="div_status"></td>
+		</tr>
+		</table>
+	</div>
+</div>
+
+<div class="table">
+	<div class="content" id="progress"></div>
+</div>
+
+<ul id="attrlist" class="attrlist"></ul>
+<div class="clear"></div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var setting = {
+		"flash_url"						: "js/swfupload/swfupload.swf",
+		"upload_url"					: "{echo admin_url('upload')}",
+		"post_params"					: {},
+		"file_size_limit"				: "{echo get_cfg_var('upload_max_filesize')}B",	
+		"file_types"					: get_attr_type(),	
+		"file_types_description"		: get_attr_name(),	
+		"file_upload_limit"				: "0",	
+		"file_queue_limit"				: "0",	
+		"button_window_mode"			: "transparent",
+		"custom_settings"				: {
+			"progressTarget"	: "progress",
+			"cancelButtonId"	: "btnCancel"
+		},
+		"debug"							: false,	
+		"button_image_url"				: "images/swfupload.png",	
+		"button_placeholder_id"			: "spanButtonPlaceHolder",	
+		"button_width"					: "92",	
+		"button_height"					: "23",	
+		"file_queued_handler"			: fileQueued,	
+		"file_queue_error_handler"		: fileQueueError,	
+		"file_dialog_complete_handler"	: swfupload_file_dialog_complete,	
+		"upload_start_handler"			: uploadStart,	
+		"upload_progress_handler"		: uploadProgress,	
+		"upload_error_handler"			: uploadError,	
+		"upload_success_handler"		: swfupload_success,	
+		"upload_complete_handler"		: swfupload_complete,	
+		"queue_complete_handler"		: swfupload_queue_complete	
+	};
+	swfu = new SWFUpload(setting);
+});
+</script>
+
+<div class="tips">普通上传</div>
+<form method="post" action="{func admin_url upload base}" enctype="multipart/form-data">
+<div class="table">
+	<div class="title">
+		请选择要上传的文件：
+		<span class="note">仅支持单文件上传</span>
+	</div>
+	<div class="content">
+		<input type="file" name="Filedata" id="Filedata_base" />
+	</div>
+</div>
+<div class="table">
+	<div class="content">
+		<input type="submit" value="提 交" class="submit" />
+	</div>
+</div>
+</form>
+<!-- inc:foot -->

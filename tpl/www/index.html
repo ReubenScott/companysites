@@ -1,0 +1,113 @@
+<!-- include tpl=head -->
+<div id="focus" class="banner">
+	<!-- php:$list = phpok("picplayer") -->
+	<div class="btn">
+		<!-- loop from=$list key=$key value=$value -->
+		<span>{$list_id.num}</span>
+		<!-- /loop -->
+	</div>
+	<ul>
+		<!-- loop from=$list key=$key value=$value -->
+		<li><a href="{$value.link}" target="{$value.target}"><img src="{$value.pic.filename}" alt="{$value.title}" width="1000px" height="300px" /></a></li>
+		<!-- /loop -->
+		<!-- php:unset($list) -->
+	</ul>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#focus').slide({mainCell:'ul',autoPlay:true,titCell:'.btn span',effect:"leftLoop"});
+});
+</script>
+
+<div class="body">
+	<div class="left">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>产品分类</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<!-- php:$list = phpok("products_cate") -->
+			<ul class="procate">
+				<!-- loop from=$list.sublist key=$key value=$value -->
+				<li><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+			<!-- php:unset($list) -->
+			<div class="clear"></div>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		<!-- include tpl=block/contactus -->
+	</div>
+	<div class="right">
+		<!-- php:$info = phpok("aboutus") -->
+		<div class="about-index">
+			<!-- if $info.thumb && is_array($info.thumb) -->
+			<div class="pic"><a href="{$info.url}" title="{$info.title}"><img src="{$info.thumb.filename}" width="300px" height="225px" alt="{$info.title}" border="0" /></a></div>
+			<!-- /if -->
+			<div class="info">
+				<h3>{$info.title}</h3>
+				<div class="note">
+					{$info.note ? $info.note : phpok_cut($info.content,255)}
+					<div align="right"><a href="{$info.url}" title="{$info.title}" class="more">查看更多&raquo;</a></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<!-- php:$list = phpok("new_products") -->
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>最新产品</h3></td>
+				<td class="more"><a href="{func listurl $list.itemInfo.identifier}" title="{$$list.itemInfo.title}" class="more">more&raquo;</a></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:0 3px;">
+			<div class="products">
+			<ul>
+				<!-- loop from=$list key=$key value=$value -->
+				<li>
+					<table>
+					<tr>
+						<td class="pic" id="pic_{$value.id}"><a href="{$value.url}" title="{$value.title}"><img src="{$value.thumb.gd.thumb}" border="0" alt="{$value.title}" /></a></td>
+					</tr>
+					<tr>
+						<td><a href="{$value.url}" title="{$value.title}">{$value.short_title}</a></td>
+					</tr>
+					</table>
+				</li>
+				<!-- /loop -->
+			</ul>
+			</div>
+			<script type="text/javascript">
+			$(document).ready(function(){
+				$(".products").slide({mainCell:"ul",autoPage:true,effect:"leftMarquee",autoPlay:true,vis:4,interTime:50});
+			});
+			</script>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+	</div>
+	<div class="clear"></div>
+	<div class="box_top mtop10"><div class="box_right">
+		<table>
+		<tr>
+			<td><h3>友情链接</h3></td>
+			<td class="more"></td>
+		</tr>
+		</table>
+	</div></div>
+	<div class="box_middle">
+		<div class="link">
+		<!-- php:$list = phpok("link") -->
+		<!-- loop from=$list key=$key value=$value -->
+		<a href="{$value.link}" target="_blank" title="{$value.title}">{$value.title}</a> &nbsp; 	
+		<!-- /loop -->
+		</div>
+	</div>
+	<div class="box_bottom"><div class="box_right"></div></div>
+</div>
+<!-- inc:foot -->

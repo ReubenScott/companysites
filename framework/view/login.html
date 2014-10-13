@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>管理员登录</title>
+<meta name="author" content="phpok.com" />
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="top">
+	<!-- if $config.adm_logo180 -->
+	<div class="logo"><div><img src="{$config.adm_logo180}" border="0" /></div></div>
+	<!-- /if -->
+</div>
+<div class="main">
+	<div class="box">
+		<form method="post" id="adminlogin" onsubmit="return admlogin();return false;">
+		<table width="360" border="0" align="center" cellpadding="0" cellspacing="0">
+		<tr>
+			<td height="30">管理员账号 </td>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<tr>
+			<td height="40"><input name="username" type="text" class="user user_bg1" id="username" tabindex="1" /></td>
+			<td colspan="2">&nbsp;</td>
+		</tr>
+		<!-- if $vcode -->
+			<tr>
+				<td width="209" height="30">管理员密码</td>
+				<td colspan="2">验证码</td>
+			</tr>
+			<tr>
+				<td height="40"><input name="password" id="password" type="password" class="user user_bg2" tabindex="2" /></td>
+				<td width="72"><input name="code_id" type="text" class="user user_bg3" id="code_id" tabindex="3" /></td>
+				<td width="79"><img src="" border="0" align="absmiddle" style="cursor:pointer;" onclick="login_code('{$sys.app_id}')" id="src_code"></td>
+			</tr>
+		<!-- else -->
+			<tr>
+				<td width="209" height="30" colspan="3">管理员密码</td>
+			</tr>
+			<tr>
+				<td height="40"><input name="password" id="password" type="password" class="user user_bg2" /></td>
+			</tr>
+		<!-- /if -->
+		<tr>
+			<td height="80" colspan="3"><input type="image" src="images/but.png" /></td>
+		</tr>
+		</table>
+		</form>
+	</div>
+	<div class="bottom"></div>
+</div>
+<script type="text/javascript" src="{func admin_url js mini ext=jquery.md5.js,admlogin.js,jquery.form.min.js}"></script>
+<script type="text/javascript">
+if (self.location != top.location) top.location = self.location;
+$(document).ready(function(){
+	login_code("{$sys.app_id}");
+});
+</script>
+</body>
+</html>

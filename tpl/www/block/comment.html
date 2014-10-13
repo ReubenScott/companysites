@@ -1,0 +1,76 @@
+<script type="text/javascript">
+//没有权限则跳转到登录或注册页
+function not_popedom_goto(name)
+{
+	var _back = "{$rs.url}";
+	var url = get_url(name,'','_back='+$.str.encode(_back));
+	$.phpok.go(url);
+}
+
+function load_comment(start,psize)
+{
+	$.ajax({
+		'dataType':'json',
+		'url':api_url('comment','','id={$rs.id}'),
+		'success':function(rs){
+			if(rs.status  != 'ok')
+			{
+				return false;
+			}
+			$('#comment').html(rs.content);
+		}
+	});
+
+}
+$(document).ready(function(){
+	$("#comment_post").submit(function(){
+		$(this).ajaxSubmit({
+			'type':'post',
+			'dataType':'json',
+			'url':api_url('comment','save'),
+			'success': function(rs){
+				if(rs.status == 'ok')
+				{
+					load_comment(0,30);
+					$("input[name=_spam]").val(rs.content.spam_code);
+				}
+				else
+				{
+					$.dialog.alert(rs.content);
+					return false;
+				}
+			}
+		});
+		return false;
+	});
+	load_comment(0,30);
+});
+</script>
+<div class="box_top"><div class="box_right">
+	<table>
+	<tr>
+		<td><h3><span class="red">“{$rs.title}”</span>的评论</h3></td>
+		<td class="more"></td>
+	</tr>
+	</table>
+</div></div>
+<div class="box_middle">
+	<div class="comment" id="comment"></div>
+	<div class="comment_post">
+	<!-- if $session.user_id -->
+		<form method="post" id="comment_post">
+			<input type="hidden" name="_spam" value="{$session.comment_spam_code}" />
+			<input type="hidden" name="tid" id="tid" value="{$rs.id}" />
+			<textarea name="content" id="comment_0"></textarea>
+			<input type="submit" value=" 提交 " />
+			尊重他人，文明评论。
+		</form>
+	<!-- else -->
+		<div class="no_popedom">您没有评论权限，请先
+			<a href="javascript:not_popedom_goto('login');void(0);" title="登录">登录</a> 或 <a href="javascript:not_popedom_goto('register');void(0);" title="注册">注册</a>
+		</div>
+	<!-- /if -->
+	</div>
+	
+</div>
+<div class="box_bottom"><div class="box_right"></div></div>

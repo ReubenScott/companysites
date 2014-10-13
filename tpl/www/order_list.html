@@ -1,0 +1,86 @@
+<!-- include tpl=head title=订单中心 -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".o-dark").mouseover(function(){
+		$(this).addClass('o-dark-over');
+	}).mouseout(function(){
+		$(this).removeClass('o-dark-over');
+	});
+	$(".o-white").mouseover(function(){
+		$(this).addClass('o-white-over');
+	}).mouseout(function(){
+		$(this).removeClass('o-white-over');
+	});
+});
+function infoit(id)
+{
+	url = get_url('order','info','id='+id);
+	window.open(url);
+}
+</script>
+<div class="cp">
+	<div class="left">
+		<!-- include tpl=block/cp_left -->
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>订单中心</h3></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:0;">
+			<div class="orderlist">
+			<table class="orderlist" width="100%">
+			<tr>
+				<th width="80px">下单时间</th>
+				<th width="150px">订单编号</th>
+				<th width="80">数量</th>
+				<th class="o-price">金额</th>
+				<th class="o-status">审核</th>
+				<th class="o-status">付款</th>
+				<th width="80px">明细</th>
+			</tr>
+			<!-- loop from=$rslist key=$key value=$value -->
+			<tr{if $rslist_id.num%2 == ''} class="o-dark"{else} class="o-white"{/if}>
+				<td class="o-date">{func date Y.m.d $value.addtime}</td>
+				<td class="o-sn">{$value.sn}</td>
+				<td class="o-qty">{$value.qty}</td>
+				<td class="o-price">{func price_format $value.price $value.currency_id $value.currency_id}</td>
+				<td class="o-status">{$status[$value.status]}</td>
+				<td class="o-status">
+					{$status[$value.pay_status]}
+					<!-- if $value.pay_date -->
+					<span class="pay_date">（{func time_format $value.pay_date}）</span>
+					<!-- /if -->
+				</td>
+				<td align="center">
+					<input type="button" value=" 查看 " onclick="infoit('{$value.id}')" />
+				</td>
+			</tr>
+			<!-- /loop -->
+			</table>
+			</div>
+			<div style="padding:0;border-top:1px solid #dddddd;"><!-- include tpl=block/pagelist --></div>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>说明：</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<ul style="margin:0;padding:10px 10px 10px 40px;">
+				<li>如需要改单，请联系我们的管理员</li>
+				<li>本站订单系统还不够强大的，如果您需要更加强大的功能，请联系官网进行定制</li>
+			</ul>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

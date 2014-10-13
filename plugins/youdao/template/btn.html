@@ -1,0 +1,25 @@
+<script type="text/javascript">
+function youdao_translate()
+{
+	var c = $("#title").val();
+	if(!c)
+	{
+		alert("无法取到要转拼音的内容！");
+		return false;
+	}
+	var url = api_url('plugin','','id={$rs.id}&exec=fanyi&q='+$.str.encode(c));
+	var rs = json_ajax(url);
+	if(rs.status == "ok")
+	{
+		$("#identifier").val(rs.content);
+	}
+	else
+	{
+		$.dialog.alert(rs.content);
+		return false;
+	}
+}
+$(document).ready(function(){
+	$("#identifier").after("&nbsp;<input type='button' class='btn' onclick='youdao_translate()' value='有道翻译' />");
+});
+</script>

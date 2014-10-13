@@ -1,0 +1,61 @@
+<!-- php:$title = $page_rs['title'].' - '.$parent_rs['title'] -->
+<!-- include tpl=head title=$title -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#top_menu li a").each(function(i){
+		if($(this).text() == '{$parent_rs.title}')
+		{
+			$(this).parent().addClass('selected');
+		}
+		else
+		{
+			$(this).parent().removeClass('selected');
+		}
+	});
+});
+</script>
+<div class="body">
+	<div class="left">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$parent_rs.title}</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle">
+			<!-- sublist pid=$parent_rs.id -->
+			<ul class="usercp">
+				<!-- loop from=$list key=$key value=$value -->
+				<li{if $page_rs.id == $value.id} class="red"{/if}><a href="{$value.url}" title="{$value.title}">{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+		</div>
+		<div class="box_bottom mbottom10"><div class="box_right"></div></div>
+		<!-- include tpl=block/contactus -->
+	</div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>{$page_rs.title}</h3></td>
+				<td class="more"></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:10px;">
+			<div class="artlist">
+			<ul>
+				<!-- loop from=$rslist key=$key value=$value -->
+				<li><a href="{$value.url}" title="{$value.title}"><span class="arrow"></span><span class="date">{func date "Y-m-d H:i:s" $value.dateline}</span>{$value.title}</a></li>
+				<!-- /loop -->
+			</ul>
+			</div>
+			<!-- include tpl=block/pagelist -->
+		</div>
+		<div class="box_bottom"><div class="box_right"></div></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- include tpl=foot -->

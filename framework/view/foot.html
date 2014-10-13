@@ -1,0 +1,18 @@
+		<br />
+	</div>
+	<div class="clear"></div>
+</div>
+<!-- plugin -->
+<div class="foot">
+	<span class="foot_right">发布版本：{echo VERSION}</span>
+	<!-- if $app->license_powered -->
+	Powered by <a href="http://www.phpok.com" target="_blank">Phpok.Com</a>,
+	<!-- /if -->
+	CopyRight &copy; {func substr $app->license_site 1} {func license_date},
+	All Right Reserved.
+	<!-- if $sys.debug -->
+	<br />{func debug_time}
+	<!-- /if -->
+</div>
+</body>
+</html>

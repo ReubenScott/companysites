@@ -1,0 +1,55 @@
+<script type="text/javascript">
+var obj_{$rs.identifier};
+$(document).ready(function(){
+	obj_{$rs.identifier} = new $.phpok_upload({
+		"is_multi"						: {if $rs.is_multiple}true{else}false{/if},
+		"id"							: "{$rs.identifier}",
+		"flash_url"						: "js/swfupload/swfupload.swf",
+		"upload_url"					: "{func admin_url upload}",
+		"file_size_limit"				: "{func get_cfg_var upload_max_filesize}B",	
+		"file_types"					: "{$rs.upload_type.swfupload}",	
+		"file_types_description"		: "{$rs.upload_type.name}"
+	});
+	obj_{$rs.identifier}.swfupload();
+	obj_{$rs.identifier}.preview_res();
+
+	$("#select_res_{$rs.identifier}").click(function(){
+		var url = get_url("open","input")+"&type={$rs.upload_type.id}&id={$rs.identifier}&tpl=open_image2";
+		url += "&is_multiple={$rs.is_multiple ? 1 : 0}";
+		$.dialog.open(url,{
+			title: "{$rs.upload_type.name}管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			ok: function(){
+				obj_{$rs.identifier}.preview_res();
+			},
+			resize: false
+		});
+	});
+});
+</script>
+<input type="hidden" name="{$rs.identifier}" id="{$rs.identifier}" value="{$rs.content}" />
+<input type="hidden" id="{$rs.identifier}_cateid" value="{$rs.cate_id}" />
+<table class="ext_upload">
+<tr>
+	<td>
+		<table class="ext_upload">
+		<tr>
+			<td valign="top"><div id="{$rs.identifier}_spanButtonPlaceHolder"></div></td>
+			<td valign="top"><input id="{$rs.identifier}_btnSubmit" type="button" class="submit" value="开始上传" onclick="obj_{$rs.identifier}.swfupload_submit('{func session_name}','{func session_id}');" /></td>
+			<td valign="top"><input id="{$rs.identifier}_btnCancel" type="button" class="button" value="取消上传" onclick="obj_{$rs.identifier}.swfu.cancelQueue();" disabled="disabled" /></td>
+			<td id="{$rs.identifier}_div_status" class="hide"></td>
+			<td valign="top"><input type="button" value="选择{$rs.upload_type.name}" class="button" id="select_res_{$rs.identifier}" /></td>
+			<td valign="top" id="{$rs.identifier}_sort" style="display:none"><input type="button" value="排序" class="button" onclick="obj_{$rs.identifier}.sort()" /></td>
+		</tr>
+		</table>
+	</td>
+</tr>
+<tr>
+	<td coslapn="99"><div id="{$rs.identifier}_progress"></div></td>
+</tr>
+<tr>
+	<td coslapn="99" id="{$rs.identifier}_attrlist"></td>
+</tr>
+</table>

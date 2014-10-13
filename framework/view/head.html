@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="author" content="phpok.com" />
+<meta http-equiv="expires" content="wed, 26 feb 1997 08:21:57 gmt"> 
+<title><!-- if $title -->{$title} - <!-- /if -->{$site_info.title ? $site_info.title : $config.title} - 后台管理</title>
+<link rel="stylesheet" type="text/css" href="css/admin.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{func admin_url js}"></script>
+</head>
+<body>
+<!-- php:$toplist = autoload_sysmenu() -->
+<div class="top" id="top">
+	<table width="100%" cellpadding="0" cellspacing="0" height="29px">
+	<tr>
+		<td align="left">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<!-- if $config.adm_logo29 -->
+				<td><div class="logo" alt="{$config.title}" title="{$config.title}"><a href="{$app->config['admin_file']}"><img src="{$config.adm_logo29}" border="0" alt="{$config.title}" /></a></div></td>
+				<!-- else -->
+				<td><div class="logo" alt="{$config.title}" title="{$config.title}"><a href="{$app->config['admin_file']}"><img src="images/logo.gif" border="0" alt="{$config.title}" /></a></div></td>
+				<!-- /if -->
+				<!-- loop from=$toplist.top_list key=$key value=$value id=top_menu -->
+				<td><a href="{$value.url}"{if $value.id == $toplist.top_id} class="active"{/if}>{$value.title}</a></td>
+				<!-- /loop -->
+				<td><a href="index.php?siteId={$session.admin_site_id}" target="_blank" title="网站首页">网站首页</a></td>
+				<td><a href="javascript:phpok_admin_clear();void(0)" title="清空缓存"><img src="images/clear.png" alt="清空缓存" style="margin-top:6px;"></a></td>
+			</tr>
+			</table>
+		</td>
+		<td align="center">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td>网站：</td>
+				<td><select name="top_site_id" id="top_site_id" onchange="goto_site(this.value,{$session.admin_site_id})">
+				<!-- loop from=$toplist.site_list key=$key value=$value -->
+				<option value="{$value.id}"{if $value.id == $session.admin_site_id} selected{/if}>{$value.title}</option>
+				<!-- /loop -->
+				</select></td>
+				<!-- if $session.admin_rs.if_system -->
+				<td><a href="javascript:add_site();void(0);">添加站点</a></td>
+				<!-- /if -->
+			</tr>
+			</table>
+		</td>
+		<td align="right">
+			<table cellpadding="0" cellspacing="0" align="right" height="100%">
+			<tr>
+				<td>{$session.admin_rs.account}</td>
+				<td><div class="control"><a href="javascript:phpok_admin_control();void(0);" title="修改密码"></a></div></td>
+				<td><div class="logout"><a href="javascript:phpok_admin_logout();void(0);" title="系统退出"></a></div></td>
+				<td>&nbsp;</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+</div>
+<div class="main" id="main">
+	<div class="left" id="left"><ul class="menu">
+		<!-- loop from=$toplist.sub_list key=$key value=$value -->
+		<li{if $value.id == $toplist.sub_id} class="hover"{/if}><a href="{$value.url}">{$value.title}</a></li>
+		<!-- /loop -->
+		<!-- php:unset($toplist) -->
+		
+		<!-- php:$pendding = show_pending_info() -->
+		<!-- if $pendding -->
+		<li class="title">待处理信息</li>
+		<li class="pendding" style="height:auto;">
+			<ul>
+				<!-- loop from=$pendding key=$key value=$value -->
+				<li><a href="{$value.url}">{$value.title}：<span class="red">{$value.total}</span></a></li>
+				<!-- /loop -->
+			</ul>
+		</li>
+		<!-- /if -->
+		<!-- php:unset($pendding) -->
+	</ul></div>
+	<div class="right" id="right">
+

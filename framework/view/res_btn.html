@@ -1,0 +1,11 @@
+<!-- if $popedom.gd -->
+<div class="action{if $hidden_gd} hide{/if}"><a href="{echo admin_url('res','gd')}">GD方案</a></div>
+<!-- /if -->
+<!-- if $popedom.cate -->
+<div class="action"><a href="{echo admin_url('res','cate')}">分类维护</a></div>
+<!-- /if -->
+<div class="action"><a href="{echo admin_url('res','add')}">添加资源</a></div>
+<!-- if $popedom.pl -->
+<div class="action"><a href="{echo admin_url('res','pl')}">批处理</a></div>
+<div class="action"><a href="javascript:update_pl_pictures();void(0);">图片全部更新</a></div>
+<!-- /if -->

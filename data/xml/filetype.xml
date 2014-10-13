@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<picture>
+	<swfupload>*.jpg;*.gif;*.png</swfupload>
+	<ext>jpg,gif,png</ext>
+	<name>图片</name>
+	<gd>1</gd>
+</picture>
+<zip>
+	<swfupload>*.rar;*.zip;*.tgz;*.tar;*.gz</swfupload>
+	<ext>rar,zip,tgz,tar,gz</ext>
+	<name>压缩文件</name>
+	<gd>0</gd>
+</zip>
+<txt>
+	<swfupload>*.txt</swfupload>
+	<ext>txt</ext>
+	<name>文本</name>
+	<gd>0</gd>
+</txt>
+<document>
+	<swfupload>*.doc;*.xls;*.pdf;*.docx;*.xlsx</swfupload>
+	<ext>doc,xls,pdf,docx,xlsx</ext>
+	<name>办公文档</name>
+	<gd>0</gd>
+</document>
+<video>
+	<swfupload>*.flv;*.swf;*.mp4;*.mp3</swfupload>
+	<ext>flv,swf,mp4,mp3</ext>
+	<name>视频</name>
+	<gd>0</gd>
+</video>

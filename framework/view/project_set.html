@@ -1,0 +1,419 @@
+<!-- inc:head -->
+<script type="text/javascript" src="{func add_js project.js}"></script>
+<div class="tips">
+	您当前的位置：
+	<a href="{echo admin_url('project')}">项目管理</a>
+	&raquo; <!-- if $id -->编辑页面<!-- else -->添加页面<!-- end -->
+</div>
+
+<form method="post" id="{$ext_module}" action="{echo admin_url('project','save')}" onsubmit="return project_check();">
+<input type="hidden" id="id" name="id" value="{$id}" />
+<div id="main_setting">
+<div class="table">
+	<div class="title">
+		名称：
+		<span class="note">设置名称，该名称将在网站前台导航中使用</span>
+	</div>
+	<div class="content"><input type="text" id="title" name="title" class="long" value="{$rs.title}" /></div>
+</div>
+
+<div class="table">
+	<div class="title">
+		项目别名：
+		<span class="note">此别名功能仅限在后台使用，用于显示在按钮上，一般不要超过6个汉字</span>
+	</div>
+	<div class="content">
+		<input type="text" id="nick_title" name="nick_title" class="default" value="{$rs.nick_title}" />
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		父栏目：
+		<span class="note">实现父子栏目可以实现数据交叉使用</span>
+	</div>
+	<div class="content">
+		<select id="parent_id" name="parent_id">
+		<option value="0">设为父栏目</option>
+		<!-- loop from=$parent_list key=$key value=$value -->
+		<!-- if $rs.id != $value.id -->
+		<option value="{$value.id}"{if $rs.parent_id == $value.id} selected{/if}>{$value.title}</option>
+		<!-- /if -->
+		<!-- /loop -->
+		</select>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		标识：
+		<span class="note">限<span class="red">字母、数字、下划线或中划线且必须是字母开头</span>，设置为<span class="red">index</span>时表示为首页专用</span>
+	</div>
+	<div class="content">
+		<input type="text" id="identifier" name="identifier" class="default" value="{$rs.identifier}" />
+		<script type="text/javascript">btn_pingyin("identifier","title");</script>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		绑定模型：
+		<span class="note">该功能可实现列表功能</span>
+	</div>
+	<div class="content">
+		<select id="module" name="module" onchange="show_module(this.value)">
+		<option value="0">不关联模块</option>
+		<!-- loop from=$module_list key=$key value=$value id=module_list_id -->
+		<option value="{$value.id}"{if $value.id == $rs.module} selected{/if}>{$value.title}</option>
+		<!-- /loop -->
+		</select>
+	</div>
+</div>
+
+<div id="module_set" class="hidden">
+	<div class="table">
+		<div class="title">
+			主题别名：
+			<span class="note">在使用模块时，会有一个必填选项，即主题，您可在这里设置别名</span>
+		</div>
+		<div class="content">
+			<input type="text" id="alias_title" name="alias_title" class="default" value="{$rs.alias_title}" />
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			主题备注：
+			<span class="note">同上</span>
+		</div>
+		<div class="content">
+			<input type="text" id="alias_note" name="alias_note" class="long" value="{$rs.alias_note}" />
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			电子商务：
+			<span class="note">开启电子商务功能或关闭电子商务功能，启用电子商务功能请注意设置相应的货币类型</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><label><input type="radio" name="is_biz" value="0"{if !$rs.is_biz} checked{/if} onclick="use_biz(0)" />禁用</label></td>
+				<td><label><input type="radio" name="is_biz" value="1"{if $rs.is_biz} checked{/if} onclick="use_biz(1)" />使用</label></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="table" id="use_biz_setting">
+		<div class="title">
+			货币默认类型：
+			<span class="note">此项主要是方便后台管理员添加产品时，默认使用的货币</span>
+		</div>
+		<div class="content">
+			<select name="currency_id" id="currency_id">
+				<option value="">请选择……</option>
+				<!-- loop from=$currency_list key=$key value=$value -->
+				<option value="{$value.id}"{if $rs[currency_id] == $value.id} selected{/if}>{$value.title}（标识：{$value.code}，汇率：{$value.val}）</option>
+				<!-- /loop -->
+			</select>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		use_biz({$rs.is_biz});
+	});
+	</script>
+	
+
+	<div class="table">
+		<div class="title">
+			搜索：
+			<span class="note">在这里开启或关闭前台相应的搜索</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><label for="is_search_0"><input type="radio" name="is_search" id="is_search_0" value="0"{if !$rs[is_search]} checked{/if} />禁用</label></td>
+				<td><label for="is_search_1"><input type="radio" name="is_search" id="is_search_1" value="1"{if $rs[is_search]} checked{/if} />使用</label></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			Tag支持：
+			<span class="note">禁用后将会放到SEO框中，供选填，使用将作为必填项目</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><label><input type="radio" name="is_tag" value="0"{if !$rs[is_tag]} checked{/if} />禁用</label></td>
+				<td><label><input type="radio" name="is_tag" value="1"{if $rs[is_tag]} checked{/if} />使用</label></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			下级主题：
+			<span class="note">启用此项，将允许主题拥有下级主题功能（适用于二级菜单，小说站）</span>
+		</div>
+		<div class="content">
+			<table cellpadding="0" cellspacing="0">
+			<tr>
+				<td><label for="subtopics_0"><input type="radio" name="subtopics" id="subtopics_0" value="0"{if !$rs[subtopics]} checked{/if} />禁用</label></td>
+				<td><label for="subtopics_1"><input type="radio" name="subtopics" id="subtopics_1" value="1"{if $rs[subtopics]} checked{/if} />使用</label></td>
+			</tr>
+			</table>
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			默认主题数：
+			<span class="note">设置每页默认的主题数量</span>
+		</div>
+		<div class="content">
+			<input type="text" id="psize" name="psize" value="{$rs.psize ? $rs.psize : 30}" class="short" />
+		</div>
+	</div>
+
+	<div class="table">
+		<div class="title">
+			数据排序：
+			<span class="note">设置好默认排序，有利于网站的管理（前后台一致）</span>
+		</div>
+		<div class="content">
+			<input type="text" id="orderby" name="orderby" class="long" value="{$rs.orderby}" />
+			<input type="button" value="清空" class="btn" onclick="$('#orderby').val('')" />
+			
+			<ul class="btnlist">
+				<li><input type="button" value="点击" onclick="phpok_admin_orderby('orderby','l.hits')" /></li>
+				<li><input type="button" value="时间" onclick="phpok_admin_orderby('orderby','l.dateline')" /></li>
+				<li><input type="button" value="ID" onclick="phpok_admin_orderby('orderby','l.id')" /></li>
+				<li><input type="button" value="人工" onclick="phpok_admin_orderby('orderby','l.sort')" /></li>
+				<span id="tmp_orderby_btn">
+				</span>
+			</ul>
+		</div>
+	</div>
+	<script type="text/javascript">
+	function refresh_catelist()
+	{
+		var url = get_url("project","rootcate");
+		url = url.replace(/&amp;/g,"&");
+		$.ajax({
+			url:url
+			,cache:false
+			,async:true
+			,dataType:"json"
+			,success:function(rs){
+				if(rs.status == "ok")
+				{
+					var info = '<option value="0">不关联分类</option>';
+					var lst = rs.content;
+					for(var i in lst)
+					{
+						info += '<option value="'+lst[i]['id']+'">'+lst[i]['title']+'</option>';
+					}
+					$("#cate").html(info);
+				}
+			}
+		});
+	}
+	</script>
+	<div class="table">
+		<div class="title">
+			关联根分类：
+			<span class="note">启用此项后，添加内容时，需要选对相对应的分类，且不能为空</span>
+		</div>
+		<div class="content">
+			<select id="cate" name="cate">
+			<option value="0">不关联分类</option>
+			<!-- loop from=$catelist key=$key value=$value id=catelist_id -->
+			<option value="{$value.id}"{if $value.id == $rs.cate} selected{/if}>{$value.title}</option>
+			<!-- /loop -->
+			</select>
+			<input type="button" value="添加根分类" onclick="cate_add()" />
+		</div>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		可配权限：
+		<span class="note">权限可选项可登录官网查阅帮助手册，
+			<a href="javascript:$.input.checkbox_all('mylayout');void(0);" class='n'>全选</a>
+			<a href="javascript:$.input.checkbox_none('mylayout');void(0);" class='n'>全不选</a>
+			<a href="javascript:$.input.checkbox_anti('mylayout');void(0);" class='n'>反选</a>
+		</span>
+	</div>
+	<div class="content">
+		<ul class="layout" id="mylayout">
+			<!-- loop from=$popedom_list key=$kk value=$vv -->
+			<li><label><input type="checkbox" name="_popedom[]" value="{$vv.id}"{if $popedom_list2 && in_array($vv.identifier,$popedom_list2)} checked{/if} /> {$vv.title}</label></li>
+			<!-- /loop -->
+		</ul>
+	</div>
+</div>
+
+</div>
+<div id="admin_setting" class="hide">
+<div class="table">
+	<div class="title">
+		排序：
+		<span class="note">自定义排序，值越小越往前靠</span>
+	</div>
+	<div class="content"><input type="text" id="taxis" name="taxis" class="short" value="{$rs.taxis ? $rs.taxis : '255'}" /></div>
+</div>
+
+<div class="table">
+	<div class="title">
+		状态：
+		<span class="note">设为禁用时页面将不可用</span>
+	</div>
+	<div class="content">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td><label for="status_0"><input type="radio" name="status" id="status_0" value="0"{if !$rs[status]} checked{/if} /> 禁用</label></td>
+			<td><label for="status_1"><input type="radio" name="status" id="status_1" value="1"{if $rs.status} checked{/if} /> 启用</label></td>
+		</tr>
+		</table>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		隐藏：
+		<span class="note">使用隐藏功能后，在后台“内容管理”那里将看不到相应的维护，请慎用！</span>
+	</div>
+	<div class="content">
+		<table cellpadding="0" cellspacing="0">
+		<tr>
+			<td><label><input type="radio" name="hidden" value="0"{if !$rs.hidden} checked{/if} /> 禁用</label></td>
+			<td><label><input type="radio" name="hidden" value="1"{if $rs.hidden} checked{/if} /> 启用</label></td>
+		</tr>
+		</table>
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		封面模板：
+		<span class="note">设定此模板将启用封面功能，不启用留空，不绑定模块时，此项不能为空</span>
+	</div>
+	<div class="content">
+		<input type="text" id="tpl_index" name="tpl_index" class="default" value="{$rs.tpl_index}" />
+		<input type="button" value="选择" onclick="phpok_tpl_open('tpl_index')" class="btn" />
+		<input type="button" value="清空" onclick="$('#tpl_index').val('');" class="btn" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		列表模板：
+		<span class="note">仅限于绑定模块后才能生效</span>
+	</div>
+	<div class="content">
+		<input type="text" id="tpl_list" name="tpl_list" class="default" value="{$rs.tpl_list}" />
+		<input type="button" value="选择" onclick="phpok_tpl_open('tpl_list')" class="btn" />
+		<input type="button" value="清空" onclick="$('#tpl_list').val('');" class="btn" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		内容模板：
+		<span class="note">仅限于绑定模块后才能生效</span>
+	</div>
+	<div class="content">
+		<input type="text" id="tpl_content" name="tpl_content" class="default" value="{$rs.tpl_content}" />
+		<input type="button" value="选择" onclick="phpok_tpl_open('tpl_content')" class="btn" />
+		<input type="button" value="清空" onclick="$('#tpl_content').val('');" class="btn" />
+	</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		图标：
+		<span class="note">请选择一个直观的图标，大小为：48x48，建议使用PNG格式</span>
+	</div>
+	<div class="content">{func form_edit ico $rs.ico text form_btn=image&width=500}</div>
+</div>
+
+<div class="table">
+	<div class="title">
+		后台备注说明：
+		<span class="note">将显示在内容管理布局区那里，用于提示编辑人员注意事项</span>
+	</div>
+	<div class="content">
+		{func form_edit admin_note $rs.admin_note editor btn_image=1&height=300}
+	</div>
+</div>
+
+</div>
+<div id="seo_setting" class="hide">
+<div class="table">
+	<div class="title">
+		SEO标题：
+		<span class="note">设置此标题后，网站Title将会替代默认定义的，不能超过85个汉字</span>
+	</div>
+	<div class="content">
+		<input type="text" id="seo_title" name="seo_title" class="long" value="{$rs.seo_title}" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		SEO关键字：
+		<span class="note">多个关键字用英文逗号或英文竖线隔开</span>
+	</div>
+	<div class="content">
+		<input type="text" id="seo_keywords" name="seo_keywords" class="long" value="{$rs.seo_keywords}" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		SEO描述：
+		<span class="note">简单描述该主题信息，用于搜索引挈，不支持HTML，不能超过85个汉字</span>
+	</div>
+	<div class="content">
+		<textarea name="seo_desc" id="seo_desc" class="long">{$rs.seo_desc}</textarea>
+	</div>
+</div>
+</div>
+
+<div class="table">
+	<div class="content">
+		<br />
+		<input type="submit" value="提 交" class="submit" />
+		<br />
+	</div>
+</div>
+</form>
+
+<div id="float_tab">
+<ul>
+	<li class="tab_over" onclick="tab_setting('main')" name="main"><img src="images/advanced.png" alt="核心设置"></li>
+	<li class="tab_out" onclick="tab_setting('admin')" name="admin"><img src="images/attr.png" border="0" alt="扩展配置" /></li>
+	<li class="tab_out" onclick="tab_setting('seo')" name="seo"><img src="images/seo.png" border="0" alt="SEO优化" /></li>
+</ul>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	 $(window).scroll(function(){
+		 $("#float_tab").css({top:$(this).scrollTop()+40});
+	 });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//检测是否有自动保存的表单
+	//autofill("{$ext_module}");
+	//通过Ajax加载自定义表单选项
+	var mid = $("#module").val();
+	show_module(mid);
+});
+</script>
+<!-- inc:foot -->

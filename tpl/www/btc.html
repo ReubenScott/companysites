@@ -1,0 +1,158 @@
+<!-- head title=$page_rs.title css="css/style.css" html5=true close=false -->
+<script type="text/javascript">
+var autorun;
+function get_market()
+{
+	//清除定时器
+	clearTimeout(autorun);
+	var url = api_plugin_url('autoc','market');
+	$.ajax({
+		'url':url,
+		'cache':false,
+		'async':true,
+		'dataType':'json',
+		'success':function(rs){
+			if(rs.status == 'ok')
+			{
+				var lst = rs.content;
+				var html = '<tr';
+				var td_ext = '-';
+				if( (lst.act1 && parseFloat(lst.act1.rate) >= 0.02) || (lst.act2 && parseFloat(lst.act2.rate) >= 0.02) )
+				{
+					html += ' class="darkbg" style="font-weight:bold;"';
+					td_ext = 'hitters';
+				}				
+				html += '>';
+				html += '<td align="center">'+lst.btc.bid.price+'</td>';
+				html += '<td align="center">'+lst.btc.bid.amount+'</td>';
+				html += '<td align="center">'+lst.btc.ask.price+'</td>';
+				html += '<td align="center">'+lst.btc.ask.amount+'</td>';
+				html += '<td align="center">'+lst.btc_time+'</td>';
+				html += '<td align="center">'+lst.okc.bid.price+'</td>';
+				html += '<td align="center">'+lst.okc.bid.amount+'</td>';
+				html += '<td align="center">'+lst.okc.ask.price+'</td>';
+				html += '<td align="center">'+lst.okc.ask.amount+'</td>';
+				html += '<td align="center">'+lst.okc_time+'</td>';
+				if(lst.act1 || lst.act2)
+				{
+					html += '<td>';
+					if(lst.act1)
+					{
+						html += '<div>BTC：'+lst.act1.btc.title+'，价格：'+lst.act1.btc.price+'</div>';
+						html += '<div>OKC：'+lst.act1.okc.title+'，价格：'+lst.act1.okc.price+'</div>';
+						html += '<div>数量：<span style="color:red;">'+lst.act1.amount+'</span>，比率：'+lst.act1.rate+'</div>';
+						if(lst.act1.ext_info)
+						{
+							html += '<div class="red">'+lst.act1.ext_info+'</div>';
+						}
+					}
+					if(lst.act2)
+					{
+						html += '<div>BTC：'+lst.act2.btc.title+'，价格：'+lst.act2.btc.price+'</div>';
+						html += '<div>OKC：'+lst.act2.okc.title+'，价格：'+lst.act2.okc.price+'</div>';
+						html += '<div>数量：<span style="color:red;">'+lst.act2.amount+'</span>，比率：'+lst.act2.rate+'</div>';
+						if(lst.act2.ext_info)
+						{
+							html += '<div class="red">'+lst.act2.ext_info+'</div>';
+						}
+					}
+					html += '</td>';
+					html += '<td align="center">';
+					if(lst.act1)
+					{
+						html += '<div align="center">BTC：'+lst.act1.cha+'</div>';
+					}
+					if(lst.act2)
+					{
+						html += '<div align="center">OKC:'+lst.act2.cha+'</div>';
+					}
+					html += '</td>';
+					html += '<td align="center">';
+					if(lst.act1)
+					{
+						html += '<div align="center">BTC：'+lst.act1.price+'</div>';
+					}
+					if(lst.act2)
+					{
+						html += '<div align="center">OKC:'+lst.act2.price+'</div>';
+					}
+					html += '</td>';
+					html += '<td align="center">';
+					if(lst.act1)
+					{
+						html += '<div align="center">BTC：'+lst.act1.g_price+'</div>';
+					}
+					if(lst.act2)
+					{
+						html += '<div align="center">OKC:'+lst.act2.g_price+'</div>';
+					}
+					html += '</td>';
+				}
+				else
+				{
+					html += '<td>'+lst.act_info+'</td>';
+					html += '<td align="center">-</td>';
+					html += '<td align="center">-</td>';
+					html += '<td align="center">-</td>';
+				}
+				html += '<td>';
+				if(lst.act1)
+				{
+					html += '<div>OKC 卖出：'+lst.time+'</div><div>BTC 买入：'+lst.time+'</div>';
+				}
+				if(lst.act2)
+				{
+					html += '<div>BTC 卖出：'+lst.time+'</div><div>OKC 买入：'+lst.time+'</div>';
+				}
+				html += '<div>最后时间：'+lst.time+'</div>';
+				html += '</td>';
+				html += '<td>'+td_ext+"</td>"
+				html += '</tr>';
+				$("#result tr").eq(1).after(html);
+				autorun = setTimeout(get_market, 12000);
+			}
+		}
+	});
+}
+</script>
+</head>
+<body>
+<div class="main" style="width:1400px;">
+	<div class="table_lc">
+	<table width="100%" id="result">
+	<tr>
+		<th colspan="2">BTC-China 买单</th>
+		<th colspan="2">BTC-China 卖单</th>
+		<th rowspan="2">BTC-China 时间</th>
+		<th colspan="2">OKCoin 买单</th>
+		<th colspan="2">OKCoin 卖单</th>
+		<th rowspan="2">OKCoin 时间</th>
+		<th rowspan="2">动作</th>
+		<th colspan="3">差价/毛利/净利</th>
+		<th rowspan="2">时间</th>
+		<th rowspan="2">其他</th>
+	</tr>
+	<tr>
+		<th>价格</th>
+		<th>数量</th>
+		<th>价格</th>
+		<th>数量</th>
+		<th>价格</th>
+		<th>数量</th>
+		<th>价格</th>
+		<th>数量</th>
+		<th>差价</th>
+		<th>毛利</th>
+		<th>净利</th>
+	</tr>
+	</table>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	get_market();
+});
+</script>
+</body>
+</html>

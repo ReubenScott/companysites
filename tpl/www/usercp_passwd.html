@@ -1,0 +1,63 @@
+<!-- include tpl=head title="修改个人密码 - 个人中心" -->
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#userinfo_password").submit(function(){
+		$(this).ajaxSubmit({
+			'type':'post',
+			'dataType':'json',
+			'url':api_url('usercp','passwd'),
+			'success':function(rs){
+				if(rs.status == 'ok')
+				{
+					$.dialog.alert("您的密码更新成功",function(){
+						$.phpok.reload();
+					},'succeed');
+				}
+				else
+				{
+					if(!rs.content) rs.content = '密码修改失败';
+					$.dialog.alert(rs.content);
+					return false;
+				}
+			}
+		});
+		return false;
+	});
+});
+</script>
+<div class="cp">
+	<div class="left"><!-- include tpl=block/cp_left --></div>
+	<div class="right">
+		<div class="box_top"><div class="box_right">
+			<table>
+			<tr>
+				<td><h3>修改密码</h3></td>
+			</tr>
+			</table>
+		</div></div>
+		<div class="box_middle" style="padding:20px;">
+			<form method="post" id="userinfo_password">
+			<div class="table">
+				<div class="l"><span class="red">*</span> 旧密码：</div>
+				<input type="password" name="oldpass" id="oldpass" value="" class="input" />
+			</div>
+			<div class="table">
+				<div class="l"><span class="red">*</span> 新密码：</div>
+				<input type="password" name="newpass" id="newpass" value="" class="input" />
+			</div>
+			<div class="table">
+				<div class="l"><span class="red">*</span> 确认新密码：</div>
+				<input type="password" name="chkpass" id="chkpass" value="" class="input" />
+			</div>
+
+			<div class="table">
+				<div class="l">&nbsp;</div>
+				<input type="submit" id="phpok_submit" value="提 交" class="but01">
+			</div>
+			</form>
+		</div>
+		<div class="box_bottom"><div class="box_right"></div></div>
+	</div>
+</div>
+
+<!-- include tpl=foot -->

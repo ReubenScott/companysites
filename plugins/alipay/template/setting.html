@@ -1,0 +1,46 @@
+<div class="table">
+	<div class="title">
+		支付宝PID：
+		<span class="note">设置支付的PID，您可以登录支付宝商家服务查询</span>
+	</div>
+	<div class="content"><input type="text" id="alipay_pid" name="alipay_pid" class="long" value="{$rs.param.alipay_pid}" /></div>
+</div>
+<div class="table">
+	<div class="title">
+		支付宝KEY：
+		<span class="note">同上</span>
+	</div>
+	<div class="content"><input type="text" id="alipay_key" name="alipay_key" class="long" value="{$rs.param.alipay_key}" /></div>
+</div>
+<div class="table">
+	<div class="title">
+		支付宝账号：
+		<span class="note">设置您的支付宝账号，以保证正常收款</span>
+	</div>
+	<div class="content"><input type="text" id="alipay_email" name="alipay_email" class="long" value="{$rs.param.alipay_email}" /></div>
+</div>
+<div class="table">
+	<div class="title">
+		前台显示扩展字段：
+		<span class="note">仅在订单明细中体现，一行一个字段，格式：<span class="red">字段,标题</span>，示例：<span class="red">trade_no,支付宝订单号</span></span>
+	</div>
+	<div class="content">
+		<textarea name="alipay_ext" id="alipay_ext" style="width:500px;height:100px;">{$rs.param.alipay_ext}</textarea>
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		前台显示名称：
+		<span class="note">设置前台显示的名称，默认是：“支付宝”</span>
+	</div>
+	<div class="content"><input type="text" id="alipay_title" name="alipay_title" class="long" value="{$rs.param.alipay_title}" /></div>
+</div>
+<div class="table">
+	<div class="title">
+		前台说明：
+		<span class="note">简单的说明一下前台的内容信息</span>
+	</div>
+	<div class="content">
+		{func form_edit alipay_note $rs.param.alipay_note editor height=180&btn_image=1&etype=simple}
+	</div>
+</div>

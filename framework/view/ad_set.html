@@ -1,0 +1,185 @@
+<!-- include tpl=head -->
+<script type="text/javascript" src="{echo add_js('ad.js')}"></script>
+<link rel="stylesheet" href="js/codemirror/lib/codemirror.css">
+<script type="text/javascript" src="js/codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="js/codemirror/mode/xml.js"></script>
+<script type="text/javascript" src="js/codemirror/mode/javascript.js"></script>
+<script type="text/javascript" src="js/codemirror/mode/css.js"></script>
+<script type="text/javascript" src="js/codemirror/mode/php.js"></script>
+<script type="text/javascript" src="js/codemirror/mode/html.js"></script>
+<style type="text/css">
+.CodeMirror{border:1px solid #ccc;width:500px;height:240px;}
+</style>
+<div class="tips">
+	&raquo; <a href="{echo admin_url('ad')}" title="广告管理">广告管理</a>
+	&raquo; {if $id}编辑{else}添加新{/if}广告
+</div>
+<form method="post" action="{echo admin_url('ad','save')}" onsubmit="return check_ad()">
+<input type="hidden" name="id" id="id" value="{$id}" />
+<div class="table">
+	<div class="title">
+		广告主题：
+		<span class="note">请简单写一下广告的标题，以方便管理和搜索</span>
+	</div>
+	<div class="content">
+		<input type="text" id="title" name="title" class="long" value="{$rs.title}" />
+	</div>
+</div>
+<div class="table">
+	<div class="title">
+		目标网址：
+		<span class="note">填写该广告将重定向目标</span>
+	</div>
+	<div class="content">
+		<input type="text" id="url" name="url" class="long" value="{$rs.url}" />
+	</div>
+</div>
+<input type="hidden" name="pic_id" id="pic_id" value="{$rs.pic_id.id}" />
+<div class="table">
+	<div class="title">
+		广告图片：
+		<span class="note"></span>
+	</div>
+	<div class="content">
+		<table>
+		<tr>
+			<td>
+				<table>
+				<tr>	
+					<td><select id="pic_id_cateid">
+					<!-- loop from=$catelist key=$key value=$value id=catelist_id -->
+					<option value="{$value.id}"{if $value.is_default} selected{/if}>{$value.title}</option>
+					<!-- /loop -->
+					</select></td>
+					<td><div style="margin-top:4px;"><div id="pic_id_spanButtonPlaceHolder"></div></div></td>
+					<td><input id="pic_id_btnSubmit" type="button" class="submit" value="开始上传" onclick="pic_id_swfupload_submit();" /></td>
+					<td><input id="pic_id_btnCancel" type="button" class="button" value="取消上传" onclick="pic_id_swfu.cancelQueue();" disabled="disabled" /></td>
+					<td id="pic_id_div_status" class="hide"></td>
+					<td><input type="button" value="选择{$rs.upload_type.title}" class="button" id="select_res_pic_id" /></td>
+				</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td coslapn="99"><div id="pic_id_progress"></div></td>
+		</tr>
+		<tr>
+			<td coslapn="99" id="pic_id_attrlist">
+				<!-- if $rs.pic_id && is_array($rs.pic_id) -->
+				<table width="100%">
+				<tr>
+					<td width="120px" align="center"><img src="{$rs.pic_id.ico}" border="0" alt="{$rs.pic_id.title}" width="80px" height="80px" /></td>
+					<td valign="top">
+						<table>
+						<tr>
+							<td><input type="text" id="pic_id_res_title_{$rs.pic_id.id}" value="{$rs.pic_id.title}" class="default" title="附件名" /></td>
+						</tr>
+						<tr>
+							<td><textarea id="pic_id_res_content_{$rs.pic_id.id}" class="default" title="备注">{$rs.pic_id.note}</textarea></td>
+						</tr>
+						<tr>
+							<td>
+								<input type="button" value="更新附件" class="button" onclick="update_res_pic_id('{$rs.pic_id.id}')" />
+								<input type="button" value="预览" class="button" onclick="preview_pic_id('{$rs.pic_id.id}')" />
+								<input type="button" value="删除" class="button red" onclick="del_res_pic_id('{$rs.pic_id.id}');" />						
+							</td>
+						</tr>
+						</table>
+					</td>
+				</tr>
+				</table>
+				<!-- /if -->
+			</td>
+		</tr>
+		</table>
+	</div>
+</div>
+<script type="text/javascript">
+//开始上传
+function pic_id_swfupload_submit()
+{
+	var cate_id = $("#pic_id_cateid").val();
+	if(cate_id)
+	{
+		pic_id_swfu.addPostParam("cateid",cate_id);
+	}
+	pic_id_swfu.addPostParam("{func session_name}","{func session_id}");
+	pic_id_swfu.startUpload();
+}
+
+$(document).ready(function(){
+	var pic_id_setting = {
+		"flash_url"						: "js/swfupload/swfupload.swf",
+		"upload_url"					: "{echo admin_url('upload')}",
+		"post_params"					: {},
+		"file_size_limit"				: "{echo get_cfg_var('upload_max_filesize')}B",	
+		"file_types"					: "*.jpg;*.png;*.gif",	
+		"file_types_description"		: "图片",	
+		"file_upload_limit"				: "0",	
+		"file_queue_limit"				: "0",	
+		"button_window_mode"			: "transparent",
+		"custom_settings"				: {
+			"progressTarget"	: "pic_id_progress",
+			"cancelButtonId"	: "pic_id_btnCancel"
+		},
+		"debug"							: false,	
+		"button_image_url"				: "images/swfupload.png",	
+		"button_placeholder_id"			: "pic_id_spanButtonPlaceHolder",	
+		"button_width"					: "92",	
+		"button_height"					: "23",
+		"button_action"					: SWFUpload.BUTTON_ACTION.SELECT_FILE,
+		"file_queued_handler"			: fileQueued,
+		"file_queue_error_handler"		: fileQueueError,	
+		"file_dialog_complete_handler"	: pic_id_swfupload_file_dialog_complete,	
+		"upload_start_handler"			: uploadStart,	
+		"upload_progress_handler"		: uploadProgress,	
+		"upload_error_handler"			: uploadError,	
+		"upload_success_handler"		: pic_id_swfupload_success,	
+		"upload_complete_handler"		: pic_id_swfupload_complete,	
+		"queue_complete_handler"		: pic_id_swfupload_queue_complete	
+	};
+	pic_id_swfu = new SWFUpload(pic_id_setting);
+	$("#select_res_pic_id").click(function(){
+		var url = get_url("open","input")+"&type=image&id=pic_id&tpl=open_image2";
+		$.dialog.open(url,{
+			title: "图片管理器",
+			lock : true,
+			width: "700px",
+			height: "70%",
+			ok: function(){
+				//
+			},
+			resize: false
+		});
+	});
+});
+</script>
+<div class="table">
+	<div class="title">
+		输出HTML内容：
+		<span class="note">支持使用变量 <span class="red">{url}</span>和<span class="red">{pic}</span>，此信息将通过document.write输出</span>
+	</div>
+	<div class="content">
+		<textarea id="content" name="content" class="long" style="height:240px;">{$rs.content}</textarea>
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	var delay;
+	var editor = CodeMirror.fromTextArea(document.getElementById("content"),{
+		lineNumbers		: true,
+		matchBrackets	: true,
+		mode			: "application/x-httpd-php",
+		lineWrapping	: true,
+		indentWithTabs	: true,
+		indentUnit		: 4
+	});
+});
+</script>
+<div class="table">
+	<div class="content">
+		<input type="submit" value="提 交" class="submit" />
+	</div>
+</div>
+</form>
+<!-- include tpl=foot -->

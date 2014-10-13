@@ -1,0 +1,30 @@
+<script type="text/javascript" src="js/uploadify/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+function _phpok_uploadify_{$html.id}(rs)
+{
+	return true;
+}
+</script>
+<link rel="stylesheet" type="text/css" href="js/uploadify/uploadify.css" />
+<input type="file" name="{$html.id}" id="{$html.id}" />
+<script type="text/javascript">
+$(document).ready(function() {
+	$('#{$html.id}').uploadify({
+		//'debug'					: true,
+		'buttonText'			: '浏览上传',
+		'button_image_url'		: '{$sys.url}',
+		'method'				: 'post',
+		'swf'      				: 'js/uploadify/uploadify.swf',
+		'fileSizeLimit'			: '{func get_cfg_var upload_max_filesize}B',
+		'fileTypeDesc'			: '{$html.name}',
+		'fileTypeExts'			: '{$html.swfupload}',
+		'formData'				: {'{func session_name}':'{func session_id}','_spam':'{$html._spam}'},
+		'onUploadSuccess'		: function(file,data,response){
+			data = $.parseJSON(data);
+			{$html.js_func}(data);
+		},
+		'uploader'				: api_url('upload','save','_spam_id={$html.id}')
+		// Put your options here
+	});
+});
+</script>
