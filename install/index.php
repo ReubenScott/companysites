@@ -118,9 +118,11 @@ elseif(G("step") == "saveconfig")
 	$content = preg_replace('/\$config\["db"\]\["data"\]\s*=\s*[\'|"][a-zA-Z0-9\-\_]*[\'|"];/isU','$config["db"]["data"] = "'.$dbconfig['data'].'";',$content);
 	$content = preg_replace('/\$config\["db"\]\["prefix"\]\s*=\s*[\'|"][a-zA-Z0-9\-\_]*[\'|"];/isU','$config["db"]["prefix"] = "'.$dbconfig['prefix'].'";',$content);
 	file_put_contents(ROOT."config.php",$content);
+  exit("ok");	
 }
 elseif(G("step") == "import")
 {
+
 	$db = connect_db("tpl","index.php?step=config");
 	//导入SQL数据
 	if(!is_file(INSTALL_DIR."phpok.sql"))
