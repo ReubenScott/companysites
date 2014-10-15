@@ -1,7 +1,7 @@
 <?php
 /***********************************************************
 	Filename: {phpok}/phpok_call.php
-	Note	: PHPOKµ÷ÓÃÖĞĞÄÀà
+	Note	: PHPOKè°ƒç”¨ä¸­å¿ƒç±»
 	Version : 4.0
 	Web		: www.phpok.com
 	Author  : qinggan <qinggan@188.com>
@@ -17,21 +17,21 @@ class phpok_call extends phpok_control
 		$this->mlist = get_class_methods($this);
 	}
 
-	//Ö´ĞĞÊı¾İµ÷ÓÃ
+	//æ‰§è¡Œæ•°æ®è°ƒç”¨
 	function phpok($id,$rs="")
 	{
 		if(!$id) return false;
 		$cacheId = '';
 		$content = '';
 		if($rs && is_string($rs)) parse_str($rs,$rs);
-		//ÅĞ¶ÏÊÇ·ñÆôÓÃ»º´æ£¬ÆôÓÃºóÖ±¶Á»º´æĞÅÏ¢
+		//åˆ¤æ–­æ˜¯å¦å¯ç”¨ç¼“å­˜ï¼Œå¯ç”¨åç›´è¯»ç¼“å­˜ä¿¡æ¯
 		if($GLOBALS['app']->cache->status())
 		{
 			$cacheId = $GLOBALS['app']->cache->key(array('id'=>$id,'rs'=>$rs),$this->site_id,"call");
 			$content = $GLOBALS['app']->cache->read($cacheId);
 		}
 		if($content) return $content;
-		//ÅĞ¶ÏÊÇÄÚÖÃ²ÎÊı»¹ÊÇµ÷ÓÃÊı¾İÖĞĞÄµÄÊı¾İ
+		//åˆ¤æ–­æ˜¯å†…ç½®å‚æ•°è¿˜æ˜¯è°ƒç”¨æ•°æ®ä¸­å¿ƒçš„æ•°æ®
 		if(substr($id,0,1) != '_')
 		{
 			$call_rs = $GLOBALS['app']->model('call')->get_rs($id,$this->site['id']);
@@ -47,23 +47,23 @@ class phpok_call extends phpok_control
 		else
 		{
 			if(!$rs || !is_array($rs)) return false;
-			//arclist£¬ÎÄÕÂÁĞ±í
-			//arc£¬µ¥ÆªÎÄÕÂĞÅÏ¢
-			//cate£¬·ÖÀàĞÅÏ¢
-			//catelist£¬·ÖÀàÊ÷
-			//project£¬ÏîÄ¿ĞÅÏ¢
-			//sublist£¬×ÓÏîÄ¿ĞÅÏ¢
-			//parent£¬¸¸¼¶ÏîÄ¿ĞÅÏ¢
-			//plist£¬Í¬¼¶ÏîÄ¿ĞÅÏ¢
-			//fields£¬×Ö¶Î±íµ¥
-			//user£¬»áÔ±
-			//userlist£¬»áÔ±ÁĞ±í
-			//total£¬ÎÄÕÂ×ÜÊı
-			//cate_id£¬µ±Ç°·ÖÀàĞÅÏ¢£¨²»´øÏîÄ¿£¬²»Éú³ÉÁ´½Ó£©
-			//subcate£¬×Ó·ÖÀàĞÅÏ¢£¬¼´µ±Ç°·ÖÀàÏÂµÄ×Ó·ÖÀà
+			//arclistï¼Œæ–‡ç« åˆ—è¡¨
+			//arcï¼Œå•ç¯‡æ–‡ç« ä¿¡æ¯
+			//cateï¼Œåˆ†ç±»ä¿¡æ¯
+			//catelistï¼Œåˆ†ç±»æ ‘
+			//projectï¼Œé¡¹ç›®ä¿¡æ¯
+			//sublistï¼Œå­é¡¹ç›®ä¿¡æ¯
+			//parentï¼Œçˆ¶çº§é¡¹ç›®ä¿¡æ¯
+			//plistï¼ŒåŒçº§é¡¹ç›®ä¿¡æ¯
+			//fieldsï¼Œå­—æ®µè¡¨å•
+			//userï¼Œä¼šå‘˜
+			//userlistï¼Œä¼šå‘˜åˆ—è¡¨
+			//totalï¼Œæ–‡ç« æ€»æ•°
+			//cate_idï¼Œå½“å‰åˆ†ç±»ä¿¡æ¯ï¼ˆä¸å¸¦é¡¹ç›®ï¼Œä¸ç”Ÿæˆé“¾æ¥ï¼‰
+			//subcateï¼Œå­åˆ†ç±»ä¿¡æ¯ï¼Œå³å½“å‰åˆ†ç±»ä¸‹çš„å­åˆ†ç±»
 			$list = array('arclist','arc','cate','catelist','project','sublist','parent','plist','fields','user','userlist','total','cate_id','subcate');
 			$id = substr($id,1);
-			//Èç¹ûÊÇarclist£¬ÇÒÎ´¶¨Òåis_listÊôĞÔ£¬ÔòÄ¬ÈÏÆôÓÃ´ËÊôĞÔ
+			//å¦‚æœæ˜¯arclistï¼Œä¸”æœªå®šä¹‰is_listå±æ€§ï¼Œåˆ™é»˜è®¤å¯ç”¨æ­¤å±æ€§
 			if($id == "arclist")
 			{
 				$rs["is_list"] = $rs["is_list"] == 'false' ? 0 : 1;
@@ -87,7 +87,7 @@ class phpok_call extends phpok_control
 		return $content;
 	}
 
-	//¶ÁÈ¡ÎÄÕÂÁĞ±í
+	//è¯»å–æ–‡ç« åˆ—è¡¨
 	function _arclist($rs)
 	{
 		return $GLOBALS['app']->model('data')->arclist($rs);
@@ -98,25 +98,25 @@ class phpok_call extends phpok_control
 		return $GLOBALS['app']->model('data')->total($rs);
 	}
 
-	//¶ÁÈ¡µ¥ÆªÎÄÕÂ
+	//è¯»å–å•ç¯‡æ–‡ç« 
 	function _arc($rs)
 	{
 		return $GLOBALS['app']->model('data')->arc($rs);
 	}
 
-	//È¡µÃÏîÄ¿ĞÅÏ¢
+	//å–å¾—é¡¹ç›®ä¿¡æ¯
 	function _project($rs)
 	{
 		return $GLOBALS['app']->model('data')->project($rs);
 	}
 
-	//¶ÁÈ¡·ÖÀàÊ÷
+	//è¯»å–åˆ†ç±»æ ‘
 	function _catelist($rs)
 	{
 		return $GLOBALS['app']->model('data')->catelist($rs);
 	}
 
-	//¶ÁÈ¡µ±Ç°·ÖÀàĞÅÏ¢
+	//è¯»å–å½“å‰åˆ†ç±»ä¿¡æ¯
 	function _cate($rs)
 	{
 		return $GLOBALS['app']->model('data')->cate($rs);
@@ -127,25 +127,25 @@ class phpok_call extends phpok_control
 		return $GLOBALS['app']->model('data')->cate_id($rs);
 	}
 
-	//È¡µÃÏîÄ¿À©Õ¹×Ö¶Î
+	//å–å¾—é¡¹ç›®æ‰©å±•å­—æ®µ
 	function _fields($rs)
 	{
 		return $GLOBALS['app']->model('data')->fields($rs);
 	}
 
-	//È¡µÃÉÏÒ»¼¶ÏîÄ¿
+	//å–å¾—ä¸Šä¸€çº§é¡¹ç›®
 	function _parent($rs)
 	{
 		return $GLOBALS['app']->model('data')->_project_parent($rs);
 	}
 
-	//¶ÁÈ¡µ±Ç°ÏîÄ¿ÏÂµÄ×ÓÏîÄ¿£¬Ö§³Ö¶à¼¶
+	//è¯»å–å½“å‰é¡¹ç›®ä¸‹çš„å­é¡¹ç›®ï¼Œæ”¯æŒå¤šçº§
 	function _sublist($rs)
 	{
 		return $GLOBALS['app']->model('data')->sublist($rs);
 	}
 
-	//¶ÁÈ¡µ±Ç°·ÖÀàÏÂµÄ×Ó·ÖÀà
+	//è¯»å–å½“å‰åˆ†ç±»ä¸‹çš„å­åˆ†ç±»
 	function _subcate($rs)
 	{
 		return $GLOBALS['app']->model('data')->subcate($rs);
