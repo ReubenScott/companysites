@@ -1,12 +1,12 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/usercp_control.php
+	Filename:  www/usercp_control.php
 	Note	: 用户控制面板
 	Version : 3.0
 	Author  : qinggan
 	Update  : 2013年07月01日 06时14分
 ***********************************************************/
-class usercp_control extends phpok_control
+class usercp_control extends base_control
 {
 	var $group_rs;
 	var $user_rs;

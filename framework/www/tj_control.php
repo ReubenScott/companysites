@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/tj_control.php
+	Filename:  www/tj_control.php
 	Note	: 宣传
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月13日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class tj_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class tj_control extends base_control
 {
 	function __construct()
 	{
@@ -113,12 +113,12 @@ class tj_control extends phpok_control
 		{
 			if($value == "jquery.js")
 			{
-				$content .= file_get_contents($this->dir_phpok."jquery.js");
+				$content .= file_get_contents(FRAMEWORK."jquery.js");
 				$content .= "\n\n";
 			}
 			else
 			{
-				$content .= file_get_contents($this->dir_phpok."js/".$value);
+				$content .= file_get_contents(FRAMEWORK."js/".$value);
 				$content .= "\n\n";
 			}
 		}

@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/post_control.php
+	Filename:  api/post_control.php
 	Note	: 存储发布的项目信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月11日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class post_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class post_control extends base_control
 {
 	function __construct()
 	{
@@ -127,7 +127,7 @@ class post_control extends phpok_control
 		$spam = str_rand(10);
 		$_SESSION['project_spam'] = $spam;
 		$status = $group_rs['post_status'];
-		phpok_delete_cache('call,list,ext');
+		delete_cache('call,list,ext');
 		$this->json(array("status"=>$status,'_spam'=>$spam),true);
 	}
 

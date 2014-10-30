@@ -2,7 +2,7 @@
 	Filename: js/global.js
 	Note	: 前台全局JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年07月01日 05时30分
 ***********************************************************/

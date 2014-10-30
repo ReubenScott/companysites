@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/all_control.php
+	Filename:  admin/all_control.php
 	Note	: 全局栏目配置
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-12 16:41
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class all_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class all_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -158,7 +158,7 @@ class all_control extends phpok_control
 		$array["biz_payment"] = $this->get("biz_payment","int");
 		$array["biz_billing"] = $this->get("biz_billing","int");
 		$this->model('site')->save($array,$_SESSION['admin_site_id']);
-		phpok_delete_cache('site');
+		delete_cache('site');
 		error("网站信息更新完成！",admin_url("all","setting"));
 	}
 

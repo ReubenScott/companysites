@@ -3,11 +3,11 @@
 	Filename: plugins/alipay/setting.php
 	Note	: 支付宝参数配置
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月14日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class setting_alipay extends phpok_plugin
 {
 	var $path;

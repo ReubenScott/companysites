@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/model/sysmenu.php
+	Filename:  model/sysmenu.php
 	Note	: 后台核心应用管理，主表：qinggan_sysmenu
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-27 14:36
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class sysmenu_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class sysmenu_model extends base_model
 {
 	function __construct()
 	{

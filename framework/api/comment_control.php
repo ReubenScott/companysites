@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/comment_control.php
+	Filename:  api/comment_control.php
 	Note	: 发表评论信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月6日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class comment_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class comment_control extends base_control
 {
 	function __construct()
 	{
@@ -134,7 +134,7 @@ class comment_control extends phpok_control
 		$parent_id = $this->get("parent_id","int");
 		//获取内容
 		$content = $this->get("content",'html');
-		$ip = phpok_ip();
+		$ip = client_ip();
 		if(!$content) $this->json('评论内容不能为空');
 		//存储表单
 		$array = array();
@@ -152,7 +152,7 @@ class comment_control extends phpok_control
 		$update = array("replydate"=>$this->time);
 		$this->model("list")->save($update,$tid);
 		//清空缓存
-		phpok_delete_cache("call,list");
+		delete_cache("call,list");
 		//更新随机码，防止恶意灌水
 		$t = str_rand(10);
 		$_SESSION['comment_spam_code'] = $t;

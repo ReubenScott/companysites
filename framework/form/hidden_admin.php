@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/form/hidden_admin.php
+	Filename:  form/hidden_admin.php
 	Note	: 隐藏字段
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-12 17:53
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class hidden_form
 {
 	function __construct()

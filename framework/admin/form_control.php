@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/form_control.php
+	Filename:  admin/form_control.php
 	Note	: 控制器管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-12 17:45
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class form_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class form_control extends base_control
 {
 	function __construct()
 	{
@@ -22,7 +22,7 @@ class form_control extends phpok_control
 		{
 			exit("未指定ID");
 		}
-		$idfile = $this->dir_phpok."form/".$id."_".$this->app_id.".php";
+		$idfile = FRAMEWORK."form/".$id."_".$this->app_id.".php";
 		if(!file_exists($idfile))
 		{
 			exit("文件：".$idfile." 不存在");

@@ -1,154 +1,149 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/phpok_call.php
-	Note	: PHPOKµ÷ÓÃÖÐÐÄÀà
+	Filename:  phpok_call.php
+	Note	: è°ƒç”¨ä¸­å¿ƒç±»
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-20 17:42
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class phpok_call extends phpok_control
-{
-	private $mlist;
-	function __construct()
-	{
-		parent::control();
-		$this->mlist = get_class_methods($this);
-	}
+if (! defined("APP_SET")) {
+  exit("<h1>Access Denied</h1>");
+}
+class phpok_call extends base_control{
+  private $mlist;
 
-	//Ö´ÐÐÊý¾Ýµ÷ÓÃ
-	function phpok($id,$rs="")
-	{
-		if(!$id) return false;
-		$cacheId = '';
-		$content = '';
-		if($rs && is_string($rs)) parse_str($rs,$rs);
-		//ÅÐ¶ÏÊÇ·ñÆôÓÃ»º´æ£¬ÆôÓÃºóÖ±¶Á»º´æÐÅÏ¢
-		if($GLOBALS['app']->cache->status())
-		{
-			$cacheId = $GLOBALS['app']->cache->key(array('id'=>$id,'rs'=>$rs),$this->site_id,"call");
-			$content = $GLOBALS['app']->cache->read($cacheId);
-		}
-		if($content) return $content;
-		//ÅÐ¶ÏÊÇÄÚÖÃ²ÎÊý»¹ÊÇµ÷ÓÃÊý¾ÝÖÐÐÄµÄÊý¾Ý
-		if(substr($id,0,1) != '_')
-		{
-			$call_rs = $GLOBALS['app']->model('call')->get_rs($id,$this->site['id']);
-			if(!$call_rs) return false;
-			if($call_rs['ext'])
-			{
-				$call_rs_ext = unserialize($call_rs['ext']);
-				unset($call_rs['ext'],$call_rs['id']);
-				if($call_rs_ext) $call_rs = array_merge($call_rs_ext,$call_rs);
-			}
-			if($rs && is_array($rs)) $call_rs = array_merge($call_rs,$rs);
-		}
-		else
-		{
-			if(!$rs || !is_array($rs)) return false;
-			//arclist£¬ÎÄÕÂÁÐ±í
-			//arc£¬µ¥ÆªÎÄÕÂÐÅÏ¢
-			//cate£¬·ÖÀàÐÅÏ¢
-			//catelist£¬·ÖÀàÊ÷
-			//project£¬ÏîÄ¿ÐÅÏ¢
-			//sublist£¬×ÓÏîÄ¿ÐÅÏ¢
-			//parent£¬¸¸¼¶ÏîÄ¿ÐÅÏ¢
-			//plist£¬Í¬¼¶ÏîÄ¿ÐÅÏ¢
-			//fields£¬×Ö¶Î±íµ¥
-			//user£¬»áÔ±
-			//userlist£¬»áÔ±ÁÐ±í
-			//total£¬ÎÄÕÂ×ÜÊý
-			//cate_id£¬µ±Ç°·ÖÀàÐÅÏ¢£¨²»´øÏîÄ¿£¬²»Éú³ÉÁ´½Ó£©
-			//subcate£¬×Ó·ÖÀàÐÅÏ¢£¬¼´µ±Ç°·ÖÀàÏÂµÄ×Ó·ÖÀà
-			$list = array('arclist','arc','cate','catelist','project','sublist','parent','plist','fields','user','userlist','total','cate_id','subcate');
-			$id = substr($id,1);
-			//Èç¹ûÊÇarclist£¬ÇÒÎ´¶¨Òåis_listÊôÐÔ£¬ÔòÄ¬ÈÏÆôÓÃ´ËÊôÐÔ
-			if($id == "arclist")
-			{
-				$rs["is_list"] = $rs["is_list"] == 'false' ? 0 : 1;
-			}
-			if(!$id || !in_array($id,$list)) return false;
-			$call_rs = array_merge($rs,array('type_id'=>$id));
-		}
-		$content = $this->load_call($call_rs);
-		if($content && $cacheId) $GLOBALS['app']->cache->write($cacheId,$content);
-		return $content;
-	}
 
-	function load_call($rs)
-	{
-		$content = "";
-		$tmp = '_'.$rs['type_id'];
-		if(in_array($tmp,$this->mlist))
-		{
-			$content = $this->$tmp($rs);
-		}
-		return $content;
-	}
+  function __construct(){
+    parent::control();
+    $this->mlist = get_class_methods($this);
+  }
+  // æ‰§è¡Œæ•°æ®è°ƒç”¨
+  function phpok($id, $rs = ""){
+    if (! $id) return false;
+    $cacheId = '';
+    $content = '';
+    if ($rs && is_string($rs)) parse_str($rs, $rs);
+    // åˆ¤æ–­æ˜¯å¦å¯ç”¨ç¼“å­˜ï¼Œå¯ç”¨åŽç›´è¯»ç¼“å­˜ä¿¡æ¯
+    if ($GLOBALS ['app']->cache->status()) {
+      $cacheId = $GLOBALS ['app']->cache->key(array(
+          'id' => $id,
+          'rs' => $rs 
+      ), $this->site_id, "call");
+      $content = $GLOBALS ['app']->cache->read($cacheId);
+    }
+    if ($content) return $content;
+    // åˆ¤æ–­æ˜¯å†…ç½®å‚æ•°è¿˜æ˜¯è°ƒç”¨æ•°æ®ä¸­å¿ƒçš„æ•°æ®
+    if (substr($id, 0, 1) != '_') {
+      $call_rs = $GLOBALS ['app']->model('call')->get_rs($id, $this->site ['id']);
+      if (! $call_rs) return false;
+      if ($call_rs ['ext']) {
+        $call_rs_ext = unserialize($call_rs ['ext']);
+        unset($call_rs ['ext'], $call_rs ['id']);
+        if ($call_rs_ext) $call_rs = array_merge($call_rs_ext, $call_rs);
+      }
+      if ($rs && is_array($rs)) $call_rs = array_merge($call_rs, $rs);
+    } else {
+      if (! $rs || ! is_array($rs)) return false;
+      // arclistï¼Œæ–‡ç« åˆ—è¡¨
+      // arcï¼Œå•ç¯‡æ–‡ç« ä¿¡æ¯
+      // cateï¼Œåˆ†ç±»ä¿¡æ¯
+      // catelistï¼Œåˆ†ç±»æ ‘
+      // projectï¼Œé¡¹ç›®ä¿¡æ¯
+      // sublistï¼Œå­é¡¹ç›®ä¿¡æ¯
+      // parentï¼Œçˆ¶çº§é¡¹ç›®ä¿¡æ¯
+      // plistï¼ŒåŒçº§é¡¹ç›®ä¿¡æ¯
+      // fieldsï¼Œå­—æ®µè¡¨å•
+      // userï¼Œä¼šå‘˜
+      // userlistï¼Œä¼šå‘˜åˆ—è¡¨
+      // totalï¼Œæ–‡ç« æ€»æ•°
+      // cate_idï¼Œå½“å‰åˆ†ç±»ä¿¡æ¯ï¼ˆä¸å¸¦é¡¹ç›®ï¼Œä¸ç”Ÿæˆé“¾æŽ¥ï¼‰
+      // subcateï¼Œå­åˆ†ç±»ä¿¡æ¯ï¼Œå³å½“å‰åˆ†ç±»ä¸‹çš„å­åˆ†ç±»
+      $list = array(
+          'arclist',
+          'arc',
+          'cate',
+          'catelist',
+          'project',
+          'sublist',
+          'parent',
+          'plist',
+          'fields',
+          'user',
+          'userlist',
+          'total',
+          'cate_id',
+          'subcate' 
+      );
+      $id = substr($id, 1);
+      // å¦‚æžœæ˜¯arclistï¼Œä¸”æœªå®šä¹‰is_listå±žæ€§ï¼Œåˆ™é»˜è®¤å¯ç”¨æ­¤å±žæ€§
+      if ($id == "arclist") {
+        $rs ["is_list"] = $rs ["is_list"] == 'false' ? 0 : 1;
+      }
+      if (! $id || ! in_array($id, $list)) return false;
+      $call_rs = array_merge($rs, array(
+          'type_id' => $id 
+      ));
+    }
+    $content = $this->load_call($call_rs);
+    if ($content && $cacheId) $GLOBALS ['app']->cache->write($cacheId, $content);
+    return $content;
+  }
 
-	//¶ÁÈ¡ÎÄÕÂÁÐ±í
-	function _arclist($rs)
-	{
-		return $GLOBALS['app']->model('data')->arclist($rs);
-	}
 
-	function _total($rs)
-	{
-		return $GLOBALS['app']->model('data')->total($rs);
-	}
+  function load_call($rs){
+    $content = "";
+    $tmp = '_' . $rs ['type_id'];
+    if (in_array($tmp, $this->mlist)) {
+      $content = $this->$tmp($rs);
+    }
+    return $content;
+  }
+  // è¯»å–æ–‡ç« åˆ—è¡¨
+  function _arclist($rs){
+    return $GLOBALS ['app']->model('data')->arclist($rs);
+  }
 
-	//¶ÁÈ¡µ¥ÆªÎÄÕÂ
-	function _arc($rs)
-	{
-		return $GLOBALS['app']->model('data')->arc($rs);
-	}
 
-	//È¡µÃÏîÄ¿ÐÅÏ¢
-	function _project($rs)
-	{
-		return $GLOBALS['app']->model('data')->project($rs);
-	}
+  function _total($rs){
+    return $GLOBALS ['app']->model('data')->total($rs);
+  }
+  // è¯»å–å•ç¯‡æ–‡ç« 
+  function _arc($rs){
+    return $GLOBALS ['app']->model('data')->arc($rs);
+  }
+  // å–å¾—é¡¹ç›®ä¿¡æ¯
+  function _project($rs){
+    return $GLOBALS ['app']->model('data')->project($rs);
+  }
+  // è¯»å–åˆ†ç±»æ ‘
+  function _catelist($rs){
+    return $GLOBALS ['app']->model('data')->catelist($rs);
+  }
+  // è¯»å–å½“å‰åˆ†ç±»ä¿¡æ¯
+  function _cate($rs){
+    return $GLOBALS ['app']->model('data')->cate($rs);
+  }
 
-	//¶ÁÈ¡·ÖÀàÊ÷
-	function _catelist($rs)
-	{
-		return $GLOBALS['app']->model('data')->catelist($rs);
-	}
 
-	//¶ÁÈ¡µ±Ç°·ÖÀàÐÅÏ¢
-	function _cate($rs)
-	{
-		return $GLOBALS['app']->model('data')->cate($rs);
-	}
-
-	function _cate_id($rs)
-	{
-		return $GLOBALS['app']->model('data')->cate_id($rs);
-	}
-
-	//È¡µÃÏîÄ¿À©Õ¹×Ö¶Î
-	function _fields($rs)
-	{
-		return $GLOBALS['app']->model('data')->fields($rs);
-	}
-
-	//È¡µÃÉÏÒ»¼¶ÏîÄ¿
-	function _parent($rs)
-	{
-		return $GLOBALS['app']->model('data')->_project_parent($rs);
-	}
-
-	//¶ÁÈ¡µ±Ç°ÏîÄ¿ÏÂµÄ×ÓÏîÄ¿£¬Ö§³Ö¶à¼¶
-	function _sublist($rs)
-	{
-		return $GLOBALS['app']->model('data')->sublist($rs);
-	}
-
-	//¶ÁÈ¡µ±Ç°·ÖÀàÏÂµÄ×Ó·ÖÀà
-	function _subcate($rs)
-	{
-		return $GLOBALS['app']->model('data')->subcate($rs);
-	}
+  function _cate_id($rs){
+    return $GLOBALS ['app']->model('data')->cate_id($rs);
+  }
+  // å–å¾—é¡¹ç›®æ‰©å±•å­—æ®µ
+  function _fields($rs){
+    return $GLOBALS ['app']->model('data')->fields($rs);
+  }
+  // å–å¾—ä¸Šä¸€çº§é¡¹ç›®
+  function _parent($rs){
+    return $GLOBALS ['app']->model('data')->_project_parent($rs);
+  }
+  // è¯»å–å½“å‰é¡¹ç›®ä¸‹çš„å­é¡¹ç›®ï¼Œæ”¯æŒå¤šçº§
+  function _sublist($rs){
+    return $GLOBALS ['app']->model('data')->sublist($rs);
+  }
+  // è¯»å–å½“å‰åˆ†ç±»ä¸‹çš„å­åˆ†ç±»
+  function _subcate($rs){
+    return $GLOBALS ['app']->model('data')->subcate($rs);
+  }
 }
 ?>

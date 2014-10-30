@@ -3,11 +3,11 @@
 	Filename: ajax/admin_adminer_check.php
 	Note	: 管理员账号验证
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 18:00
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $username = $this->get("username");
 if(!$username)
 {

@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/form.js
+	Filename:  form.js
 	Note	: 自定义表单中涉及到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-26 11:02
 ***********************************************************/
@@ -365,7 +365,7 @@ function phpok_user_delete(id,val)
 	return true;
 }
 
-/* PHPOK编辑器扩展按钮属性 */
+/* 编辑器扩展按钮属性 */
 function phpok_edit_type(id)
 {
 	var t = "#sMode_"+id;
@@ -385,7 +385,7 @@ function phpok_edit_type(id)
 }
 
 /*
- * PHPOK自定义表单中关于附件上传涉及到的JS操作
+ * 自定义表单中关于附件上传涉及到的JS操作
  * 最后修改时间：2013年10月19日
  * 此JS涉及到外部调用的JS函数get_url，json_ajax，$.str，$.dialog,$.parseJSON
  */

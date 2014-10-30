@@ -3,11 +3,11 @@
 	Filename: ajax/www_vcode.php
 	Note	: 前台生成图片验证码
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 18:06
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 ob_end_clean();
 ob_start();
 $x_size=76;

@@ -3,11 +3,11 @@
 	Filename: install/index.php
 	Note	: 安装升级包
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2014年1月7日
 ***********************************************************/
-define("PHPOK_SET",true);
+define("APP_SET",true);
 //定义根目录
 define("INSTALL_DIR",str_replace("\\","/",dirname(__FILE__))."/");
 define("ROOT",INSTALL_DIR."../");
@@ -16,7 +16,7 @@ include_once(INSTALL_DIR."global.php");
 
 if(is_file(ROOT."data/install.lock"))
 {
-	error("您已安装过PHPOK4，要重新安装请删除data/install.lock文件");
+	error("您已安装过4，要重新安装请删除data/install.lock文件");
 }
 
 if(!is_file(ROOT."config.php"))
@@ -142,7 +142,7 @@ elseif(G("step") == "site")
 {
 	//配置网站信息
 	$rs = root_url();
-	$rs['title'] = "PHPOK企业通用网站";
+	$rs['title'] = "企业通用网站";
 	
 	include(INSTALL_DIR."tpl/site.php");
 }

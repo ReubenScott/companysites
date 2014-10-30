@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/libs/vcode.php
+	Filename:  libs/vcode.php
 	Note	: 通用图形验证码类，支持干扰线
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2014年1月6日
 ***********************************************************/
-//if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+//if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class vcode_lib
 {
 	var $width = 76;

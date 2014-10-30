@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/form/user_admin.php
+	Filename:  form/user_admin.php
 	Note	: 关联会员账号
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-15 11:46
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class user_form
 {
 	function __construct()

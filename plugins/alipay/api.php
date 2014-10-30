@@ -3,11 +3,11 @@
 	Filename: plugins/alipay/api.php
 	Note	: 支付宝接口执行端
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月15日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class api_alipay extends phpok_plugin
 {
 	var $path;
@@ -62,7 +62,7 @@ class api_alipay extends phpok_plugin
 				"body"	=> '支付订单：'.$rs['sn'].'费用',
 				"show_url"	=> $show_url,
 				"anti_phishing_key"	=> '',
-				"exter_invoke_ip"	=> phpok_ip(),
+				"exter_invoke_ip"	=> client_ip(),
 				"_input_charset"	=> 'utf-8'
 		);
 

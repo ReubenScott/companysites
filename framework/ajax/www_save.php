@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_save.php
 	Note	: 存储表单
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月30日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 if(!$_SESSION["user_id"])
 {
 	error("您还未登录",$this->url('login'));
@@ -71,5 +71,5 @@ $i_array["phpok"] = $identifier;
 $i_array["type_id"] = "content";
 $this->model('id')->save($i_array);
 $_back = "index.html";
-phpok_delete_cache("call,list");
+delete_cache("call,list");
 error("您的信息已经发布成功",$_back,"ok");

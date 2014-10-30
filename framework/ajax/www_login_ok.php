@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_login_ok.php
 	Note	: 会员登录验证
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月14日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 //判断会员是否已登录
 if($_SESSION["user_id"])
 {
@@ -47,7 +47,7 @@ if(!$rs)
 {
 	json_exit("会员信息不存在");
 }
-$action = phpok_user_login($rs["id"],$pass);
+$action = user_login($rs["id"],$pass);
 if($action != "ok")
 {
 	json_exit($action);

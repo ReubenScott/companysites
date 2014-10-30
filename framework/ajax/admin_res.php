@@ -3,11 +3,11 @@
 	Filename: ajax/admin_res.php
 	Note	: 自定义表单中获取附件内容
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-10 02:56
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $id = $this->get("id");
 if(!$id)
 {

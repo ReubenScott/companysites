@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
 	Filename: {phpok}phpok_plugin.php
-	Note	: PHPOK4²å¼þºËÐÄ¿ØÖÆÖÐÐÄ
+	Note	: 4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
-	Update  : 2013Äê8ÔÂ29ÈÕ
+	Update  : 2013ï¿½ï¿½8ï¿½ï¿½29ï¿½ï¿½
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class phpok_plugin
 {
 	var $app;

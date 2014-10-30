@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/reply.php
+	Filename:  model/reply.php
 	Note	: 评论信息维护
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月21日 12时00分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class reply_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class reply_model extends base_model
 {
 	function __construct()
 	{

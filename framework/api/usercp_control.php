@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/usercp_control.php
+	Filename:  api/usercp_control.php
 	Note	: 会员中心数据存储
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月5日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class usercp_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class usercp_control extends base_control
 {
 	function __construct()
 	{
@@ -60,7 +60,7 @@ class usercp_control extends phpok_control
 		{
 			$this->model('user')->update_ext($ext,$_SESSION['user_id']);
 		}
-		phpok_user_login($_SESSION["user_id"]);
+		user_login($_SESSION["user_id"]);
 		$this->json('ok',true);
 	}
 
@@ -71,7 +71,7 @@ class usercp_control extends phpok_control
 		if(!$data) $this->json(1049);
 		$array = array('avatar'=>$data);
 		$this->model('user')->save($array,$_SESSION['user_id']);
-		phpok_user_login($_SESSION["user_id"]);
+		user_login($_SESSION["user_id"]);
 		$this->json('ok',true);
 	}
 
@@ -88,7 +88,7 @@ class usercp_control extends phpok_control
 		$password = password_create($newpass);
 		$array["pass"] = $password;
 		$this->model('user')->save($array,$_SESSION["user_id"]);
-		phpok_user_login($_SESSION["user_id"]);
+		user_login($_SESSION["user_id"]);
 		$this->json('ok',true);
 	}
 

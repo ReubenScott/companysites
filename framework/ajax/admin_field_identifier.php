@@ -3,11 +3,11 @@
 	Filename: ajax/admin_field_identifier.php
 	Note	: 检测标识串是否存在
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-11-29 16:18
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $id = $this->get("id","int");
 $identifier = $this->get("identifier");
 if(!$identifier)

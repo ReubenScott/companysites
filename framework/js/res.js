@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/res.js
+	Filename:  js/res.js
 	Note	: 资源管理器中涉及到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-31 15:08
 ***********************************************************/

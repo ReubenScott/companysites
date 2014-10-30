@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/module.js
+	Filename:  js/module.js
 	Note	: 后台模型管理涉及到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-11-29 21:20
 ***********************************************************/

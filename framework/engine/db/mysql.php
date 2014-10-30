@@ -1,6 +1,6 @@
 <?php
 #==================================================================================================
-#	Filename: phpok/engine/db/db_mysql
+#	Filename:  engine/db/db_mysql
 #	Note	: 连接数据库类
 #	Version : 3.0
 #	Author  : qinggan
@@ -413,7 +413,7 @@ class db_mysql
 		return $this->query_count;
 	}
 
-	# PHPOK中常用的简洁高效的SQL生成查询，仅适合单表查询
+	# 中常用的简洁高效的SQL生成查询，仅适合单表查询
 	function phpok_one($tbl,$condition="",$fields="*")
 	{
 		$sql = "SELECT ".$fields." FROM ".$this->db->prefix.$tbl;

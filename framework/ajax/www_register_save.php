@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_register_save.php
 	Note	: 存储会员注册数据
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月12日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 //判断会员是否已登录
 if($_SESSION["user_id"])
 {
@@ -133,6 +133,6 @@ if(!$rs)
 
 if($rs["status"])
 {
-	phpok_user_login($rs["id"]);
+	user_login($rs["id"]);
 }
 json_exit("会员注册成功",true);

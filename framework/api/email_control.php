@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/email_control.php
+	Filename:  api/email_control.php
 	Note	: 邮件发送操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月3日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class email_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class email_control extends base_control
 {
 	function __construct()
 	{

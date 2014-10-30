@@ -3,12 +3,12 @@
 	Filename: admin/fields_control.php
 	Note	: 字段管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-31 22:29
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class fields_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class fields_control extends base_control
 {
 	var $form_list;
 	var $field_list;
@@ -49,7 +49,7 @@ class fields_control extends phpok_control
 			}
 		}
 		$this->assign("rslist",$rslist);
-		$xmlfile = $this->dir_root.'data/xml/fields_area.xml';
+		$xmlfile = ROOT.'data/xml/fields_area.xml';
 		$list = xml_to_array(file_get_contents($xmlfile));
 		$this->assign("arealist",$list);
 		$this->view("fields_index");
@@ -84,7 +84,7 @@ class fields_control extends phpok_control
 		$opt_list = $this->model('opt')->group_all();
 		$this->assign("opt_list",$opt_list);
 		//取得复选框
-		$xmlfile = $this->dir_root.'data/xml/fields_area.xml';
+		$xmlfile = ROOT.'data/xml/fields_area.xml';
 		$list = xml_to_array(file_get_contents($xmlfile));
 		$this->assign("arealist",$list);
 		$this->assign("area",$area);
@@ -99,7 +99,7 @@ class fields_control extends phpok_control
 		$opt_list = $this->model('opt')->group_all();
 		$this->assign("opt_list",$opt_list);
 		//取得复选框
-		$xmlfile = $this->dir_root.'data/xml/fields_area.xml';
+		$xmlfile = ROOT.'data/xml/fields_area.xml';
 		$list = xml_to_array(file_get_contents($xmlfile));
 		$this->assign("arealist",$list);
 		$this->assign("area",$area);

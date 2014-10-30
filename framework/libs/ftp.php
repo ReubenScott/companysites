@@ -1,9 +1,9 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/libs/ftp.php
+	Filename:  libs/ftp.php
 	Note	: FTP基本操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-02-18 17:46
 ***********************************************************/
@@ -19,7 +19,7 @@ class ftp_lib
 	var $root_dir   = "/"; # 服务器根目录
 	var $timeout    = 60; # FTP连接超时时间
 
-	# 构造函数，此参数在PHPOK中极少使用或是不使用
+	# 构造函数，此参数在中极少使用或是不使用
 	function __construct() {}
 
 	# 设置FTP服务器信息

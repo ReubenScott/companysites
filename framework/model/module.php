@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/module.php
+	Filename:  model/module.php
 	Note	: 模型管理维护
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-11-29 21:06
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class module_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class module_model extends base_model
 {
 	function __construct()
 	{
@@ -122,7 +122,7 @@ class module_model extends phpok_model
 		{
 			return false;
 		}
-		# 创建表字段，这里不加索引等功能，如果在数据量大时，可咨询PHPOK官方进行优化
+		# 创建表字段，这里不加索引等功能，如果在数据量大时，可咨询官方进行优化
 		$sql = "ALTER TABLE ".$this->db->prefix."list_".$id." ADD `".$rs["identifier"]."`";
 		if($rs["field_type"] == "varchar")
 		{

@@ -149,7 +149,7 @@ div.body:after {clear:both;content:".";display: block;visibility:hidden;height:0
 div.body .left {float:left;width:260px;}
 div.body .right {float:right;width:730px;}
 
-/* PHPOK 通用布局页面 */
+/*  通用布局页面 */
 div.main{margin:10px auto;width:1000px;position:relative;}
 div.main div.left{float:left;width:260px;position:relative;}
 div.main div.right{float:right;width:730px;position:relative;}

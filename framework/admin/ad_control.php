@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/ad_control.php
+	Filename:  admin/ad_control.php
 	Note	: 广告管理系统（自动生成JS被调用）及统计管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月13日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ad_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ad_control extends base_control
 {
 	function __construct()
 	{
@@ -55,7 +55,7 @@ class ad_control extends phpok_control
 			$this->assign("date",date("Y-m-d",$time));
 		}
 		$total = $this->model('ad')->get_total($condition);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&opt=第[num]页&add=[total]/[psize]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&opt=第[num]页&add=[total]/[psize]&always=1");
 		$this->assign("rslist",$rslist);
 		$this->assign("pagelist",$pagelist);
 		$this->view("ad_list");

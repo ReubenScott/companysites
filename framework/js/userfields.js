@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/userfields.js
+	Filename:  js/userfields.js
 	Note	: 会员自定义字段管理器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月4日
 ***********************************************************/

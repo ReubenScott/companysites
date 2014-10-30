@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: phpok/libs/string.php
+	Filename:  libs/string.php
 	Note	: 字符串管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 13:38
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class string_lib
 {
 	function __construct()

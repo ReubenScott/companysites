@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/open_control.php
+	Filename:  admin/open_control.php
 	Note	: 虚弹窗口管理器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-02-07 17:23
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class open_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class open_control extends base_control
 {
 	function __construct()
 	{
@@ -120,7 +120,7 @@ class open_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("total",$total);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 	}
 
@@ -181,7 +181,7 @@ class open_control extends phpok_control
 				}
 				//读子主题
 				$total = $this->model('list')->get_total($p_rs["module"],$condition);
-				$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&opt=第[num]页&add=[total]/[psize]&always=1");
+				$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&opt=第[num]页&add=[total]/[psize]&always=1");
 				$this->assign("pagelist",$pagelist);
 				$this->assign("p_rs",$p_rs);
 				$this->assign("rslist",$rslist);
@@ -222,7 +222,7 @@ class open_control extends phpok_control
 		$offset = ($pageid - 1) * $psize;
 		$rslist = $this->model('user')->get_list($condition,$offset,$psize);
 		$count = $this->model('user')->get_count($condition);
-		$pagelist = phpok_page($page_url,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=2&add=[total]/[psize]，页[num]/[total_page]&always=1");
+		$pagelist = run_paging($page_url,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=2&add=[total]/[psize]，页[num]/[total_page]&always=1");
 		$this->assign("total",$count);
 		$this->assign("rslist",$rslist);
 		$this->assign("id",$id);
@@ -252,7 +252,7 @@ class open_control extends phpok_control
 		$offset = ($pageid - 1) * $psize;
 		$rslist = $this->model('user')->get_list($condition,$offset,$psize);
 		$count = $this->model('user')->get_count($condition);
-		$pagelist = phpok_page($page_url,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=2&add=[total]/[psize]，页[num]/[total_page]&always=1");
+		$pagelist = run_paging($page_url,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=2&add=[total]/[psize]，页[num]/[total_page]&always=1");
 		$this->assign("total",$count);
 		$this->assign("rslist",$rslist);
 		$this->assign("id",$id);

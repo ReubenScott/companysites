@@ -6,7 +6,7 @@
 	Author  : qinggan
 	Update  : 2009-12-23
 ***********************************************************/
-class user_control extends phpok_control
+class user_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -39,12 +39,12 @@ class user_control extends phpok_control
 		$offset = ($pageid-1) * $psize;
 		$rslist = $this->model('user')->get_list($condition,$offet,$psize);
 		$count = $this->model('user')->get_count($keywords);
-		$pagelist = phpok_page($page_url,$count,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($page_url,$count,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("total",$count);
 		$this->assign("rslist",$rslist);
 		$this->assign("pagelist",$pagelist);
 		
-		$xmlfile = $this->dir_root.'data/xml/admin_user.xml';
+		$xmlfile = ROOT.'data/xml/admin_user.xml';
 		$list = xml_to_array(file_get_contents($xmlfile));
 		$this->assign("arealist",$list);
 

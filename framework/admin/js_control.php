@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/admin/js_control.php
+	Filename:  admin/js_control.php
 	Note	: JS控制器，这里用来控制后台的JS信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-29 20:22
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class js_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class js_control extends base_control
 {
 	function __construct()
 	{
@@ -35,9 +35,9 @@ class js_control extends phpok_control
 		header("Pragma: no-cache");
 		$ext = $this->get("ext");
 		$ext_js = "\n";
-		$ext_js.= $this->lib('file')->cat($this->dir_phpok."jquery.js");
+		$ext_js.= $this->lib('file')->cat(FRAMEWORK."jquery.js");
 		$ext_js.= "\n";
-		$ext_js.= $this->lib('file')->cat($this->dir_phpok."form.js");
+		$ext_js.= $this->lib('file')->cat(FRAMEWORK."form.js");
 		$ext_js.= "\n";
 		$autoload_js = $this->config["autoload_js"];
 		if($autoload_js)
@@ -51,9 +51,9 @@ class js_control extends phpok_control
 			foreach($list AS $key=>$value)
 			{
 				$value = trim($value);
-				if($value && file_exists($this->dir_phpok."js/".$value) && $value != "jquery.js")
+				if($value && file_exists(FRAMEWORK."js/".$value) && $value != "jquery.js")
 				{
-					$ext_js .= $this->lib('file')->cat($this->dir_phpok."js/".$value);
+					$ext_js .= $this->lib('file')->cat(FRAMEWORK."js/".$value);
 					$ext_js .= "\n";
 				}
 			}
@@ -83,9 +83,9 @@ class js_control extends phpok_control
 			foreach($list AS $key=>$value)
 			{
 				$value = trim($value);
-				if($value && file_exists($this->dir_phpok."js/".$value) && $value != "jquery.js")
+				if($value && file_exists(FRAMEWORK."js/".$value) && $value != "jquery.js")
 				{
-					$ext_js .= $this->lib('file')->cat($this->dir_phpok."js/".$value);
+					$ext_js .= $this->lib('file')->cat(FRAMEWORK."js/".$value);
 					$ext_js .= "\n";
 				}
 			}
@@ -96,7 +96,7 @@ class js_control extends phpok_control
 	function pingyin_f()
 	{
 		$this->lib("pingyin");
- 		$this->lib('pingyin')->path = $this->dir_phpok."dict/pingyin.qdb";
+ 		$this->lib('pingyin')->path = FRAMEWORK."dict/pingyin.qdb";
  		$title = $this->get("title");
  		$py = iconv("UTF-8","GBK",$title);
 	 	$py = $this->lib('pingyin')->ChineseToPinyin($py);

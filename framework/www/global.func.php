@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/global.func.php
+	Filename:  www/global.func.php
 	Note	: 前台公共函数
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-16 13:13
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 
 //下一篇主题
 if(!function_exists("phpok_next"))

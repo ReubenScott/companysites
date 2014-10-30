@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/model/tpl.php
+	Filename:  model/tpl.php
 	Note	: 模板管理，涉及到的数据表：qinggan_tpl
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-17 15:15
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class tpl_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class tpl_model extends base_model
 {
 	function __construct()
 	{

@@ -6,7 +6,7 @@
 	Author  : qinggan
 	Update  : 2013年5月4日
 ***********************************************************/
-class user_model extends phpok_model
+class user_model extends base_model
 {
 	var $psize = 20;
 	function __construct()
@@ -165,7 +165,7 @@ class user_model extends phpok_model
 		{
 			return false;
 		}
-		# 创建表字段，这里不加索引等功能，如果在数据量大时，可咨询PHPOK官方进行优化
+		# 创建表字段，这里不加索引等功能，如果在数据量大时，可咨询官方进行优化
 		$sql = "ALTER TABLE ".$this->db->prefix."user_ext ADD `".$rs["identifier"]."`";
 		if($rs["field_type"] == "varchar")
 		{

@@ -7,7 +7,7 @@
 	<p>服务器引挈： <span class="darkblue">{echo $_SERVER['SERVER_SOFTWARE']}</span></p>
 	<p>PHP运行方式：<span class="darkblue">{echo php_sapi_name()}</span></p>
 	<p>程序最长运行时间：<span class="darkblue">{echo get_cfg_var('max_execution_time')} 秒</span></p>
-	<p>自动定义全局变量： {echo function_exists('register_globals') ? '<span class="red"><b>开启状态，PHPOK建议您关闭此功能。</b></span>' :'<span class="darkblue"><b>关闭</b></span>'}</p>
+	<p>自动定义全局变量： {echo function_exists('register_globals') ? '<span class="red"><b>开启状态，建议您关闭此功能。</b></span>' :'<span class="darkblue"><b>关闭</b></span>'}</p>
 	<p>使用URL打开文件：{echo function_exists('allow_url_fopen') ? '<span class="darkblue">是，允许</span>' : '<span class="red">不允许</span>'}</p>
 	<p>组件curl：{echo function_exists('curl_init') ? '<span class="darkblue">是，允许</span>' : '<span class="red">不支持，部分功能不能使用</span>'}
 	<p>发行版本：<span class="darkblue">{$version}</span></p>

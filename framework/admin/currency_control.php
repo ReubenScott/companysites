@@ -1,12 +1,12 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/currency_control.php
+	Filename:  admin/currency_control.php
 	Note	: 货币管理
 	Version : 3.0
 	Author  : qinggan
 	Update  : 2011-07-16 07:15
 ***********************************************************/
-class currency_control extends phpok_control
+class currency_control extends base_control
 {
 	public $popedom;
 	function __construct()

@@ -3,11 +3,11 @@
 	Filename: admin.php
 	Note	: 后台管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-15 15:26
 ***********************************************************/
-define("PHPOK_SET",true);
+define("APP_SET",true);
 
 define("APP_ID","admin");
 

@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/cate.php
+	Filename:  model/cate.php
 	Note	: 栏目管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-06 10:09
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class cate_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class cate_model extends base_model
 {
 	function __construct()
 	{
@@ -129,7 +129,7 @@ class cate_model extends phpok_model
 	//存储分类信息
 	function save($data,$id=0)
 	{
-		phpok_delete_cache("cate");
+		delete_cache("cate");
 		if(!$data || !is_array($data)) return false;
 		if($id)
 		{
@@ -207,7 +207,7 @@ class cate_model extends phpok_model
 	# 更新排序
 	function update_taxis($id,$taxis=255)
 	{
-		phpok_delete_cache("cate");
+		delete_cache("cate");
 		$sql = "UPDATE ".$this->db->prefix."cate SET taxis='".$taxis."' WHERE id='".$id."'";
 		return $this->db->query($sql);
 	}
@@ -231,7 +231,7 @@ class cate_model extends phpok_model
 			$this->db->query($sql);
 		}
 		//删除缓存操作
-		phpok_delete_cache("cate");
+		delete_cache("cate");
 		return true;
 	}
 

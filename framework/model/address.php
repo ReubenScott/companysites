@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/address.php
+	Filename:  model/address.php
 	Note	: 地址库管理，每个会员都有30个地址库
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月27日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class address_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class address_model extends base_model
 {
 	function __construct()
 	{

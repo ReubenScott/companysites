@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/res_control.php
+	Filename:  admin/res_control.php
 	Note	: 资源管理器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-27 12:02
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class res_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class res_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -39,7 +39,7 @@ class res_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("total",$total);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 		# 存储当前的URL信息
 		$myurl = $pageurl ."&".$this->config["pageid"]."=".$pageid;
@@ -87,10 +87,10 @@ class res_control extends phpok_control
 			$tmplist = array();
 			foreach($rs["gd"] AS $key=>$value)
 			{
-				if(file_exists($this->dir_root.$value["filename"]))
+				if(file_exists(ROOT.$value["filename"]))
 				{
 					$tmp = array();
-					list($width, $height, $type, $attr) = getimagesize($this->dir_root.$value["filename"]);
+					list($width, $height, $type, $attr) = getimagesize(ROOT.$value["filename"]);
 					$tmp["width"] = $width;
 					$tmp["height"] = $height;
 					$tmp["gd"] = $value["identifier"];
@@ -216,9 +216,9 @@ class res_control extends phpok_control
 		if($root && $root != "/")
 		{
 			if(substr($root,0,1) == "/") $root = substr($root,1);
-			if(!file_exists($this->dir_root.$root))
+			if(!file_exists(ROOT.$root))
 			{
-				$this->lib('file')->make($this->dir_root.$root);
+				$this->lib('file')->make(ROOT.$root);
 			}
 		}
 		$folder = $this->get("folder");
@@ -306,7 +306,7 @@ class res_control extends phpok_control
 			json_exit("未指定ID！");
 		}
 		//删除图片方案下的图片信息
-		$this->model('res')->delete_gd_id($id,$this->dir_root);
+		$this->model('res')->delete_gd_id($id,ROOT);
 		//删除方案信息
 		$this->model('gd')->delete($id);
 		json_exit("图片方案删除成功！",true);
@@ -524,12 +524,12 @@ class res_control extends phpok_control
 				$x1 = $ext_rs["x1"];
 				$y1 = $ext_rs["y1"];
 				$new = $rs["folder"]."_tmp_".$id."_.".$rs["ext"];
-				$cropped = $this->create_img($new,$this->dir_root.$rs["filename"],$w,$h,$x1,$y1);
+				$cropped = $this->create_img($new,ROOT.$rs["filename"],$w,$h,$x1,$y1);
 				$this->lib('gd')->gd($new,$id,$gd_rs);
 			}
 			else
 			{
-				$this->lib('gd')->gd($this->dir_root.$rs["filename"],$id,$gd_rs);
+				$this->lib('gd')->gd(ROOT.$rs["filename"],$id,$gd_rs);
 			}
 			$array["filename"] = $rs["folder"].$gd_rs["identifier"]."_".$id.".".$rs["ext"];
 			$array["filetime"] = $this->system_time;
@@ -537,11 +537,11 @@ class res_control extends phpok_control
 		}
 		else
 		{
-			$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$id);
+			$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$id);
 			if(!$ico)
 			{
 				$ico = "images/filetype-large/".$rs["ext"].".jpg";
-				if(!file_exists($ico) && !file_exists($this->dir_root.$ico))
+				if(!file_exists($ico) && !file_exists(ROOT.$ico))
 				{
 					$ico = "images/filetype-large/unknow.jpg";
 				}
@@ -571,7 +571,7 @@ class res_control extends phpok_control
 		$gd = $this->get("gd","int");
 		$rs = $this->model('res')->get_one($id);
 		$new = $rs["folder"]."_tmp_".$id."_.".$rs["ext"];
-		$cropped = $this->create_img($new,$this->dir_root.$rs["filename"],$w,$h,$x1,$y1,1);
+		$cropped = $this->create_img($new,ROOT.$rs["filename"],$w,$h,$x1,$y1,1);
 		# 判断是否GD
 		if($gd)
 		{
@@ -676,7 +676,7 @@ class res_control extends phpok_control
 			error("附件信息不存在",$e_url,"error");
 		}
 		$e_url = admin_url("res","set","id=".$id);
-		if(!$rs["filename"] || !file_exists($this->dir_root.$rs["filename"]))
+		if(!$rs["filename"] || !file_exists(ROOT.$rs["filename"]))
 		{
 			error("附件不存在",$e_url,"error");
 		}
@@ -685,7 +685,7 @@ class res_control extends phpok_control
 		{
 			error("远程附件不允许下载，请直接打开",$e_url,"error");
 		}
-		$filesize = filesize($this->dir_root.$rs["filename"]);
+		$filesize = filesize(ROOT.$rs["filename"]);
 		ob_end_clean();
 		header("Date: ".gmdate("D, d M Y H:i:s", $rs["addtime"])." GMT");
 		header("Last-Modified: ".gmdate("D, d M Y H:i:s", $rs["addtime"])." GMT");
@@ -693,7 +693,7 @@ class res_control extends phpok_control
 		header("Content-Disposition: attachment; filename=".rawurlencode($rs["title"].".".$rs["ext"]));
 		header("Content-Length: ".$filesize);
 		header("Accept-Ranges: bytes");
-		readfile($this->dir_root.$rs["filename"]);
+		readfile(ROOT.$rs["filename"]);
 		flush();
 		ob_flush();
 	}
@@ -718,7 +718,7 @@ class res_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("total",$total);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1&half=3");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1&half=3");
 		$this->assign("pagelist",$pagelist);
 		# 存储当前的URL信息
 		$myurl = $pageurl ."&".$this->config["pageid"]."=".$pageid;
@@ -837,7 +837,7 @@ class res_control extends phpok_control
 				$array["res_id"] = $rs['id'];
 				$array["gd_id"] = $value["id"];
 				$array["filetime"] = $this->system_time;
-				$gd_tmp = $this->lib('gd')->gd($this->dir_root.$rs["filename"],$rs['id'],$value);
+				$gd_tmp = $this->lib('gd')->gd(ROOT.$rs["filename"],$rs['id'],$value);
 				if($gd_tmp)
 				{
 					$array["filename"] = $rs["folder"].$gd_tmp;
@@ -845,7 +845,7 @@ class res_control extends phpok_control
 				}
 			}
 			//更新附件缩略图
-			$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$rs['id']);
+			$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$rs['id']);
 			if($ico)
 			{
 				$ico = $rs['folder'].$ico;
@@ -854,7 +854,7 @@ class res_control extends phpok_control
 		if(!$ico)
 		{
 			$ico = "images/filetype-large/".$rs["ext"].".jpg";
-			if(!is_file($this->dir_root.$ico)) $ico = 'images/filetype-large/unknown.jpg';
+			if(!is_file(ROOT.$ico)) $ico = 'images/filetype-large/unknown.jpg';
 		}
 		//更新图标
 		$tmp = array();
@@ -887,20 +887,20 @@ class res_control extends phpok_control
 			foreach($rslist AS $key=>$value)
 			{
 				//删除附件
-				if(file_exists($this->dir_root.$value["filename"]) && is_file($this->dir_root.$value["filename"]))
+				if(file_exists(ROOT.$value["filename"]) && is_file(ROOT.$value["filename"]))
 				{
 					$this->lib('file')->rm($value["filename"]);
 				}
-				if($value["ico"] && substr($value["ico"],0,7) != "images/" && file_exists($this->dir_root.$value["ico"]))
+				if($value["ico"] && substr($value["ico"],0,7) != "images/" && file_exists(ROOT.$value["ico"]))
 				{
 					$this->lib('file')->rm($value["ico"]);
 				}
 				//删除扩展
 				foreach($value["gd"] AS $k=>$v)
 				{
-					if($v["filename"] && file_exists($this->dir_root.$v["filename"]))
+					if($v["filename"] && file_exists(ROOT.$v["filename"]))
 					{
-						$this->lib('file')->rm($this->dir_root.$v["filename"]);
+						$this->lib('file')->rm(ROOT.$v["filename"]);
 					}
 				}
 			}

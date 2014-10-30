@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/ueditor_control.php
+	Filename:  api/ueditor_control.php
 	Note	: Ueditor编辑器中涉及到的上传操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月3日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ueditor_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ueditor_control extends base_control
 {
 	function __construct()
 	{
@@ -110,9 +110,9 @@ class ueditor_control extends phpok_control
 		{
 			$folder .= date($cate_rs["folder"],$this->time);
 		}
-		if(!is_dir($this->dir_root.$folder)) $this->lib('file')->make($this->dir_root.$folder);
+		if(!is_dir(ROOT.$folder)) $this->lib('file')->make(ROOT.$folder);
 		//二次判断是否有文件夹
-		if(!is_dir($this->dir_root.$folder)) $folder = $cate_rs['folder'];
+		if(!is_dir(ROOT.$folder)) $folder = $cate_rs['folder'];
 		//
 		if(substr($folder,-1) != "/") $folder .= "/";
 		if(substr($folder,0,1) == "/") $folder = substr($folder,1);
@@ -170,7 +170,7 @@ class ueditor_control extends phpok_control
 	            array_push( $tmpNames , "error" );
                 continue;
             }
-            $save_folder = $this->dir_root.$cate_rs['folder'];
+            $save_folder = ROOT.$cate_rs['folder'];
 			$newfile = $save_folder.$new_filename.".".$ext;
 			$this->lib('file')->save_pic($content,$newfile);
 			if(!is_file($newfile))
@@ -245,7 +245,7 @@ class ueditor_control extends phpok_control
 		$filename = $this->time."_".rand(1,999).'.png';
 		$cate_rs = $this->res_folder();
 		//存储成为图片
-		$newfile = $this->dir_root.$cate_rs['folder'].$filename;
+		$newfile = ROOT.$cate_rs['folder'].$filename;
 		$this->lib('file')->save_pic($img,$newfile);
 		//当图片不存在时
 		if(!is_file($newfile)) exit("{'url':'',state:'涂鸦失败，请检查'}");
@@ -256,14 +256,14 @@ class ueditor_control extends phpok_control
 		$array['session_id'] = $this->session->sessid();
 		$array['user_id'] = $_SESSION['user_id'];
 		$array['title'] = substr($array['name'],0,-4);
-		$img_ext = getimagesize($this->dir_root.$array['filename']);
+		$img_ext = getimagesize(ROOT.$array['filename']);
 		$my_ext = array("width"=>$img_ext[0],"height"=>$img_ext[1]);
 		$array["attr"] = serialize($my_ext);
 		//存储图片信息
 		$id = $this->model('res')->save($array);
 		if(!$id)
 		{
-			$this->lib('file')->rm($this->dir_root.$array['filename']);
+			$this->lib('file')->rm(ROOT.$array['filename']);
 			exit("{'url':'',state:'附件存储失败，请检查'}");
 		}
 		//更新附件操作
@@ -288,7 +288,7 @@ class ueditor_control extends phpok_control
 		//获取附件分类
 		$cate_rs = $this->res_folder($this->get($cate));
 		$basename = basename($rs["filename"]);
-		$save_folder = $this->dir_root.$cate_rs['folder'];
+		$save_folder = ROOT.$cate_rs['folder'];
 		if($save_folder.$basename != $rs["filename"])
 		{
 			$this->lib('file')->mv($rs["filename"],$save_folder.$basename);

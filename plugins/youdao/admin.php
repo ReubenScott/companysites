@@ -6,7 +6,7 @@
 	Author  : qinggan
 	Update  : 2012-08-22 19:59
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class admin_youdao extends phpok_plugin
 {
 	var $path;

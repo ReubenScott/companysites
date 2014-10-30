@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/reply_control.php
+	Filename:  admin/reply_control.php
 	Note	: 回复内容管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年7月2日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class reply_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class reply_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -54,7 +54,7 @@ class reply_control extends phpok_control
 			$this->assign("rslist",$rslist);
 			if($total>$psize)
 			{
-				$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
+				$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
 				$this->assign("pagelist",$pagelist);
 			}
 		}
@@ -154,7 +154,7 @@ class reply_control extends phpok_control
 			$this->assign("rslist",$rslist);
 			if($total>$psize)
 			{
-				$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
+				$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
 				$this->assign("pagelist",$pagelist);
 			}
 		}

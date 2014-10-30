@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/ad.php
+	Filename:  model/ad.php
 	Note	: 广告管理（Model层）
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月13日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ad_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ad_model extends base_model
 {
 	function __construct()
 	{

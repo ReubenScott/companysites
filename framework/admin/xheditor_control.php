@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/ueditor_control.php
+	Filename:  admin/ueditor_control.php
 	Note	: Ueditor 编辑器中涉及到上传的操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月26日 19时04分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class xheditor_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class xheditor_control extends base_control
 {
 	function __construct()
 	{
@@ -77,7 +77,7 @@ class xheditor_control extends phpok_control
 		if(!$cate_rs)
 		{
 			$cate_rs["id"] = 0;
-			$cate_rs["root"] = $this->dir_root."res/";
+			$cate_rs["root"] = ROOT."res/";
 			$cate_rs["folder"] = "/";
 		}
 		$folder = $cate_rs["root"];
@@ -114,7 +114,7 @@ class xheditor_control extends phpok_control
             $fileType = strtolower( strrchr( $imgUrl , '.' ));
             $ext = substr($fileType,1);
             if(!$ext) $ext = "png";
-			$save_folder = $this->dir_root.$folder;
+			$save_folder = ROOT.$folder;
 			$newfile = $save_folder.$new_filename.".".$ext;
 			$this->lib('file')->save_pic($content,$newfile);
 			if(!file_exists($newfile))
@@ -186,7 +186,7 @@ class xheditor_control extends phpok_control
 		if(!$cate_rs)
 		{
 			$cate_rs["id"] = 0;
-			$cate_rs["root"] = $this->dir_root."res/";
+			$cate_rs["root"] = ROOT."res/";
 			$cate_rs["folder"] = "/";
 		}
 		$folder = $cate_rs["root"];
@@ -206,7 +206,7 @@ class xheditor_control extends phpok_control
 		}
 		//存储目录
 		$basename = basename($rs["filename"]);
-		$save_folder = $this->dir_root.$folder;
+		$save_folder = ROOT.$folder;
 		if($save_folder.$basename != $rs["filename"])
 		{
 			$this->lib('file')->mv($rs["filename"],$save_folder.$basename);
@@ -321,7 +321,7 @@ class xheditor_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("total",$total);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 	}
 
@@ -390,7 +390,7 @@ class xheditor_control extends phpok_control
 		if(!$cate_rs)
 		{
 			$cate_rs["id"] = 0;
-			$cate_rs["root"] = $this->dir_root."res/";
+			$cate_rs["root"] = ROOT."res/";
 			$cate_rs["folder"] = "/";
 		}
 		$folder = $cate_rs["root"];
@@ -408,7 +408,7 @@ class xheditor_control extends phpok_control
 		{
 			$folder = str_replace("//","/",$folder);
 		}
-		$save_folder = $this->dir_root.$folder;
+		$save_folder = ROOT.$folder;
 		$newfile = $save_folder.$new_filename.".".$ext;
 		$this->lib('file')->save_pic($imgContent,$newfile);
 		if(!file_exists($newfile))
@@ -471,11 +471,11 @@ class xheditor_control extends phpok_control
 		if(in_array($rs["ext"],$arraylist))
 		{
 			$this->lib("gd");
-			$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$id);
+			$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$id);
 			if(!$ico)
 			{
 				$ico = "images/filetype-large/".$rs["ext"].".jpg";
-				if(!file_exists($this->dir_root.$ico))
+				if(!file_exists(ROOT.$ico))
 				{
 					$ico = "images/filetype-large/unknow.jpg";
 				}
@@ -491,7 +491,7 @@ class xheditor_control extends phpok_control
 		{
 			$tmp = array();
 			$ico = "images/filetype-large/".$rs["ext"].".jpg";
-			if(!file_exists($this->dir_root.$ico))
+			if(!file_exists(ROOT.$ico))
 			{
 				$ico = "images/filetype-large/unknow.jpg";
 			}

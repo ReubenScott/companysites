@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/order.js
+	Filename:  js/order.js
 	Note	: 订单JS相关动作管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月18日
 ***********************************************************/

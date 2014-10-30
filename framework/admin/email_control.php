@@ -6,7 +6,7 @@
 	Author  : qinggan
 	Update  : 2011-03-12
 ***********************************************************/
-class email_control extends phpok_control
+class email_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -36,7 +36,7 @@ class email_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('email')->get_count($condition);//读取模块总数
 		$pageurl = $this->url("email");
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
 		if($pagelist)
 		{
 			$this->assign("pagelist",$pagelist);

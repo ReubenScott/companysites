@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/engine/cache/secache.php
+	Filename:  engine/cache/secache.php
 	Note	: secache单文件缓存
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月7日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 
 class cache_secache
 {

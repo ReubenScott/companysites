@@ -3,11 +3,11 @@
 	Filename: ajax/www_update_dateline.php
 	Note	: 刷新简历
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月29日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 if(!$_SESSION['user_id'])
 {
 	$this->json("非会员不能执行此操作");
@@ -30,6 +30,6 @@ if($rs['user_id'] != $_SESSION["user_id"])
 $array = array("dateline"=>$this->time);
 $this->model('list')->save($array,$id);
 //清空缓存
-phpok_delete_cache('call');
+delete_cache('call');
 $this->json('ok',true);
 ?>

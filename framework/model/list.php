@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/list.php
+	Filename:  model/list.php
 	Note	: 读取内容列表
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-15 02:17
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class list_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class list_model extends base_model
 {
 	function __construct()
 	{
@@ -355,7 +355,7 @@ class list_model extends phpok_model
 
 	function attr_list()
 	{
-		$xmlfile = $this->dir_root."data/xml/attr.xml";
+		$xmlfile = ROOT."data/xml/attr.xml";
 		if(!file_exists($xmlfile))
 		{
 			$array = array("h"=>"头条","c"=>"推荐","a"=>"特荐");

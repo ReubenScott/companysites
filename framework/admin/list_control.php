@@ -3,12 +3,12 @@
 	Filename: admin/list_control.php
 	Note	: 内容控制器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-31 19:45
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class list_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class list_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -357,7 +357,7 @@ class list_control extends phpok_control
 			}
 			unset($sublist,$sub_idstring,$sub_idlist);
 			$_SESSION["last_page_url"] = $pageurl."&".$this->config["pageid"]."=".$pageid;
-			$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
+			$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
 			$this->assign("pagelist",$pagelist);
 			$this->assign("rslist",$rslist);
 		}

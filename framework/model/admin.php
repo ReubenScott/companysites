@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/model/admin.php
+	Filename:  model/admin.php
 	Note	: 管理员信息管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-20 14:20
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class admin_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class admin_model extends base_model
 {
 	function __construct()
 	{

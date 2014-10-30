@@ -29,7 +29,7 @@ class upload_lib
 		{
 			return false;
 		}
-		$app = init_app();
+		global $app ;
 		$this->dir_res = $app->dir_root."res/";
 		$app->model("res");
 		$config = $app->res_model->type_list();

@@ -3,11 +3,11 @@
 	Filename: ajax/www_add_fav.php
 	Note	: 添加收藏
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年07月01日 10时28分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $site_id = $this->site["id"];
 if(!$site_id)
 {
@@ -59,7 +59,7 @@ if($chk_rs)
 	//更新收藏次数
 	$sql = "UPDATE ".$this->db->prefix."list_".$rs["module_id"]." SET fav_count=fav_count-1 WHERE id='".$tid."'";
 	$this->db->query($sql);
-	phpok_delete_cache('call,list');
+	delete_cache('call,list');
 	json_exit(array('tips'=>"取消收藏操作成功",'action'=>'-'),true);
 }
 
@@ -116,7 +116,7 @@ $this->model('list')->save_ext($tmplist,$p_rs["module"]);
 $sql = "UPDATE ".$this->db->prefix."list_".$rs["module_id"]." SET fav_count=fav_count+1 WHERE id='".$tid."'";
 $this->db->query($sql);
 //清除缓存
-phpok_delete_cache('call,list');
+delete_cache('call,list');
 
 //存储扩展字段
 $identifier = "content-".$insert_id;

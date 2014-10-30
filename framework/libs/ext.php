@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/libs/ext.php
+	Filename:  libs/ext.php
 	Note	: 扩展表内容读取及格式化
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年7月20日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class ext_lib
 {
 	var $app;

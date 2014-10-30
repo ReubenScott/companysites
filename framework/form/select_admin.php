@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/form/select_admin.php
+	Filename:  form/select_admin.php
 	Note	: 文本区编辑框
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-12 17:53
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class select_form
 {
 	function __construct()

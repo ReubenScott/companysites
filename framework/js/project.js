@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/project.js
+	Filename:  js/project.js
 	Note	: 项目管理的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月29日
 ***********************************************************/

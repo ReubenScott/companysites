@@ -1,12 +1,12 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/usergroup_control.php
+	Filename:  admin/usergroup_control.php
 	Note	: 会员组管理
 	Version : 3.1
 	Author  : qinggan
 	Update  : 2011-03-13
 ***********************************************************/
-class usergroup_control extends phpok_control
+class usergroup_control extends base_control
 {
 	var $popedom;
 	function __construct()

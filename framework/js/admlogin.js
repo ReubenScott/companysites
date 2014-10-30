@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/admlogin.js
+	Filename:  js/admlogin.js
 	Note	: 管理员登录页涉及到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2014年1月6日
 ***********************************************************/

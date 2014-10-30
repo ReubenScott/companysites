@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/ajax_control.php
+	Filename:  ajax_control.php
 	Note	: Ajax公共操作，不限前台，后台
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月15日 10时02分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ajax_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ajax_control extends base_control
 {
 	function __construct()
 	{
@@ -30,10 +30,10 @@ class ajax_control extends phpok_control
 		{
 			$this->json_exit("Ajax目标文件不能为空！");
 		}
-		$ajax_file = $this->dir_phpok."ajax/".$this->app_id."_".$filename.".php";
+		$ajax_file = FRAMEWORK."ajax/".$this->app_id."_".$filename.".php";
 		if(!is_file($ajax_file))
 		{
-			$ajax_file = $this->dir_root."ajax/".$this->app_id."_".$filename.".php";
+			$ajax_file = ROOT."ajax/".$this->app_id."_".$filename.".php";
 			if(!is_file($ajax_file))
 			{
 				$this->json_exit("Ajax文件：".$ajax_file."不存在");
@@ -74,10 +74,10 @@ class ajax_control extends phpok_control
 		{
 			exit("Ajax目标文件不能为空！");
 		}
-		$ajax_file = $this->dir_phpok."ajax/".$this->app_id."_".$filename.".php";
+		$ajax_file = FRAMEWORK."ajax/".$this->app_id."_".$filename.".php";
 		if(!file_exists($ajax_file))
 		{
-			$ajax_file = $this->dir_root."ajax/".$this->app_id."_".$filename.".php";
+			$ajax_file = ROOT."ajax/".$this->app_id."_".$filename.".php";
 			if(!file_exists($ajax_file))
 			{
 				exit("Ajax文件：".$ajax_file."不存在");

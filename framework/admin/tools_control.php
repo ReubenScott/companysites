@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/admin/tools_control.php
+	Filename:  admin/tools_control.php
 	Note	: 后台首页控制台
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 13:03
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class tools_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class tools_control extends base_control
 {
 	function __construct()
 	{

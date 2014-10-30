@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/call.php
+	Filename:  model/call.php
 	Note	: 数据调用中心涉及到的SQL操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-18 02:24
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class call_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class call_model extends base_model
 {
 	//site_id，为网站ID
 	var $site_id = 0;
@@ -100,7 +100,7 @@ class call_model extends phpok_model
 	{
 		if(!$data || !is_array($data)) return false;
 		//删除缓存文件
-		phpok_delete_cache("call");
+		delete_cache("call");
 		if($id)
 		{
 			return $this->db->update_array($data,"phpok",array("id"=>$id));
@@ -119,7 +119,7 @@ class call_model extends phpok_model
 
 	function del($id)
 	{
-		phpok_delete_cache("call");
+		delete_cache("call");
 		$sql = "DELETE FROM ".$this->db->prefix."phpok WHERE id='".$id."'";
 		return $this->db->query($sql);
 	}

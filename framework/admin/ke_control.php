@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/ke_control.php
+	Filename:  admin/ke_control.php
 	Note	: 基于KindEditor的附件管理器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-02-07 15:24
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ke_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ke_control extends base_control
 {
 	var $order = "name";
 	function __construct()
@@ -19,7 +19,7 @@ class ke_control extends phpok_control
 
 	function index_f()
 	{
-		$php_path = $this->dir_root;
+		$php_path = ROOT;
 		$php_url = '';
 		//根目录路径，可以指定绝对路径，比如 /var/www/attached/
 		$root_path = $php_path . 'res/';

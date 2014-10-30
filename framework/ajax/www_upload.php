@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_upload.php
 	Note	: 上传附件
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月30日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $cateid = $this->get("cateid","int");
 $rs = $this->lib('upload')->upload("fileupload");
 if($rs["status"] != "ok")
@@ -19,7 +19,7 @@ $cate_rs = $this->model('res')->cate_one($cateid);
 if(!$cate_rs)
 {
 	$cate_rs["id"] = 0;
-	$cate_rs["root"] = $this->dir_root."res/";
+	$cate_rs["root"] = ROOT."res/";
 	$cate_rs["folder"] = "/";
 }
 $folder = $cate_rs["root"];
@@ -39,7 +39,7 @@ if($folder)
 }
 //存储目录
 $basename = basename($rs["filename"]);
-$save_folder = $this->dir_root.$folder;
+$save_folder = ROOT.$folder;
 if($save_folder.$basename != $rs["filename"])
 {
 	$this->lib('file')->mv($rs["filename"],$save_folder.$basename);
@@ -102,7 +102,7 @@ if(!$rs) json_exit("附件不存在");
 $arraylist = array("jpg","gif","png","jpeg");
 if(in_array($rs["ext"],$arraylist))
 {
-	$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$id);
+	$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$id);
 	if(!$ico)
 	{
 		$ico = "images/filetype-large/".$rs["ext"].".jpg";
@@ -122,7 +122,7 @@ else
 {
 	$tmp = array();
 	$ico = "images/filetype-large/".$rs["ext"].".jpg";
-	if(!file_exists($ico) && !file_exists($this->dir_root.$ico))
+	if(!file_exists($ico) && !file_exists(ROOT.$ico))
 	{
 		$ico = "images/filetype-large/unknow.jpg";
 	}
@@ -144,7 +144,7 @@ if(in_array($rs["ext"],$arraylist))
 			$array["res_id"] = $id;
 			$array["gd_id"] = $value["id"];
 			$array["filetime"] = $this->system_time;
-			$gd_tmp = $this->lib('gd')->gd($this->dir_root.$rs["filename"],$id,$value);
+			$gd_tmp = $this->lib('gd')->gd(ROOT.$rs["filename"],$id,$value);
 			if($gd_tmp)
 			{
 				$array["filename"] = $rs["folder"].$gd_tmp;

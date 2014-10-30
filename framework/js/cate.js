@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/cate.js
+	Filename:  js/cate.js
 	Note	: 栏目管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-06 17:42
 ***********************************************************/

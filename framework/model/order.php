@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/order.php
+	Filename:  model/order.php
 	Note	: 订单信息及管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月8日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class order_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class order_model extends base_model
 {
 	function __construct()
 	{
@@ -108,7 +108,7 @@ class order_model extends phpok_model
 
 	function status_list()
 	{
-		$info = xml_to_array(file_get_contents($this->dir_phpok.'system.xml'));
+		$info = xml_to_array(file_get_contents(FRAMEWORK.'system.xml'));
 		if($info['orderstatus']) return $info['orderstatus'];
 		return false;
 	}

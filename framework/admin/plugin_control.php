@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/plugin_control.php
+	Filename:  admin/plugin_control.php
 	Note	: 插件中心
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-08 10:04
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class plugin_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class plugin_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -53,9 +53,9 @@ class plugin_control extends phpok_control
 			$rs['param'] = unserialize($rs['param']);
 		}
 		$this->assign("rs",$rs);
-		if(is_file($this->dir_root.'plugins/'.$id.'/setting.php'))
+		if(is_file(ROOT.'plugins/'.$id.'/setting.php'))
 		{
-			include_once($this->dir_root.'plugins/'.$id.'/setting.php');
+			include_once(ROOT.'plugins/'.$id.'/setting.php');
 			$name = 'setting_'.$id;
 			$cls = new $name();
 			$methods = get_class_methods($cls);
@@ -93,9 +93,9 @@ class plugin_control extends phpok_control
 		$version = $this->get('version');
 		$array = array('title'=>$title,'note'=>$note,'taxis'=>$taxis,'author'=>$author,'version'=>$version);
 		$this->model('plugin')->update_plugin($array,$id);
-		if(is_file($this->dir_root.'plugins/'.$id.'/setting.php'))
+		if(is_file(ROOT.'plugins/'.$id.'/setting.php'))
 		{
-			include_once($this->dir_root.'plugins/'.$id.'/setting.php');
+			include_once(ROOT.'plugins/'.$id.'/setting.php');
 			$name = 'setting_'.$id;
 			$cls = new $name();
 			$methods = get_class_methods($cls);
@@ -188,9 +188,9 @@ class plugin_control extends phpok_control
 		if(!$id) $this->json(1002);
 		$rs = $this->model('plugin')->get_one($id);
 		if(!$rs) $this->json(1001);
-		if(is_file($this->dir_root.'plugins/'.$id.'/uninstall.php'))
+		if(is_file(ROOT.'plugins/'.$id.'/uninstall.php'))
 		{
-			include_once($this->dir_root.'plugins/'.$id.'/uninstall.php');
+			include_once(ROOT.'plugins/'.$id.'/uninstall.php');
 			$name = 'uninstall_'.$id;
 			$cls = new $name();
 			$methods = get_class_methods($cls);
@@ -213,9 +213,9 @@ class plugin_control extends phpok_control
 		$status = $rs["status"] ? 0 : 1;
 		$this->model('plugin')->update_status($id,$status);
 		//执行插件运行
-		if(is_file($this->dir_root.'plugins/'.$id.'/setting.php'))
+		if(is_file(ROOT.'plugins/'.$id.'/setting.php'))
 		{
-			include_once($this->dir_root.'plugins/'.$id.'/setting.php');
+			include_once(ROOT.'plugins/'.$id.'/setting.php');
 			$name = 'setting_'.$id;
 			$cls = new $name();
 			$methods = get_class_methods($cls);
@@ -235,8 +235,8 @@ class plugin_control extends phpok_control
 		$rs = $this->model('plugin')->get_one($id);
 		if(!$rs) json_exit(1001);
 		if($rs['param']) $rs['param'] = unserialize($rs['param']);
-		if(!is_file($this->dir_root.'plugins/'.$id.'/'.$this->app_id.'.php')) $this->json(1008);
-		include_once($this->dir_root.'plugins/'.$id.'/'.$this->app_id.'.php');
+		if(!is_file(ROOT.'plugins/'.$id.'/'.$this->app_id.'.php')) $this->json(1008);
+		include_once(ROOT.'plugins/'.$id.'/'.$this->app_id.'.php');
 		$name = $this->app_id.'_'.$id;
 		$cls = new $name();
 		$methods = get_class_methods($cls);

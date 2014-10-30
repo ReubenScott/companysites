@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: phpok/js/fields.js
+	Filename:  js/fields.js
 	Note	: 字段管理中涉及的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-11-26 17:07
 ***********************************************************/

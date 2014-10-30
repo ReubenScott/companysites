@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/admin/ajax_control.php
+	Filename:  admin/ajax_control.php
 	Note	: Ajax调用，无限制调用，请在应用中根据需要添加
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 18:08
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class ajax_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class ajax_control extends base_control
 {
 	function __construct()
 	{

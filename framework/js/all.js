@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/all.js
+	Filename:  js/all.js
 	Note	: 全局模块参数设置
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-19 20:20
 ***********************************************************/

@@ -3,11 +3,11 @@
 	Filename: ajax/www_add_atten.php
 	Note	: 添加关注
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年07月01日 10时28分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $site_id = $this->config_site["id"];
 if(!$site_id)
 {

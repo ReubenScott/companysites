@@ -1,12 +1,12 @@
 <?php
 /***********************************************************
-	Filename: phpok/engine/session/file.php
+	Filename:  engine/session/file.php
 	Note	: 自定义SESSION存储目录
 	Version : 4.0
 	Author  : qinggan
 	Update  : 2011-11-07 15:54
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 
 class session_file
 {

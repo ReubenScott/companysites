@@ -2,7 +2,7 @@
 	Filename: js/global.js
 	Note	: 后台通用JS，此JS应加载在jquery.js之后
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 16:58
 ***********************************************************/

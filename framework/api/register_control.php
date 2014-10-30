@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/register_control.php
+	Filename:  api/register_control.php
 	Note	: 注册API接口
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年10月30日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class register_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class register_control extends base_control
 {
 	function __construct()
 	{
@@ -107,7 +107,7 @@ class register_control extends phpok_control
 		if($array['status'])
 		{
 			//状态为1时，直接在线登录
-			phpok_user_login($uid);
+			user_login($uid);
 			$this->json(101,true);
 		}
 		//未设置审核，直接中止，弹出提示
@@ -136,7 +136,7 @@ class register_control extends phpok_control
 			$this->model('list')->update_ext($ext,$p_rs['module'],$info['id']);
 			//验证串通过更新会员状态
 			$this->user_model->set_status($uid,1);
-			phpok_user_login($uid);
+			user_login($uid);
 		}
 		$this->json(101,true);
 	}

@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/api/login_control.php
+	Filename:  api/login_control.php
 	Note	: API登录接口
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年11月2日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class login_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class login_control extends base_control
 {
 	function __construct()
 	{
@@ -38,7 +38,7 @@ class login_control extends phpok_control
 		$chk_rs = $this->model('user')->chk_name($user);
 		if(!$chk_rs) $this->json(1023);
 		//尝试登录信息
-		$info = phpok_user_login($chk_rs["id"],$pass);
+		$info = user_login($chk_rs["id"],$pass);
 		if($info != "ok")
 		{
 			$this->json($info,false,true,false);

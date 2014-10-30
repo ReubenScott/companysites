@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/ad.js
+	Filename:  js/ad.js
 	Note	: 广告后台管理常用到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月13日
 ***********************************************************/

@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/list.js
+	Filename:  js/list.js
 	Note	: 内容管理里的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-02-21 11:13
 ***********************************************************/

@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/cart_control.php
+	Filename:  www/cart_control.php
 	Note	: 购物车
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月21日 15时21分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class cart_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class cart_control extends base_control
 {
 	public $cart_id = 0;
 	function __construct()

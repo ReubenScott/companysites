@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/order_control.php
+	Filename:  www/order_control.php
 	Note	: 订单信息管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月8日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class order_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class order_control extends base_control
 {
 	function __construct()
 	{

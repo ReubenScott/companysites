@@ -1,4 +1,4 @@
-// PHPOK程序中常用到的JS，封装在此
+// 程序中常用到的JS，封装在此
 // 水平比较菜:)
 ;(function($){
 	$.phpok = {
@@ -18,7 +18,7 @@
 })(jQuery);
 
 //JS操作全选，反选等工具
-// 由PHPOK整理重新编写的常见的input属性操作
+// 由整理重新编写的常见的input属性操作
 ;(function($){
 
 	$.input = {
@@ -111,7 +111,7 @@
 			return string ? string : false;
 		},
 		identifier: function(str){
-			//验证标识串，PHPOK系统中，大量使用标识串，将此检测合并进来
+			//验证标识串，系统中，大量使用标识串，将此检测合并进来
 			var chk = /^[A-Za-z]+[a-zA-Z0-9_\-]*$/;
 			return chk.test(str);
 		},
@@ -229,7 +229,7 @@ function identifier(str)
 	return $.str.identifier(str);
 }
 
-// 由PHPOK编写的基于jQuery的Cookie操作
+// 由编写的基于jQuery的Cookie操作
 // 读取cookie信息 $.cookie.get("变量名");
 // 设置cookie信息 $.cookie.set("变量名","值","过期时间");
 // 删除Cookie信息 $.cookie.del("变量名");

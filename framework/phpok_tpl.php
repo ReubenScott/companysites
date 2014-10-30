@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: phpok/phpok_tpl.php
-	Note	: PHPOK模板引挈，简单实用
+	Filename: phpok_tpl.php
+	Note	: 模板引挈，简单实用
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 10:27
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class phpok_tpl
 {
 	# 模板编译后的前缀ID，后面跟下划线
@@ -36,7 +36,7 @@ class phpok_tpl
 	var $tpl_ext = "html";
 
 	# HTML头部信息，防止被下载
-	var $html_head = '<?php if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");} ?>';
+	var $html_head = '<?php if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");} ?>';
 
 	# tpl_value，附值
 	var $tpl_value;
@@ -48,7 +48,7 @@ class phpok_tpl
 		if($config["dir_tpl"]) $this->dir_tpl = $config["dir_tpl"];
 		if($config["dir_cache"]) $this->dir_cache = $config["dir_cache"];
 		if($config["dir_php"]) $this->dir_php = $config["dir_php"];
-		if($config["dir_root"]) $this->dir_root = $config["dir_root"];
+// 		if($config["dir_root"]) ROOT = $config["dir_root"];
 		if($config["path_change"]) $this->path_change = $config["path_change"];
 		$this->refresh_auto = $config["refresh_auto"] ? true : false;
 		$this->refresh = $config["refresh"] ? true : false;
@@ -174,11 +174,11 @@ class phpok_tpl
 		{
 			if($type == "file")
 			{
-				$tplfile = $this->dir_root.$this->dir_tpl.$tpl.".".$this->tpl_ext;
+				$tplfile = ROOT.$this->dir_tpl.$tpl.".".$this->tpl_ext;
 			}
 			elseif($type == "file-ext")
 			{
-				$tplfile = $this->dir_root.$this->dir_tpl.$tpl;
+				$tplfile = ROOT.$this->dir_tpl.$tpl;
 			}
 			else
 			{
@@ -416,7 +416,7 @@ class phpok_tpl
 			if(substr($value,0,1) != '$') $value = "'".$value."'";
 			$array[] = "'".$key."'=>".$value;
 		}
-		return '<?php echo phpok_url(array('.implode(",",$array).'));?>';
+		return '<?php echo static_url(array('.implode(",",$array).'));?>';
 	}
 
 	function ajaxurl_php($string)
@@ -670,11 +670,11 @@ class phpok_tpl
 		if($type == "content" || $type == "msg") return $tpl;
 		if($type == "file")
 		{
-			$tplfile = $this->dir_root.$this->dir_tpl.$tpl.".".$this->tpl_ext;
+			$tplfile = ROOT.$this->dir_tpl.$tpl.".".$this->tpl_ext;
 		}
 		elseif($type == "file-ext")
 		{
-			$tplfile = $this->dir_root.$this->dir_tpl.$tpl;
+			$tplfile = ROOT.$this->dir_tpl.$tpl;
 		}
 		else
 		{
@@ -737,7 +737,7 @@ class phpok_tpl
 	{
 		$tplfile = $tplname;
 		if(!$isext) $tplfile .= ".".$this->tpl_ext;
-		if(!$ifabs) $tplfile = $this->dir_root.$this->dir_tpl.$tplfile;
+		if(!$ifabs) $tplfile = ROOT.$this->dir_tpl.$tplfile;
 		if(is_file($tplfile))
 		{
 			return true;

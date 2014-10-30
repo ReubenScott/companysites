@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/tag.php
+	Filename:  model/tag.php
 	Note	: TAG管理器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-16 07:53
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class tag_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class tag_model extends base_model
 {
 	function __construct()
 	{
@@ -76,7 +76,7 @@ class tag_model extends phpok_model
 	//更新主题的Tag信息
 	function update_tag($id,$tag="")
 	{
-		$this->lib("pingyin")->path = $this->dir_phpok."libs/pingyin.qdb";
+		$this->lib("pingyin")->path = FRAMEWORK."libs/pingyin.qdb";
  		$py = iconv("UTF-8","GBK",$tag);
 	 	$py = $this->lib("pingyin")->ChineseToPinyin($py);
 	 	$py = strtolower($py);

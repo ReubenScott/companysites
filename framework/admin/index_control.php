@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/admin/index_control.php
+	Filename:  admin/index_control.php
 	Note	: 后台首页控制台
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-19 13:03
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class index_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class index_control extends base_control
 {
 	function __construct()
 	{
@@ -41,18 +41,18 @@ class index_control extends phpok_control
 
 	function clear_f()
 	{
-		$this->lib('file')->rm($this->dir_root."data/cache/");
-		$this->lib('file')->rm($this->dir_root."data/tpl_www/");
-		$this->lib('file')->rm($this->dir_root."data/tpl_admin/");
-		$list = $this->lib('file')->ls($this->dir_root."data/");
+		$this->lib('file')->rm(ROOT."data/cache/");
+		$this->lib('file')->rm(ROOT."data/tpl_www/");
+		$this->lib('file')->rm(ROOT."data/tpl_admin/");
+		$list = $this->lib('file')->ls(ROOT."data/");
 		if(!$list) $list = array();
 		foreach($list AS $key=>$value)
 		{
 			if(is_file($value) && basename($value) != "install.lock") $this->lib('file')->rm($value);
 		}
-		$list = $this->lib("file")->ls($this->dir_phpok."config/");
+		$list = $this->lib("file")->ls(FRAMEWORK."config/");
 		if(!$list) $list = array();
-		include($this->dir_phpok."config/config.global.php");
+		include(FRAMEWORK."config/config.global.php");
 		foreach($list AS $key=>$value)
 		{
 			$tmp = basename($value);

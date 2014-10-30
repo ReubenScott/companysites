@@ -2,7 +2,7 @@
 	Filename: {phpok}js/global.www.js
 	Note	: 前台公共JS加载
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月12日
 ***********************************************************/

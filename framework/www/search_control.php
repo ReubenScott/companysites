@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/search_control.php
+	Filename:  www/search_control.php
 	Note	: 搜索
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-20 23:51
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class search_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class search_control extends base_control
 {
 	function __construct()
 	{

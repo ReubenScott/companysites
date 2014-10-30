@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/call_control.php
+	Filename:  admin/call_control.php
 	Note	: 数据调用中心
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-18 02:22
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class call_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class call_control extends base_control
 {
 	var $psize = 20;
 	var $phpok_type_list;//可调用类型
@@ -62,7 +62,7 @@ class call_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('call')->get_count($condition);
 		$this->assign("total",$total);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$this->psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$this->psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 		$attrlist = $this->model('list')->attr_list();
 		$this->assign("attrlist",$attrlist);
@@ -96,7 +96,7 @@ class call_control extends phpok_control
 		$this->model("list");
 		$attrlist = $this->model('list')->attr_list();
 		$this->assign("attrlist",$attrlist);
-		$this->view("phpok_set");
+		$this->view("APP_SET");
 	}
 
 	//取得分类列表

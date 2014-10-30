@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/js_control.php
+	Filename:  js_control.php
 	Note	: JS控制器，这里用来控制后台的JS信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-29 20:22
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class js_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class js_control extends base_control
 {
 	function __construct()
 	{
@@ -23,7 +23,7 @@ class js_control extends phpok_control
 	function index_f()
 	{
 		$this->js_base();
-		echo $this->file_lib->cat($this->dir_phpok."form.js");
+		echo $this->file_lib->cat(FRAMEWORK."form.js");
 		echo "\n";
 		$ext = $this->get("ext");
 		$autoload_js = $this->config["autoload_js"];
@@ -37,10 +37,10 @@ class js_control extends phpok_control
 		foreach($list AS $key=>$value)
 		{
 			$value = trim($value);
-			$js1_file = $this->dir_root."js/".$value;
-			$js2_file = $this->dir_phpok."js/".$value;
+			$js1_file = ROOT."js/".$value;
+			$js2_file = FRAMEWORK."js/".$value;
 			$jsfile = is_file($js1_file) ? $js1_file : $js2_file;
-			if(!is_file($jsfile)) $jsfile = $this->dir_root.$value;
+			if(!is_file($jsfile)) $jsfile = ROOT.$value;
 			if($value && is_file($jsfile) && $value != "jquery.js")
 			{
 				echo $this->file_lib->cat($jsfile);
@@ -65,7 +65,7 @@ class js_control extends phpok_control
 			//判断后缀是否是.js
 			if(strtolower(substr($value,-3)) != '.js') $value .= '.js';
 			//判断文件是否存在
-			$file = is_file($this->dir_phpok.'js/'.$value) ? $this->dir_phpok.'js/'.$value : $this->dir_root."js/".$value;
+			$file = is_file(FRAMEWORK.'js/'.$value) ? FRAMEWORK.'js/'.$value : ROOT."js/".$value;
 			if(is_file($file))
 			{
 				echo "\n";
@@ -78,7 +78,7 @@ class js_control extends phpok_control
 	//取得拼音
 	function pingyin_f()
 	{
- 		$this->lib("pingyin")->path = $this->dir_phpok."libs/pingyin.qdb";
+ 		$this->lib("pingyin")->path = FRAMEWORK."libs/pingyin.qdb";
  		$title = $this->get("title");
  		if(!$title)
  		{
@@ -132,7 +132,7 @@ class js_control extends phpok_control
 				$value = trim($value);
 				if(!$value) continue;
 				if(strtolower(substr($value,-3)) != '.js') $value .= '.js';
-				$file = is_file($this->dir_phpok.'js/'.$value) ? $this->dir_phpok.'js/'.$value : $this->dir_root."js/".$value;
+				$file = is_file(FRAMEWORK.'js/'.$value) ? FRAMEWORK.'js/'.$value : ROOT."js/".$value;
 				if(is_file($file))
 				{
 					echo "\n";
@@ -193,7 +193,7 @@ class js_control extends phpok_control
 		echo "\n";
 		echo 'function api_plugin_url(id,func,ext){var url = "'.$weburl.$this->config['api_file'].'?'.$this->config['ctrl_id'].'=plugin&'.$this->config['func_id'].'=index&id="+id+"&exec="+func;if(ext){url+="&"+ext};return url;};';
 		echo "\n";
-		echo $this->file_lib->cat($this->dir_phpok."jquery.js");
+		echo $this->file_lib->cat(FRAMEWORK."jquery.js");
 		echo "\n";
 	}
 }

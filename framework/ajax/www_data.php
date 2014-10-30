@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_data.php
 	Note	: 通过Ajax获取数据调用信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月28日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $offset = $this->get("startid","int");
 $id = $this->get("phpok");
 if(!$id)

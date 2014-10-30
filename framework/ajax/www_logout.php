@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_logout.php
 	Note	: 会员退出操作，退出后将清空相关的SESSION信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月14日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 if(!$_SESSION["user_id"])
 {
 	json_exit("您还没有登录，不能使用此功能");

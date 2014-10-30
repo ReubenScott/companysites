@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: phpok/model/fields.php
+	Filename:  model/fields.php
 	Note	: 读取 qinggan_fields/qinggan_fields_ext 表操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-11-01 20:24
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class fields_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class fields_model extends base_model
 {
 	function __construct()
 	{

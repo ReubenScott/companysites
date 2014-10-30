@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/register_control.php
+	Filename:  www/register_control.php
 	Note	: 会员注册信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月15日 14时45分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class register_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class register_control extends base_control
 {
 	function __construct()
 	{
@@ -202,7 +202,7 @@ class register_control extends phpok_control
 		}
 		if($rs["status"])
 		{
-			phpok_user_login($rs["id"]);
+			user_login($rs["id"]);
 			$tip = "会员 <span class='red'>".$rs["user"]."</span> 注册成功";
 		}
 		else

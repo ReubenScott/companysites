@@ -3,11 +3,11 @@
 	Filename: plugins/alipay/admin.php
 	Note	: 支付宝插件在后台的一些应用
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月18日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class admin_alipay extends phpok_plugin
 {
 	var $path;

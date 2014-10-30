@@ -3,7 +3,7 @@
 	Filename: alipay.php
 	Note	: 异步通知订单付款信息
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月15日
 ***********************************************************/

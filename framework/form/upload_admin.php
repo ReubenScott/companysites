@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/form/upload_admin.php
+	Filename:  form/upload_admin.php
 	Note	: 附件属性
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-14 05:37
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 class upload_form
 {
 	function __construct()

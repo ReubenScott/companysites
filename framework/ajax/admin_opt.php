@@ -3,11 +3,11 @@
 	Filename: ajax/admin_opt.php
 	Note	: 后台联动菜单用到的文件
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-09 15:24
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $this->model("opt");
 $val = $this->get("val");
 $group_id = $this->get("group_id");

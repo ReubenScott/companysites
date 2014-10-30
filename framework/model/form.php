@@ -1,20 +1,20 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/form.php
+	Filename:  model/form.php
 	Note	: 表单选择器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-12 17:34
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class form_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class form_model extends base_model
 {
 	public $info = "";
 	function __construct()
 	{
 		parent::model();
-		$this->info = xml_to_array(file_get_contents($this->dir_phpok.'system.xml'));
+		$this->info = xml_to_array(file_get_contents(FRAMEWORK.'system.xml'));
 	}
 
 	function form_all()

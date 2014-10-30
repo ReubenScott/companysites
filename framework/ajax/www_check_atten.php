@@ -3,11 +3,11 @@
 	Filename: ajax/www_check_atten.php
 	Note	: 检查是否已关注此主题
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年07月01日 11时22分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $project = "atten";
 if(!$_SESSION["user_id"])
 {

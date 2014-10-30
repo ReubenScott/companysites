@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/cate_control.php
+	Filename:  admin/cate_control.php
 	Note	: 栏目管理
 	Version : 4.0
 	Author  : qinggan
 	Update  : 2012-08-22 16:05
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class cate_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class cate_control extends base_control
 {
 	var $popedom;
 	function __construct()

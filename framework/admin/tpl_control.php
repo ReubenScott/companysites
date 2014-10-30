@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/tpl_control.php
+	Filename:  admin/tpl_control.php
 	Note	: 模板控制器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-04-12 11:51
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class tpl_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class tpl_control extends base_control
 {
 	var $popedom;
 	function __construct()
@@ -92,7 +92,7 @@ class tpl_control extends phpok_control
 		if(!$id) error("未指定风格ID",$this->url("tpl"),"error");
 		$rs = $this->model('tpl')->get_one($id);
 		if(!$rs) error("风格信息不存在",$this->url("tpl"),"error");
-		if(!$rs["folder"] || !file_exists($this->dir_root."tpl/".$rs["folder"]))
+		if(!$rs["folder"] || !file_exists(ROOT."tpl/".$rs["folder"]))
 		{
 			error("风格目录不存在，或未指定风格目录，请检查",$this->url("tpl"),"error");
 		}
@@ -109,7 +109,7 @@ class tpl_control extends phpok_control
 		if(substr($folder,-1) != "/") $folder .= "/";
 		$this->assign("folder",$folder);
 		//绑定目录
-		$tpl_dir = $this->dir_root."tpl/".$rs["folder"].$folder;
+		$tpl_dir = ROOT."tpl/".$rs["folder"].$folder;
 		$tpl_list = $this->lib('file')->ls($tpl_dir);
 		$ext_length = strlen($rs["ext"]);
 		if(!$tpl_list) $tpl_list = array();
@@ -138,7 +138,7 @@ class tpl_control extends phpok_control
 					if($tmp_total > 1)
 					{
 						$tmp_ext = strtolower($tmp[($tmp_total-1)]);
-						$typefile = $this->dir_root."images/filetype/".$tmp_ext.".gif";
+						$typefile = ROOT."images/filetype/".$tmp_ext.".gif";
 						$type = file_exists($typefile) ? $tmp_ext : "unknown";
 					}
 				}
@@ -172,12 +172,12 @@ class tpl_control extends phpok_control
 		{
 			json_exit("新旧名称一样，不需要执行改名操作");
 		}
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$old;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$old;
 		if(!file_exists($file))
 		{
 			json_exit("文件（夹）不存在");
 		}
-		$newfile = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$newfile = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(file_exists($newfile))
 		{
 			json_exit("新文件（夹）已经存在，请重新改名");
@@ -201,7 +201,7 @@ class tpl_control extends phpok_control
 		$title = $this->get("title");
 		$type = $this->get("type");
 		if(!$type) $type = "file";
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(file_exists($file))
 		{
 			json_exit("要创建的文件（夹）名称已经存在，请检查");
@@ -230,7 +230,7 @@ class tpl_control extends phpok_control
 		$folder = $this->get("folder");
 		if(!$folder) $folder = "/";
 		$title = $this->get("title");
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(!file_exists($file))
 		{
 			json_exit("文件（夹）不存在");
@@ -260,7 +260,7 @@ class tpl_control extends phpok_control
 		$folder = $this->get("folder");
 		if(!$folder) $folder = "/";
 		$title = $this->get("title");
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(!file_exists($file))
 		{
 			json_exit("文件（夹）不存在");
@@ -289,7 +289,7 @@ class tpl_control extends phpok_control
 		$folder = $this->get("folder");
 		if(!$folder) $folder = "/";
 		$title = $this->get("title");
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(!file_exists($file))
 		{
 			json_exit("文件（夹）不存在");
@@ -316,7 +316,7 @@ class tpl_control extends phpok_control
 		$folder = $this->get("folder");
 		if(!$folder) $folder = "/";
 		$title = $this->get("title");
-		$file = $this->dir_root."tpl/".$rs["folder"].$folder.$title;
+		$file = ROOT."tpl/".$rs["folder"].$folder.$title;
 		if(!file_exists($file))
 		{
 			error_open("文件不存在");
@@ -348,7 +348,7 @@ class tpl_control extends phpok_control
 		if(substr($folder,-1) != "/") $folder .= "/";
 		$this->assign("folder",$folder);
 		//绑定目录
-		$tpl_dir = $this->dir_root."tpl/".$rs["folder"].$folder;
+		$tpl_dir = ROOT."tpl/".$rs["folder"].$folder;
 		$tpl_list = $this->lib('file')->ls($tpl_dir);
 		$ext_length = strlen($rs["ext"]);
 		if($tpl_list)
@@ -376,7 +376,7 @@ class tpl_control extends phpok_control
 						if($tmp_total > 1)
 						{
 							$tmp_ext = strtolower($tmp[($tmp_total-1)]);
-							if(file_exists($this->dir_root."images/filetype/".$tmp_ext.".gif"))
+							if(file_exists(ROOT."images/filetype/".$tmp_ext.".gif"))
 							{
 								$type = $tmp_ext;
 							}

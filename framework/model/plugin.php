@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/plugins.php
+	Filename:  model/plugins.php
 	Note	: 插件中心
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-08 10:19
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class plugin_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class plugin_model extends base_model
 {
 	function __construct()
 	{
@@ -31,7 +31,7 @@ class plugin_model extends phpok_model
 	//取得全部的插件列表
 	function dir_list()
 	{
-		$folder = $this->dir_root."plugins/";
+		$folder = ROOT."plugins/";
 		//读取列表
 		$handle = opendir($folder);
 		$list = array();
@@ -54,7 +54,7 @@ class plugin_model extends phpok_model
 
 	function get_xml($id)
 	{
-		$folder = $this->dir_root."plugins/".$id."/";
+		$folder = ROOT."plugins/".$id."/";
 		if(!is_dir($folder))
 		{
 			return false;

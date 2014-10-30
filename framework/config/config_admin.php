@@ -1,13 +1,13 @@
 <?php
 /***********************************************************
-	Filename: phpok/config/config_admin.php
+	Filename:  config/config_admin.php
 	Note	: 后台控制器
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-10-17 15:36
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 
 //后台自动加载的JS，此处的JS对应的CSS，HTML及图片路径是相对于网站根目录
 //Swfupload 上传控件涉及到的JS，需要同时加载css/swfupload.css

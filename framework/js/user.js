@@ -1,8 +1,8 @@
 /***********************************************************
-	Filename: {phpok}/js/user.js
+	Filename:  js/user.js
 	Note	: 会员管理中涉及到的JS
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年5月2日
 ***********************************************************/

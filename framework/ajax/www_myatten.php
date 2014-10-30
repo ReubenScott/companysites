@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_myatten.php
 	Note	: 我的收藏
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月28日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 $offset = $this->get("startid","int");
 $offset = intval($offset);
 if(!$_SESSION['user_id'])

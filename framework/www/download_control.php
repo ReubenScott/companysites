@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/www/download_control.php
+	Filename:  www/download_control.php
 	Note	: 附件下载管理
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年06月08日 09时13分
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class download_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class download_control extends base_control
 {
 	function __construct()
 	{
@@ -48,11 +48,11 @@ class download_control extends phpok_control
 	function download($rs,$back='')
 	{
 		if(!$back) $back = $this->url;
-		if(!$rs || !$rs["filename"] || !is_file($this->dir_root.$rs["filename"]))
+		if(!$rs || !$rs["filename"] || !is_file(ROOT.$rs["filename"]))
 		{
 			error("附件不存在",$back,"error");
 		}
-		$filesize = filesize($this->dir_root.$rs["filename"]);
+		$filesize = filesize(ROOT.$rs["filename"]);
 		$title = $rs["title"] ? $rs['title'] : basename($rs['filename']);
 		$title = str_replace(".".$rs["ext"],"",$title);
 		ob_end_clean();
@@ -62,7 +62,7 @@ class download_control extends phpok_control
 		header("Content-Disposition: attachment; filename=".rawurlencode($title.".".$rs["ext"]));
 		header("Content-Length: ".$filesize);
 		header("Accept-Ranges: bytes");
-		readfile($this->dir_root.$rs['filename']);
+		readfile(ROOT.$rs['filename']);
 		flush();
 		ob_flush();
 	}

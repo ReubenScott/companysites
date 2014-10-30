@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_atten.php
 	Note	: 加关注
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年10月1日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 if(!$_SESSION['user_id'])
 {
 	json_exit("您还未登录");

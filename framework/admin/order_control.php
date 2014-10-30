@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/order_control.php
+	Filename:  admin/order_control.php
 	Note	: 订单管理，编辑和删除等相关操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年12月18日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class order_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class order_control extends base_control
 {
 	function __construct()
 	{
@@ -110,7 +110,7 @@ class order_control extends phpok_control
 			}
 			$this->assign('rslist',$rslist);
 			$this->assign('total',$total);
-			$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
+			$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=数量：[total]/[psize]，页码：[num]/[total_page]&always=1");
 			$this->assign('pagelist',$pagelist);
 		}
 		//订单状态列表
@@ -281,7 +281,7 @@ class order_control extends phpok_control
 			error_open('没有产品信息');
 		}
 		$rslist = $this->model('list')->get_all($condition,$offset,$psize);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=5&add=[total]/[psize]&always=1");
 		$this->assign('pagelist',$pagelist);
 		$this->assign('rslist',$rslist);
 		$this->assign('id',$id);
@@ -332,7 +332,7 @@ class order_control extends phpok_control
 			$rslist = $this->model('res')->get_list($condition,$offset,$psize,false);
 			$this->assign("rslist",$rslist);
 			$this->assign("pageurl",$pageurl);
-			$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
+			$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
 			$this->assign("pagelist",$pagelist);
 		}
 		$this->assign("formurl",$formurl);

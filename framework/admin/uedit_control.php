@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/uedit_control.php
+	Filename:  admin/uedit_control.php
 	Note	: 百度编辑器扩展之服务器插件
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年6月7日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class uedit_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class uedit_control extends base_control
 {
 	function __construct()
 	{
@@ -49,7 +49,7 @@ class uedit_control extends phpok_control
 		$this->assign("pageurl",$pageurl);
 		if($total>$psize)
 		{
-			$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
+			$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
 			$this->assign("pagelist",$pagelist);
 		}
 		$this->all("picture");
@@ -109,7 +109,7 @@ class uedit_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("pageurl",$pageurl);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=0&add=[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=0&add=[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 		$this->all($type);
 		$this->view("edit_file");
@@ -152,7 +152,7 @@ class uedit_control extends phpok_control
 		$this->assign("rslist",$rslist);
 		$total = $this->model('res')->get_count($condition);
 		$this->assign("pageurl",$pageurl);
-		$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=0&add=[total]/[psize]，页码：[num]/[total_page]&always=1");
+		$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=0&add=[total]/[psize]，页码：[num]/[total_page]&always=1");
 		$this->assign("pagelist",$pagelist);
 		$this->all("video");
 		$this->view("edit_video");
@@ -213,7 +213,7 @@ class uedit_control extends phpok_control
 			$this->assign("total",$total);
 			if($total>$psize)
 			{
-				$pagelist = phpok_page($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
+				$pagelist = run_paging($pageurl,$total,$pageid,$psize,"home=首页&prev=上一页&next=下一页&last=尾页&half=4&add=[total]/[psize]&always=1");
 				$this->assign("pagelist",$pagelist);
 			}
 		}

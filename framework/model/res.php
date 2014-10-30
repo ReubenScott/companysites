@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/res.php
+	Filename:  model/res.php
 	Note	: 资源读取
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2012-12-27 13:09
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class res_model extends phpok_model
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class res_model extends base_model
 {
 	var $img_type_list;
 	function __construct()
@@ -150,7 +150,7 @@ class res_model extends phpok_model
 
 	function delete_gd_id($id,$root_dir="/")
 	{
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "SELECT * FROM ".$this->db->prefix."res_ext WHERE gd_id='".$id."'";
 		$rslist = $this->db->get_all($sql);
 		if($rslist)
@@ -192,16 +192,16 @@ class res_model extends phpok_model
 	# 删除资源
 	function delete($id)
 	{
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$rs = $this->get_one($id);
 		if(!$rs) return false;
 		if(file_exists($rs["filename"]) && is_file($rs["filename"]))
 		{
 			unlink($rs["filename"]);
 		}
-		if($rs["ico"] && substr($rs["ico"],0,7) != "images/" && file_exists($this->dir_root.$rs["ico"]))
+		if($rs["ico"] && substr($rs["ico"],0,7) != "images/" && file_exists(ROOT.$rs["ico"]))
 		{
-			unlink($this->dir_root.$rs["ico"]);
+			unlink(ROOT.$rs["ico"]);
 		}
 		# 删除扩展资源方案
 		$this->ext_delete($id);
@@ -238,15 +238,15 @@ class res_model extends phpok_model
 	# 删除扩展图片方案
 	function ext_delete($id)
 	{
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "SELECT * FROM ".$this->db->prefix."res_ext WHERE res_id='".$id."'";
 		$rslist = $this->db->get_all($sql);
 		if(!$rslist) return false;
 		foreach($rslist AS $key=>$value)
 		{
-			if(is_file($this->dir_root.$value["filename"]))
+			if(is_file(ROOT.$value["filename"]))
 			{
-				unlink($this->dir_root.$value["filename"]);
+				unlink(ROOT.$value["filename"]);
 			}
 		}
 		$sql = "DELETE FROM ".$this->db->prefix."res_ext WHERE res_id='".$id."'";
@@ -290,7 +290,7 @@ class res_model extends phpok_model
 	function cate_default_set($id)
 	{
 		if(!$id) return false;
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "UPDATE ".$this->db->prefix."res_cate SET is_default='0' WHERE is_default='1'";
 		$this->db->query($sql);
 		$sql = "UPDATE ".$this->db->prefix."res_cate SET is_default='1' WHERE id='".$id."'";
@@ -302,7 +302,7 @@ class res_model extends phpok_model
 	function cate_save($data,$id=0)
 	{
 		if(!$data || !is_array($data)) return false;
-		phpok_delete_cache("res");
+		delete_cache("res");
 		if($id)
 		{
 			return $this->db->update_array($data,"res_cate",array("id"=>$id));
@@ -316,7 +316,7 @@ class res_model extends phpok_model
 	# 删除图片附件分类
 	function cate_delete($id,$default_id=0)
 	{
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "DELETE FROM ".$this->db->prefix."res_cate WHERE id='".$id."'";
 		$this->db->query($sql);
 		if($default_id)
@@ -331,7 +331,7 @@ class res_model extends phpok_model
 	function update_title($title,$id)
 	{
 		if(!$id || !$title) return false;
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "UPDATE ".$this->db->prefix."res SET title='".$title."' WHERE id='".$id."'";
 		return $this->db->query($sql);
 	}
@@ -340,7 +340,7 @@ class res_model extends phpok_model
 	function update_note($note,$id)
 	{
 		if(!$id) return false;
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "UPDATE ".$this->db->prefix."res SET note='".$note."' WHERE id='".$id."'";
 		return $this->db->query($sql);
 	}
@@ -348,7 +348,7 @@ class res_model extends phpok_model
 	# 取得所有的附件类型
 	function type_list()
 	{
-		$xmlfile = $this->dir_root."data/xml/filetype.xml";
+		$xmlfile = ROOT."data/xml/filetype.xml";
 		if(!is_file($xmlfile))
 		{
 			$array = array("picture"=>array("name"=>"图片","swfupload"=>"*.jpg;*.png;*.gif;*.jpeg","ext"=>"jpg,png,gif,jpeg","gd"=>1));
@@ -361,7 +361,7 @@ class res_model extends phpok_model
 	function pl_delete($id)
 	{
 		if(!$id) return false;
-		phpok_delete_cache("res");
+		delete_cache("res");
 		$sql = "DELETE FROM ".$this->db->prefix."res WHERE id IN(".$id.")";
 		$this->db->query($sql);
 		$sql = "DELETE FROM ".$this->db->prefix."res_ext WHERE res_id IN(".$id.") ";
@@ -444,11 +444,11 @@ class res_model extends phpok_model
 		$main = array();
 		if(in_array($rs["ext"],$arraylist))
 		{
-			$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$id);
+			$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$id);
 			if(!$ico)
 			{
 				$ico = "images/filetype-large/".$rs["ext"].".jpg";
-				if(!is_file($this->dir_root.$ico)) $ico = "images/filetype-large/unknown.jpg";
+				if(!is_file(ROOT.$ico)) $ico = "images/filetype-large/unknown.jpg";
 			}
 			else
 			{
@@ -459,7 +459,7 @@ class res_model extends phpok_model
 		else
 		{
 			$ico = "images/filetype-large/".$rs["ext"].".jpg";
-			if(!is_file($this->dir_root.$ico)) $ico = "images/filetype-large/unknown.jpg";
+			if(!is_file(ROOT.$ico)) $ico = "images/filetype-large/unknown.jpg";
 			$main["ico"] = $ico;
 		}
 		$this->save($main,$id);
@@ -477,7 +477,7 @@ class res_model extends phpok_model
 			$array["res_id"] = $rs['id'];
 			$array["gd_id"] = $value["id"];
 			$array["filetime"] = $this->time;
-			$gd_tmp = $GLOBALS['app']->lib('gd')->gd($this->dir_root.$rs["filename"],$id,$value);
+			$gd_tmp = $GLOBALS['app']->lib('gd')->gd(ROOT.$rs["filename"],$id,$value);
 			if($gd_tmp)
 			{
 				$array["filename"] = $rs["folder"].$gd_tmp;

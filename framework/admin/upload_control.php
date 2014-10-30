@@ -1,14 +1,14 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/admin/upload_control.php
+	Filename:  admin/upload_control.php
 	Note	: 附件上传操作
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-01-09 10:51
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
-class upload_control extends phpok_control
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
+class upload_control extends base_control
 {
 	function __construct()
 	{
@@ -131,7 +131,7 @@ class upload_control extends phpok_control
 		if(!$cate_rs)
 		{
 			$cate_rs["id"] = 0;
-			$cate_rs["root"] = $this->dir_root."res/";
+			$cate_rs["root"] = ROOT."res/";
 			$cate_rs["folder"] = "/";
 		}
 		$folder = $cate_rs["root"];
@@ -151,7 +151,7 @@ class upload_control extends phpok_control
 		}
 		//存储目录
 		$basename = basename($rs["filename"]);
-		$save_folder = $this->dir_root.$folder;
+		$save_folder = ROOT.$folder;
 		if($save_folder.$basename != $rs["filename"])
 		{
 			$this->lib('file')->mv($rs["filename"],$save_folder.$basename);
@@ -233,7 +233,7 @@ class upload_control extends phpok_control
 		if(in_array($rs["ext"],$arraylist))
 		{
 			$this->lib("gd");
-			$ico = $this->lib('gd')->thumb($this->dir_root.$rs["filename"],$id);
+			$ico = $this->lib('gd')->thumb(ROOT.$rs["filename"],$id);
 			if(!$ico)
 			{
 				$ico = "images/filetype-large/".$rs["ext"].".jpg";
@@ -253,7 +253,7 @@ class upload_control extends phpok_control
 		{
 			$tmp = array();
 			$ico = "images/filetype-large/".$rs["ext"].".jpg";
-			if(!file_exists($ico) && !file_exists($this->dir_root.$ico))
+			if(!file_exists($ico) && !file_exists(ROOT.$ico))
 			{
 				$ico = "images/filetype-large/unknow.jpg";
 			}
@@ -283,7 +283,7 @@ class upload_control extends phpok_control
 			$array["res_id"] = $id;
 			$array["gd_id"] = $value["id"];
 			$array["filetime"] = $this->system_time;
-			$gd_tmp = $this->lib('gd')->gd($this->dir_root.$rs["filename"],$id,$value);
+			$gd_tmp = $this->lib('gd')->gd(ROOT.$rs["filename"],$id,$value);
 			if($gd_tmp)
 			{
 				$array["filename"] = $rs["folder"].$gd_tmp;

@@ -3,11 +3,11 @@
 	Filename: {phpok}ajax/www_register.php
 	Note	: 前台会员注册页面
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月12日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 
 //判断会员是否已登录
 if($_SESSION["user_id"])
@@ -29,5 +29,5 @@ if($this->tpl->check_exists("register_open"))
 }
 else
 {
-	$this->view($this->dir_phpok."tpl_default/register_open.html","abs-file");
+	$this->view(FRAMEWORK."tpl_default/register_open.html","abs-file");
 }

@@ -3,11 +3,11 @@
 	Filename: install/global.php
 	Note	: 安装程序包中涉及到的函数及对象
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2014年1月7日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 //Get或是Post参数
 //system参数为true时，则强制要求字母，数字，下划线及中划数
 //为false仅过滤基本的引号信息

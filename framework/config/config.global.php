@@ -3,11 +3,11 @@
 	Filename: {phpok}config/config.global.php
 	Note	: 全站全局参数
 	Version : 4.0
-	Web		: www.phpok.com
+	Web		: mirror.wicp.net
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013年9月3日
 ***********************************************************/
-if(!defined("PHPOK_SET")){exit("<h1>Access Denied</h1>");}
+if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
 # 启用调试
 $config["debug"] = true;
 
@@ -66,7 +66,7 @@ $config['js_cache_time'] = 86400;
 
 //JS-MD5加密类，ArtDialog弹出窗
 $config['autoload_js']  = "jquery.md5.js,jquery.artdialog.js,jquery.artdialog_ext.js";
-//PHPOK公共JS加载类
+//公共JS加载类
 $config['autoload_js'] .= ',jquery.phpok.js,global.js';
 //jQuery表单插件，支持ajaxSubmit提交
 $config["autoload_js"] .= ",jquery.form.min.js";

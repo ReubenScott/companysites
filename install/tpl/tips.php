@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta http-equiv="expires" content="wed, 26 feb 1997 08:21:57 gmt"> 
-<title>友情提示，您正在安装PHPOK4</title>
+<title>友情提示，您正在安装4</title>
 <style type="text/css">
 body{font-size:12px;font-family:"Microsoft Yahei","宋体","Tahoma","Arial"}
 .body{margin:100px auto auto auto;width:550px;border:1px solid #8F8F8F;}

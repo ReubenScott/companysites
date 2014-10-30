@@ -1,12 +1,12 @@
 <?php
 /***********************************************************
-	Filename: {phpok}/model/usergroup.php
+	Filename:  model/usergroup.php
 	Note	: 会员组模块
 	Version : 3.0
 	Author  : qinggan
 	Update  : 2011-03-14
 ***********************************************************/
-class usergroup_model extends phpok_model
+class usergroup_model extends base_model
 {
 	function __construct()
 	{
@@ -105,7 +105,7 @@ class usergroup_model extends phpok_model
 		if(!$id) return false;
 		$sql = "UPDATE ".$this->db->prefix."user_group SET status='".$status."' WHERE id='".$id."'";
 		$this->db->query($sql);
-		phpok_delete_cache("group");
+		delete_cache("group");
 		return true;
 	}
 }
