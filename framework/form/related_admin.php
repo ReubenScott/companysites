@@ -18,7 +18,7 @@ class related_form
 
 	function config()
 	{
-		$file = $this->app->dir_phpok.'form/html/related_admin.html';
+		$file = 'framework/form/html/related_admin.html';
 		$this->app->view($file,"abs-file");
 	}
 }

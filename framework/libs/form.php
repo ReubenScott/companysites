@@ -22,10 +22,10 @@ class form_lib
 		{
 			foreach($flist AS $key=>$value)
 			{
-				$file = $GLOBALS['app']->dir_phpok.'form/'.$key.'_'.$GLOBALS['app']->app_id.'.php';
+				$file = 'framework/form/'.$key.'_'.$GLOBALS['app']->app_id.'.php';
 				if(!is_file($file))
 				{
-					$file = $GLOBALS['app']->dir_phpok.'form/'.$key.'_admin.php';
+					$file = 'framework/form/'.$key.'_admin.php';
 				}
 				//如果文件存在
 				if(is_file($file))

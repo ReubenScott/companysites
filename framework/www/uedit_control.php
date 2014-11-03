@@ -54,7 +54,7 @@ class uedit_control extends base_control
 			$this->assign("pagelist",$pagelist);
 		}
 		$this->all("picture");
-		$this->view(FRAMEWORK."/view/edit_picture.html",'abs-file');
+		$this->view("framework//view/edit_picture.html",'abs-file');
 	}
 
 	//编辑器文件管理器

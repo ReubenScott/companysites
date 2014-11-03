@@ -23,7 +23,7 @@ class ptitle_form
 	{
 		$opt_list = $this->app->project_model->get_all_project($_SESSION["admin_site_id"],"p.module>0");
 		$this->app->assign("opt_list",$opt_list);
-		$html = $this->app->dir_phpok."form/html/title_admin.html";
+		$html = "framework/form/html/title_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
@@ -53,7 +53,7 @@ class ptitle_form
 			}
 			$rs["content"] = $content;		
 		}
-		$file = $this->app->dir_phpok."form/html/title_form_admin.html";
+		$file = "framework/form/html/title_form_admin.html";
 		$this->app->assign("rs",$rs);
 		$this->app->assign("rslist",$rslist);
 		$content = $this->app->fetch($file,'abs-file');

@@ -54,7 +54,7 @@ class system_control extends base_control
 			$this->assign("parent_list",$parent_list);
 			$this->assign("pid",$pid);
 			# 定义控制层
-			$list = $this->lib('file')->ls(FRAMEWORK."admin");
+			$list = $this->lib('file')->ls("framework/admin");
 			$dirlist = array();
 			foreach($list AS $key=>$value)
 			{

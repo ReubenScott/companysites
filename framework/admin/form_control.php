@@ -22,7 +22,8 @@ class form_control extends base_control
 		{
 			exit("未指定ID");
 		}
-		$idfile = FRAMEWORK."form/".$id."_".$this->app_id.".php";
+		$idfile = "framework/form/".$id."_".$this->app_id.".php";
+		
 		if(!file_exists($idfile))
 		{
 			exit("文件：".$idfile." 不存在");

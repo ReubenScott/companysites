@@ -135,7 +135,7 @@ class inp_control extends base_control
 		$this->assign("multi",$multi);
 		$this->assign("input",$input);
 		$this->tpl->path_change("");
-		$this->view(FRAMEWORK."view/inp_title.html","abs-file");
+		$this->view("framework/view/inp_title.html","abs-file");
 	}
 
 	//function 

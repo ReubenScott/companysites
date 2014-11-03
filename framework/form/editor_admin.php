@@ -18,7 +18,7 @@ class editor_form
 
 	function config()
 	{
-		$html = $this->app->dir_phpok."form/html/editor_admin.html";
+		$html = "framework/form/html/editor_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
@@ -67,7 +67,7 @@ class editor_form
 			$save_path = '["默认分类"]';
 		}
 		$GLOBALS['app']->assign("save_path",$save_path);
-		$file = $GLOBALS['app']->dir_phpok.'form/html/ueditor_from_admin.html';
+		$file = 'framework/form/html/ueditor_from_admin.html';
 		return $GLOBALS['app']->fetch($file,'abs-file');
 	}
 	
@@ -103,7 +103,7 @@ class editor_form
 //			}
 //			$this->app->assign("btn_file_list",$btn_file_list);
 //		}
-//		$file = $this->app->dir_phpok."form/html/editor_from_admin.html";
+//		$file = "framework/form/html/editor_from_admin.html";
 //		$content = $this->app->fetch($file,'abs-file');
 //		return $content;
 //	}

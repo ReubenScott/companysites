@@ -18,7 +18,7 @@ class password_form
 
 	function config()
 	{
-		$html = $this->app->dir_phpok."form/html/password_admin.html";
+		$html = "framework/form/html/password_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
@@ -41,7 +41,7 @@ class password_form
 		}
 		$this->app->assign("rs",$rs);
 		$this->app->assign("current_date",date("Y-m-d",$this->app->system_time));
-		$file = $this->app->dir_phpok."form/html/password_format_admin.html";
+		$file = "framework/form/html/password_format_admin.html";
 		$content = $this->app->fetch($file,'abs-file');
 		$this->app->unassign("rs");
 		$this->app->unassign("current_date");

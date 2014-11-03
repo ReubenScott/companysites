@@ -18,7 +18,7 @@ class hidden_form
 
 	function config()
 	{
-		$html = $this->app->dir_phpok."form/html/hidden_admin.html";
+		$html = "framework/form/html/hidden_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 

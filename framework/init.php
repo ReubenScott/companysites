@@ -33,7 +33,7 @@ function xml_to_array($xml){
   $reg = "/<([a-zA-Z0-9\_\-]+)([^>]*?)>([\\x00-\\xFF]*?)<\\/\\1>/";
   if (preg_match_all($reg, $xml, $matches)) {
     $count = count($matches [0]);
-    $arr = array ();
+    $arr = array();
     for($i = 0; $i < $count; $i ++) {
       $key = $matches [1] [$i];
       $ext = $matches [2] [$i];
@@ -41,12 +41,12 @@ function xml_to_array($xml){
       if (array_key_exists($key, $arr)) {
         if (is_array($arr [$key])) {
           if (! array_key_exists(0, $arr [$key])) {
-            $arr [$key] = array (
+            $arr [$key] = array(
                 $arr [$key] 
             );
           }
         } else {
-          $arr [$key] = array (
+          $arr [$key] = array(
               $arr [$key] 
           );
         }
@@ -54,7 +54,7 @@ function xml_to_array($xml){
           $ext = trim($ext);
           preg_match_all("/([0-9a-zA-Z\_]+)\=[\"|'](.+)[\"|']/isU", $ext, $extlist);
           if ($extlist [1]) {
-            $tmplist = array ();
+            $tmplist = array();
             foreach ( $extlist [1] as $kk => $vv ) {
               $tmplist [$vv] = $extlist [2] [$kk];
             }
@@ -67,11 +67,11 @@ function xml_to_array($xml){
             $ext = trim($ext);
             preg_match_all("/([0-9a-zA-Z\_]+)\=[\"|'](.+)[\"|']/isU", $ext, $extlist);
             if ($extlist [1]) {
-              $tmplist = array ();
+              $tmplist = array();
               foreach ( $extlist [1] as $kk => $vv ) {
                 $tmplist [$vv] = $extlist [2] [$kk];
               }
-              $arr [$key] [] = array (
+              $arr [$key] [] = array(
                   "id" => $tmplist,
                   "val" => $val 
               );
@@ -91,7 +91,7 @@ function xml_to_array($xml){
           $ext = trim($ext);
           preg_match_all("/([0-9a-zA-Z\_]+)\=[\"|'](.+)[\"|']/isU", $ext, $extlist);
           if ($extlist [1]) {
-            $tmplist = array ();
+            $tmplist = array();
             foreach ( $extlist [1] as $kk => $vv ) {
               $tmplist [$vv] = $extlist [2] [$kk];
             }
@@ -104,7 +104,7 @@ function xml_to_array($xml){
             $ext = trim($ext);
             preg_match_all("/([0-9a-zA-Z\_]+)\=[\"|'](.+)[\"|']/isU", $ext, $extlist);
             if ($extlist [1]) {
-              $tmplist = array ();
+              $tmplist = array();
               foreach ( $extlist [1] as $kk => $vv ) {
                 $tmplist [$vv] = $extlist [2] [$kk];
               }
@@ -128,8 +128,7 @@ function xml_to_array($xml){
 // 将文本转为ASCII码，实现在任意网页下显示中文提示
 // 的开发过程中的错误提示，八成都是中文提示
 function phpok_ascii($str){
-  if (! $str)
-    return false;
+  if (! $str) return false;
   $str = iconv("UTF-8", "UTF-16BE", $str);
   $output = "";
   for($i = 0; $i < strlen($str); $i ++, $i ++) {
@@ -145,15 +144,13 @@ function phpok_ascii($str){
 
 // 错误提示，此错误提示将会直接输出并中止下一步执行
 function phpok_errmsg($str, $is_format = true){
-  if ($str && $is_format)
-    $str = phpok_ascii($str);
+  if ($str && $is_format) $str = phpok_ascii($str);
   exit($str);
 }
 
 
 function phpok_exit($str, $is_format = true){
-  if ($str && $is_format)
-    $str = phpok_ascii($str);
+  if ($str && $is_format) $str = phpok_ascii($str);
   exit($str);
 }
 
@@ -161,14 +158,10 @@ function phpok_exit($str, $is_format = true){
 function run_time($is_end = false){
   $time = explode(" ", microtime());
   if (! $is_end) {
-    if (defined("SYS_TIME_START")) {
-      return false;
-    }
+    if (defined("SYS_TIME_START")) {return false;}
     define("SYS_TIME_START", ($time [0] + $time [1]));
   } else {
-    if (! defined("SYS_TIME_START")) {
-      return false;
-    }
+    if (! defined("SYS_TIME_START")) {return false;}
     $time = $time [0] + $time [1] - SYS_TIME_START;
     return round($time, 5);
   }
@@ -177,14 +170,10 @@ function run_time($is_end = false){
 // 登记内存
 function run_memory($is_end = false){
   if (! $is_end) {
-    if (defined("SYS_MEMORY_START") || ! function_exists("memory_get_usage")) {
-      return false;
-    }
+    if (defined("SYS_MEMORY_START") || ! function_exists("memory_get_usage")) {return false;}
     define("SYS_MEMORY_START", memory_get_usage());
   } else {
-    if (! defined("SYS_MEMORY_START")) {
-      return false;
-    }
+    if (! defined("SYS_MEMORY_START")) {return false;}
     $memory = memory_get_usage() - SYS_MEMORY_START;
     // 格式化大小
     if ($memory <= 1024) {
@@ -277,11 +266,9 @@ class _init_app{
     // 取得当前页网址
     $url = $this->url;
     $afile = $this->config [$this->app_id . '_file'];
-    if (! $afile)
-      $afile = 'index.php';
+    if (! $afile) $afile = 'index.php';
     $url .= $afile;
-    if ($_SERVER ['QUERY_STRING'])
-      $url .= "?" . $_SERVER ['QUERY_STRING'];
+    if ($_SERVER ['QUERY_STRING']) $url .= "?" . $_SERVER ['QUERY_STRING'];
     $this->site ["url"] = $url;
     $this->config ["url"] = $this->url;
     $this->config ['app_id'] = $this->app_id;
@@ -315,10 +302,8 @@ class _init_app{
   
   // 语言包变量格式化
   final public function lang_format($info, $var){
-    if (! $info)
-      return false;
-    if (! $var || ! is_array($var))
-      return $info;
+    if (! $info) return false;
+    if (! $var || ! is_array($var)) return $info;
     foreach ( $var as $key => $value ) {
       $info = str_replace('{' . $key . '}', $value, $info);
     }
@@ -336,8 +321,7 @@ class _init_app{
     }
     $Text = trim($Text);
     // 是否启用nl2br
-    if ($nl2br)
-      $Text = str_replace("\n", "<br />", $Text);
+    if ($nl2br) $Text = str_replace("\n", "<br />", $Text);
     $Text = preg_replace("/\\t/is", "", $Text);
     $Text = preg_replace("/\[hr\]/is", "<hr />", $Text);
     $Text = preg_replace("/\[separator\]/is", "<br/>", $Text);
@@ -370,7 +354,7 @@ class _init_app{
       foreach ( $list [0] as $key => $value ) {
         $tmpid = $list [1] [$key] ? $list [1] [$key] : intval($list [2] [$key]);
         if ($tmpid) {
-          $dlist [] = array (
+          $dlist [] = array(
               'string' => $value,
               'id' => $tmpid,
               'title' => $list [2] [$key] 
@@ -410,8 +394,7 @@ class _init_app{
     if ($list && count($list) > 0) {
       $dlist = '';
       foreach ( $list [0] as $key => $value ) {
-        if (! $list [1] [$key] || ! $list [2] [$key])
-          continue;
+        if (! $list [1] [$key] || ! $list [2] [$key]) continue;
         $string = '<a href="' . $this->url($list [1] [$key]) . '" title="' . $list [2] [$key] . '" target="_blank">' . $list [2] [$key] . '</a>';
         $Text = str_replace($value, $string, $Text);
       }
@@ -437,13 +420,13 @@ class _init_app{
   
   // 加载视图引挈
   function init_view(){
-    $file = FRAMEWORK . "phpok_tpl.php";
+    $file = "framework/phpok_tpl.php";
     if (! file_exists($file)) {
       $this->error("视图引挈文件：" . $file . " 不存在！");
     }
     include_once ($file);
     if ($this->app_id == "admin") {
-      $tpl_rs = array ();
+      $tpl_rs = array();
       $tpl_rs ["id"] = "1";
       $tpl_rs ["dir_tpl"] = basename(FRAMEWORK) . "/view/";
       $tpl_rs ["dir_cache"] = ROOT . "data/tpl_admin/";
@@ -458,9 +441,9 @@ class _init_app{
         $this->error("未指定模板文件");
       }
       $this->tpl = new phpok_tpl($this->site ["tpl_id"]);
-      include_once (FRAMEWORK . "phpok_call.php");
+      include_once ("framework/phpok_call.php");
       $this->call = new phpok_call();
-      include_once (FRAMEWORK . "phpok_tpl_helper.php");
+      include_once ("framework/phpok_tpl_helper.php");
     }
   }
   
@@ -483,10 +466,9 @@ class _init_app{
       } else {
         $site_rs = $this->model("site")->get_one_default();
       }
-      if (! $site_rs)
-        $site_rs = array (
-            'title' => '企业建站系统' 
-        );
+      if (! $site_rs) $site_rs = array(
+          'title' => '企业建站系统' 
+      );
       $this->site = $site_rs;
       return true;
     }
@@ -504,24 +486,20 @@ class _init_app{
       }
     }
     $cacheId = $this->cache->key($domain, "", "site");
-    if ($this->is_mobile)
-      $cacheId = $this->cache->key($domain, "", "site,mobile");
+    if ($this->is_mobile) $cacheId = $this->cache->key($domain, "", "site,mobile");
     $site_rs = $this->cache->read($cacheId);
     if (! $site_rs) {
       $site_rs = $this->model("site")->get_one_from_domain($domain);
-      if (! $site_rs)
-        $site_rs = $this->site_model->get_one_default();
-      if (! $site_rs)
-        $this->error("无法获取网站信息，请检查！");
+      if (! $site_rs) $site_rs = $this->site_model->get_one_default();
+      if (! $site_rs) $this->error("无法获取网站信息，请检查！");
       $ext_list = $this->site_model->site_config($site_rs ["id"]);
-      if ($ext_list)
-        $site_rs = array_merge($ext_list, $site_rs);
-        // 读取模板扩展
+      if ($ext_list) $site_rs = array_merge($ext_list, $site_rs);
+      // 读取模板扩展
       if ($site_rs ["tpl_id"]) {
         $this->model("tpl");
         $rs = $this->tpl_model->get_one($site_rs ["tpl_id"]);
         if ($rs) {
-          $tpl_rs = array ();
+          $tpl_rs = array();
           $tpl_rs ["id"] = $rs ["id"];
           $tpl_rs ["dir_tpl"] = $rs ["folder"] ? "tpl/" . $rs ["folder"] . "/" : "tpl/www/";
           $tpl_rs ["dir_cache"] = ROOT . "data/tpl_www/";
@@ -545,8 +523,7 @@ class _init_app{
           $site_rs ["tpl_id"] = $tpl_rs;
         }
       }
-      if ($cacheId)
-        $this->cache->write($cacheId, $site_rs);
+      if ($cacheId) $this->cache->write($cacheId, $site_rs);
     }
     // 判断网站是否开放
     if (! $site_rs ["status"]) {
@@ -558,17 +535,15 @@ class _init_app{
   // 装载插件
   function init_plugin(){
     $rslist = $this->model('plugin')->get_all(1);
-    if (! $rslist)
-      return $rslist;
+    if (! $rslist) return $rslist;
     foreach ( $rslist as $key => $value ) {
-      if ($value ['param'])
-        $value ['param'] = unserialize($value ['param']);
+      if ($value ['param']) $value ['param'] = unserialize($value ['param']);
       if (is_file(ROOT . 'plugins/' . $key . '/' . $this->app_id . '.php')) {
         include_once (ROOT . 'plugins/' . $key . '/' . $this->app_id . '.php');
         $name = $this->app_id . "_" . $key;
         $cls = new $name();
         $mlist = get_class_methods($cls);
-        $this->plugin [$key] = array (
+        $this->plugin [$key] = array(
             "method" => $mlist,
             "obj" => $cls,
             'id' => $key 
@@ -589,11 +564,9 @@ class _init_app{
   
   // 运行插件
   function plugin($ap, $param = ""){
-    if (! $ap)
-      return false;
+    if (! $ap) return false;
     $ap = str_replace("-", "_", $ap); // 替换节点的中划线为下划线
-    if (! $this->plugin || count($this->plugin) < 1 || ! is_array($this->plugin))
-      return false;
+    if (! $this->plugin || count($this->plugin) < 1 || ! is_array($this->plugin)) return false;
     foreach ( $this->plugin as $key => $value ) {
       if (in_array($ap, $value ['method'])) {
         $value ['obj']->$ap($param);
@@ -604,20 +577,16 @@ class _init_app{
 
 
   function load($class, $type = "lib", $ext_folder = ""){
-    if (! $class)
-      return false;
+    if (! $class) return false;
     $folder = FRAMEWORK;
     $folder .= $type == "model" ? "model/" : "libs/";
     if ($ext_folder && $ext_folder != "/") {
       $folder .= $ext_folder;
-      if (substr($folder, - 1) != "/")
-        $folder .= "/";
+      if (substr($folder, - 1) != "/") $folder .= "/";
     }
     $class_name = $class . "_" . ($type == "model" ? "model" : "lib");
     if ($type == "model") {
-      if ($this->$class_name && is_object($this->$class_name)) {
-        return $this->$class_name;
-      }
+      if ($this->$class_name && is_object($this->$class_name)) {return $this->$class_name;}
       if (! $this->model_list || ! is_array($this->model_list) || ! in_array($class_name, $this->model_list)) {
         if (! file_exists($folder . $class . ".php")) {
           $this->error("Model层异常，文件：" . $folder . $class . ".php 不存在！");
@@ -656,7 +625,7 @@ class _init_app{
     }
     // $engine_file_list = "";
     foreach ( $this->config ["engine"] as $key => $value ) {
-      $file = FRAMEWORK . "engine/" . $key . "/" . $value ["file"] . ".php";
+      $file = "framework/engine/" . $key . "/" . $value ["file"] . ".php";
       if (file_exists($file)) {
         include ($file);
         $var = $key . "_" . $value ["file"];
@@ -669,17 +638,14 @@ class _init_app{
   function init_config(){
     // 根目录下的config，一般该文件是来用配置全局网站需要用到的信息
     $file = ROOT . "config.php";
-    if (is_file($file))
-      include ($file);
-      // 全站全局参数
-    $file = FRAMEWORK . "config/config.global.php";
-    if (is_file($file))
-      include ($file);
-      // 配置文档下的config，这里就可以针对各个应用进行配置了
-    $file = FRAMEWORK . "config/config_" . $this->app_id . ".php";
-    if (is_file($file))
-      include ($file);
-      // 判断是否有使用Debug
+    if (is_file($file)) include ($file);
+    // 全站全局参数
+    $file = "framework/config/config.global.php";
+    if (is_file($file)) include ($file);
+    // 配置文档下的config，这里就可以针对各个应用进行配置了
+    $file = "framework/config/config_" . $this->app_id . ".php";
+    if (is_file($file)) include ($file);
+    // 判断是否有使用Debug
     $config ["debug"] ? error_reporting(E_ALL ^ E_NOTICE) : error_reporting(0);
     // 判断是否使用gzip功能
     if (ini_get('zlib.output_compression')) {
@@ -705,18 +671,12 @@ class _init_app{
   function url($ctrl = "", $func = "", $ext = ""){
     if ($this->app_id == "admin") {
       $url = $this->config ["admin_file"];
-      if (! $ctrl && ! $func && ! $ext)
-        return $url;
-      if ($ctrl || $func || $ext)
-        $url .= "?";
-      if ($ctrl)
-        $url .= $this->config ["ctrl_id"] . "=" . $ctrl . "&";
-      if ($func)
-        $url .= $this->config ["func_id"] . "=" . $func . "&";
-      if ($ext)
-        $url .= $ext;
-      if (substr($url, - 1) == "&" || substr($url, - 1) == "?")
-        $url = substr($url, 0, - 1);
+      if (! $ctrl && ! $func && ! $ext) return $url;
+      if ($ctrl || $func || $ext) $url .= "?";
+      if ($ctrl) $url .= $this->config ["ctrl_id"] . "=" . $ctrl . "&";
+      if ($func) $url .= $this->config ["func_id"] . "=" . $func . "&";
+      if ($ext) $url .= $ext;
+      if (substr($url, - 1) == "&" || substr($url, - 1) == "?") $url = substr($url, 0, - 1);
       return $url;
     }
     $url = $this->url;
@@ -731,9 +691,8 @@ class _init_app{
       }
       return $url;
     } else {
-      if (! $ctrl)
-        return $url;
-      $ctrl_list = $this->config ['reserved'] ? explode(',', $this->config ['reserved']) : array (
+      if (! $ctrl) return $url;
+      $ctrl_list = $this->config ['reserved'] ? explode(',', $this->config ['reserved']) : array(
           "cart",
           "order",
           "cp",
@@ -750,21 +709,18 @@ class _init_app{
           $url .= "&" . $this->config ["func_id"] . "=" . $func;
         }
         if ($ext && $ext != "&") {
-          if (substr($ext, 0, 1) == "&")
-            $ext = substr($ext, 1);
+          if (substr($ext, 0, 1) == "&") $ext = substr($ext, 1);
           $url .= "&" . $ext;
         }
         return $url;
       } else {
         $url .= "?id=" . $ctrl;
         if ($func && $func != "&") {
-          if (substr($func, 0, 1) == "&")
-            $func = substr($func, 1);
+          if (substr($func, 0, 1) == "&") $func = substr($func, 1);
           $url .= "&cate=" . $func;
         }
         if ($ext && $ext != "&") {
-          if (substr($ext, 0, 1) == "&")
-            $ext = substr($ext, 1);
+          if (substr($ext, 0, 1) == "&") $ext = substr($ext, 1);
           $url .= "&" . $ext;
         }
         return $url;
@@ -801,20 +757,8 @@ class _init_app{
   
   // 配置网站全局常量
   function init_constant(){
-    // 配置网站根目录
-    // if(!defined("ROOT")) define("ROOT",str_replace("\\","/",dirname(__FILE__))."/../");
-    // if(substr(ROOT,-1) != "/") ROOT .= "/";
-    // 配置框架根目录
-    // if(!defined("FRAMEWORK")) defined("FRAMEWORK",ROOT."phpok/");
-    // FRAMEWORK = FRAMEWORK;
-    // if(substr(FRAMEWORK,-1) != "/") FRAMEWORK .= "/";
-    // if(substr(FRAMEWORK,0,strlen(ROOT)) != ROOT)
-    // {
-    // FRAMEWORK = ROOT.FRAMEWORK;
-    // }
     // 定义APP_ID
-    if (! defined("APP_ID"))
-      define("APP_ID", "phpok");
+    if (! defined("APP_ID")) define("APP_ID", "phpok");
     $this->app_id = APP_ID;
     // 判断加载的版本及授权方式
     if (is_file(ROOT . "version.php")) {
@@ -823,22 +767,17 @@ class _init_app{
     }
     if (is_file(ROOT . "license.php")) {
       include (ROOT . "license.php");
-      $license_array = array (
+      $license_array = array(
           "LGPL",
           "PBIZ",
           "CBIZ" 
       );
       $this->license = (defined("LICENSE") && in_array(LICENSE, $license_array)) ? LICENSE : "LGPL";
-      if (defined("LICENSE_DATE"))
-        $this->license_date = LICENSE_DATE;
-      if (defined("LICENSE_SITE"))
-        $this->license_site = LICENSE_SITE;
-      if (defined("LICENSE_CODE"))
-        $this->license_code = LICENSE_CODE;
-      if (defined("LICENSE_NAME"))
-        $this->license_name = LICENSE_NAME;
-      if (defined("LICENSE_POWERED"))
-        $this->license_powered = LICENSE_POWERED;
+      if (defined("LICENSE_DATE")) $this->license_date = LICENSE_DATE;
+      if (defined("LICENSE_SITE")) $this->license_site = LICENSE_SITE;
+      if (defined("LICENSE_CODE")) $this->license_code = LICENSE_CODE;
+      if (defined("LICENSE_NAME")) $this->license_name = LICENSE_NAME;
+      if (defined("LICENSE_POWERED")) $this->license_powered = LICENSE_POWERED;
     }
   }
   
@@ -849,14 +788,11 @@ class _init_app{
   // 通过post或get取得数据，并格式化成自己需要的
   function get($id, $type = "safe", $ext = ""){
     $val = isset($_POST [$id]) ? $_POST [$id] : (isset($_GET [$id]) ? $_GET [$id] : "");
-    if ($val == '')
-      return false;
-      // 判断内容是否有转义，所有未转义的数据都直接转义
+    if ($val == '') return false;
+    // 判断内容是否有转义，所有未转义的数据都直接转义
     $addslashes = false;
-    if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc())
-      $addslashes = true;
-    if (! $addslashes)
-      $val = $this->_addslashes($val);
+    if (function_exists("get_magic_quotes_gpc") && get_magic_quotes_gpc()) $addslashes = true;
+    if (! $addslashes) $val = $this->_addslashes($val);
     return $this->format($val, $type, $ext);
   }
   
@@ -866,8 +802,7 @@ class _init_app{
   // ext，扩展，当type为html时，ext存在表示支持js，不存在表示不支持js
   // 当type为func属性时，表示ext直接执行函数
   function format($msg, $type = "safe", $ext = ""){
-    if ($msg == "")
-      return false;
+    if ($msg == "") return false;
     if (is_array($msg)) {
       foreach ( $msg as $key => $value ) {
         $msg [$key] = $this->format($value, $type, $ext);
@@ -875,14 +810,12 @@ class _init_app{
       return $msg;
     }
     // 当返回为HTML+JS时，不再进行任何过滤
-    if ($type == "html_js")
-      return $msg;
+    if ($type == "html_js") return $msg;
     if ($type == "html") {
-      if ($ext)
-        return $msg;
-        // 清除危险字符
+      if ($ext) return $msg;
+      // 清除危险字符
       $msg = stripslashes($msg);
-      $array = array (
+      $array = array(
           "/<script(.*)<\/script>/isU",
           "/<frame(.*)>/isU",
           "/<\/fram(.*)>/isU",
@@ -896,15 +829,9 @@ class _init_app{
       return addslashes($msg);
     }
     // 当为复选框时的判断
-    if ($type == "checkbox" && strtolower($msg) == "on") {
-      return 1;
-    }
-    if ($type == "int" || $type == "intval") {
-      return intval($msg);
-    }
-    if ($type == "float" || $type == "floatval") {
-      return floatval($msg);
-    }
+    if ($type == "checkbox" && strtolower($msg) == "on") {return 1;}
+    if ($type == "int" || $type == "intval") {return intval($msg);}
+    if ($type == "float" || $type == "floatval") {return floatval($msg);}
     $msg = stripslashes($msg);
     if ($type == "system") {
       $msg = strtolower($msg);
@@ -915,19 +842,16 @@ class _init_app{
       }
       return $msg;
     }
-    if ($type == "func" && function_exists($ext)) {
-      return $ext($msg);
-    }
-    if ($type == "time")
-      return strtotime($msg);
-    $danger_string = array (
+    if ($type == "func" && function_exists($ext)) {return $ext($msg);}
+    if ($type == "time") return strtotime($msg);
+    $danger_string = array(
         "\\",
         "'",
         '"',
         "<",
         ">" 
     );
-    $clear = array (
+    $clear = array(
         "&#92;",
         "&#39;",
         "&quot;",
@@ -976,8 +900,7 @@ class _init_app{
   }
   // 导常抛出
   function error($content = ""){
-    if (! $content)
-      $content = "异常请检查";
+    if (! $content) $content = "异常请检查";
     $html = '<!DOCTYPE html>' . "\n";
     $html .= '<html>' . "\n";
     $html .= '<head>' . "\n";
@@ -998,9 +921,7 @@ class _init_app{
   
   // 字符串转换
   function charset($msg, $from_charset = "GBK", $to_charset = "UTF-8"){
-    if (! $msg) {
-      return false;
-    }
+    if (! $msg) {return false;}
     if (is_array($msg)) {
       foreach ( $msg as $key => $value ) {
         $msg [$key] = $this->charset($value, $from_charset, $to_charset);
@@ -1033,7 +954,7 @@ class _init_app{
     if (! $ctrl) {
       $id = $this->get("id");
       $ctrl = "index";
-      $t = $this->config ["reserved"] ? explode(",", $this->config ["reserved"]) : array ();
+      $t = $this->config ["reserved"] ? explode(",", $this->config ["reserved"]) : array();
       if ($id && $t && in_array($id, $t)) {
         $ctrl = $id;
         $func = $this->get("cate", "system");
@@ -1048,7 +969,7 @@ class _init_app{
       }
     }
     // 判断是否需要全局登录
-    $no_check = array (
+    $no_check = array(
         "login",
         "register",
         "ajax",
@@ -1061,8 +982,7 @@ class _init_app{
       header("Location:" . $url);
       exit();
     }
-    if (! $func)
-      $func = "index";
+    if (! $func) $func = "index";
     $file = FRAMEWORK . $this->app_id . "/" . $ctrl . "_control.php";
     if ($ctrl == "ajax" || $ctrl == "js" || $ctrl == "inp") {
       $file = FRAMEWORK . $ctrl . "_control.php";
@@ -1075,15 +995,12 @@ class _init_app{
       header("Cache-Control: post-check=0, pre-check=0", false);
       header("Pragma: no-cache");
     }
-    if (! is_file($file))
-      $this->error("应用文件：" . $file . " 不存在！");
+    if (! is_file($file)) $this->error("应用文件：" . $file . " 不存在！");
     include ($file);
     // 加载常用的函数
-    if (is_file(FRAMEWORK . "global.func.php"))
-      include (FRAMEWORK . "global.func.php");
-    if (is_file(FRAMEWORK . $this->app_id . "/global.func.php"))
-      include (FRAMEWORK . $this->app_id . "/global.func.php");
-      // 执行应用
+    if (is_file("framework/global.func.php")) include ("framework/global.func.php");
+    if (is_file(FRAMEWORK . $this->app_id . "/global.func.php")) include (FRAMEWORK . $this->app_id . "/global.func.php");
+    // 执行应用
     $app_name = $ctrl . "_control";
     $this->ctrl = $ctrl;
     $this->func = $func;
@@ -1112,11 +1029,9 @@ class _init_app{
   function action_admin(){
     $ctrl = $this->get($this->config ["ctrl_id"], "system");
     $func = $this->get($this->config ["func_id"], "system");
-    if (! $ctrl)
-      $ctrl = "index";
-    if (! $func)
-      $func = "index";
-    $no_check = array (
+    if (! $ctrl) $ctrl = "index";
+    if (! $func) $func = "index";
+    $no_check = array(
         "login",
         "ajax",
         "js",
@@ -1129,7 +1044,8 @@ class _init_app{
       header("Location:" . $url);
       exit();
     }
-    $appfile = FRAMEWORK . $this->app_id . "/" . $ctrl . "_control.php";
+    $appfile = "framework/" . $this->app_id . "/" . $ctrl . "_control.php";
+    
     if ($ctrl == "ajax" || $ctrl == "js" || $ctrl == "inp") {
       $appfile = FRAMEWORK . $ctrl . "_control.php";
     }
@@ -1148,11 +1064,9 @@ class _init_app{
       header("Pragma: no-cache");
     }
     // 加载常用的函数
-    if (is_file(FRAMEWORK . "global.func.php"))
-      include (FRAMEWORK . "global.func.php");
-    if (is_file(FRAMEWORK . $this->app_id . "/global.func.php"))
-      include (FRAMEWORK . $this->app_id . "/global.func.php");
-      // 执行应用
+    if (is_file("framework/global.func.php")) include ("framework/global.func.php");
+    if (is_file(FRAMEWORK . $this->app_id . "/global.func.php")) include (FRAMEWORK . $this->app_id . "/global.func.php");
+    // 执行应用
     $app_name = $ctrl . "_control";
     $cls = new $app_name();
     $list = get_class_methods($cls);
@@ -1169,7 +1083,7 @@ class _init_app{
         }
       }
     }
-    include (FRAMEWORK . "phpok_tpl_helper.php");
+    include ("framework/phpok_tpl_helper.php");
     $this->config ['ctrl'] = $this->ctrl;
     $this->config ['func'] = $this->func;
     $this->assign('sys', $this->config);
@@ -1182,14 +1096,12 @@ class _init_app{
     // 1、人工不指定格式化内容，2、内容为空，3、内容是数组
     $status_info = $status ? 'ok' : 'error';
     if (! $format || $content == '' || is_array($content)) {
-      $rs = array (
+      $rs = array(
           'status' => $status_info 
       );
-      if ($content != '')
-        $rs ['content'] = $content;
+      if ($content != '') $rs ['content'] = $content;
       $info = $this->lib('json')->encode($rs);
-      if ($exit)
-        exit($info);
+      if ($exit) exit($info);
       return $info;
     }
     // 判断要格式化的内容是否存在相应的数据
@@ -1197,15 +1109,13 @@ class _init_app{
     // 当数据只有一条时，不循环返回
     if (count($list) == 1) {
       $info = $this->lang [$this->app_id] [$content] ? $this->lang [$this->app_id] [$content] : $this->lang ['global'] [$content];
-      if ($info == '')
-        $info = $content;
-      $rs = array (
+      if ($info == '') $info = $content;
+      $rs = array(
           'status' => $status_info,
           "content" => $info 
       );
       $info = $this->lib('json')->encode($rs);
-      if ($exit)
-        exit($info);
+      if ($exit) exit($info);
       return $info;
     }
     foreach ( $list as $key => $value ) {
@@ -1217,22 +1127,19 @@ class _init_app{
         }
       }
     }
-    $rs = array (
+    $rs = array(
         'status' => $status_info 
     );
-    if ($info != '' && ! is_array($info))
-      $rs ['content'] = $info;
+    if ($info != '' && ! is_array($info)) $rs ['content'] = $info;
     $info = $this->lib('json')->encode($rs);
-    if ($exit)
-      exit($info);
+    if ($exit) exit($info);
     return $info;
   }
   
   // 针对4前台执行SEO优化
   final public function phpok_seo($rs){
-    if (! $rs || ! is_array($rs))
-      return false;
-    $seo = $this->site ['seo'] ? $this->site ["seo"] : array ();
+    if (! $rs || ! is_array($rs)) return false;
+    $seo = $this->site ['seo'] ? $this->site ["seo"] : array();
     foreach ( $rs as $key => $value ) {
       if (substr($key, 0, 3) == "seo" && $value && is_string($value)) {
         $subkey = substr($key, 4);
@@ -1262,7 +1169,7 @@ class _init_auto{
   // 魔术方法之方法重载
   public function __call($method, $param){
     if (method_exists($GLOBALS ['app'], $method)) {
-      return call_user_func_array(array (
+      return call_user_func_array(array(
           $GLOBALS ['app'],
           $method 
       ), $param);
@@ -1270,13 +1177,13 @@ class _init_auto{
       $lst = explode("_", $method);
       if ($lst [1] == 'model') {
         $GLOBALS ['app']->model($lst [0]);
-        call_user_func_array(array (
+        call_user_func_array(array(
             $GLOBALS ['app'],
             $method 
         ), $param);
       } elseif ($lst [1] == 'lib') {
         $GLOBALS ['app']->lib($lst [0]);
-        return call_user_func_array(array (
+        return call_user_func_array(array(
             $GLOBALS ['app'],
             $method 
         ), $param);
@@ -1294,9 +1201,7 @@ class _init_auto{
     $lst = explode("_", $id);
     if ($lst [1] == "model") {
       return $GLOBALS ['app']->model($lst [0]);
-    } elseif ($lst [1] == "lib") {
-      return $GLOBALS ['app']->lib($lst [0]);
-    }
+    } elseif ($lst [1] == "lib") {return $GLOBALS ['app']->lib($lst [0]);}
     return $GLOBALS ['app']->$id;
   }
 
@@ -1308,18 +1213,18 @@ class _init_auto{
 
 // 控制器，里面大部分函数将通过Global功能调用核心引挈
 class base_control extends _init_auto{
-
-
   function control(){
     parent::__construct();
   }
 }
+
 class base_model extends _init_auto{
   // 继承control信息
   function model(){
     parent::__construct();
   }
 }
+
 class phpok_plugin extends _init_auto{
   // 默认父类，装载语言包
   function plugin(){
@@ -1352,8 +1257,7 @@ class phpok_plugin extends _init_auto{
 
 
   final public function plugin_info($id = ''){
-    if (! $id)
-      $id = $this->plugin_id();
+    if (! $id) $id = $this->plugin_id();
     $rs = $this->model('plugin')->get_one($id);
     if ($rs ['param']) {
       $rs ['param'] = unserialize($rs ['param']);
@@ -1363,13 +1267,10 @@ class phpok_plugin extends _init_auto{
   
   // 存储插件配置
   final public function plugin_save($ext, $id = ""){
-    if (! $id)
-      $id = $this->plugin_id();
-    if (! $id)
-      return false;
+    if (! $id) $id = $this->plugin_id();
+    if (! $id) return false;
     $rs = $this->model('plugin')->get_one($id);
-    if (! $rs)
-      return false;
+    if (! $rs) return false;
     $info = ($ext && is_array($ext)) ? serialize($ext) : '';
     $this->model('plugin')->update_param($id, $info);
   }
@@ -1377,17 +1278,15 @@ class phpok_plugin extends _init_auto{
   // cf，控制接入点
   function load_after($cf, $param = ""){
     // 接入点不存在时，取消执行
-    if (! $cf)
-      return false;
-      // 接入点不符合要求时，取消执行
-    if (! in_array($cf, $this->AP))
-      return false;
+    if (! $cf) return false;
+    // 接入点不符合要求时，取消执行
+    if (! in_array($cf, $this->AP)) return false;
     // 取得接入点
   }
   
   // 接入点列表
   function cf_list(){
-    $list = array ();
+    $list = array();
     $list ["list-ok"] = "存储内容数据";
     $list ["list-edit"] = "编辑内容数据";
     return $list;
@@ -1399,7 +1298,7 @@ unset($_ENV, $_SERVER ['MIBDIRS'], $_SERVER ['MYSQL_HOME'], $_SERVER ['OPENSSL_C
 
 $app = new _init_app();
 
-include_once ("helper.php");
+include_once ("includes/helper.inc");
 $app->init_autoload();
 $app->init_site();
 $app->init_view();

@@ -23,6 +23,20 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- 表的结构 `variable`
+--
+
+DROP TABLE IF EXISTS `variable`;
+CREATE TABLE `variable` (
+    `name` varchar(128) NOT NULL DEFAULT '\'',
+    `value` longtext NOT NULL,
+    PRIMARY KEY (`name`)
+)  ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
 -- 表的结构 `qinggan_address`
 --
 

@@ -23,7 +23,7 @@ class js_control extends base_control
 	function index_f()
 	{
 		$this->js_base();
-		echo $this->file_lib->cat(FRAMEWORK."form.js");
+		echo $this->file_lib->cat("framework/form.js");
 		echo "\n";
 		$ext = $this->get("ext");
 		$autoload_js = $this->config["autoload_js"];
@@ -38,7 +38,7 @@ class js_control extends base_control
 		{
 			$value = trim($value);
 			$js1_file = ROOT."js/".$value;
-			$js2_file = FRAMEWORK."js/".$value;
+			$js2_file = "framework/js/".$value;
 			$jsfile = is_file($js1_file) ? $js1_file : $js2_file;
 			if(!is_file($jsfile)) $jsfile = ROOT.$value;
 			if($value && is_file($jsfile) && $value != "jquery.js")
@@ -65,7 +65,7 @@ class js_control extends base_control
 			//判断后缀是否是.js
 			if(strtolower(substr($value,-3)) != '.js') $value .= '.js';
 			//判断文件是否存在
-			$file = is_file(FRAMEWORK.'js/'.$value) ? FRAMEWORK.'js/'.$value : ROOT."js/".$value;
+			$file = is_file('framework/js/'.$value) ? 'framework/js/'.$value : ROOT."js/".$value;
 			if(is_file($file))
 			{
 				echo "\n";
@@ -78,7 +78,7 @@ class js_control extends base_control
 	//取得拼音
 	function pingyin_f()
 	{
- 		$this->lib("pingyin")->path = FRAMEWORK."libs/pingyin.qdb";
+ 		$this->lib("pingyin")->path = "framework/libs/pingyin.qdb";
  		$title = $this->get("title");
  		if(!$title)
  		{
@@ -132,7 +132,7 @@ class js_control extends base_control
 				$value = trim($value);
 				if(!$value) continue;
 				if(strtolower(substr($value,-3)) != '.js') $value .= '.js';
-				$file = is_file(FRAMEWORK.'js/'.$value) ? FRAMEWORK.'js/'.$value : ROOT."js/".$value;
+				$file = is_file('framework/js/'.$value) ? 'framework/js/'.$value : ROOT."js/".$value;
 				if(is_file($file))
 				{
 					echo "\n";
@@ -193,7 +193,7 @@ class js_control extends base_control
 		echo "\n";
 		echo 'function api_plugin_url(id,func,ext){var url = "'.$weburl.$this->config['api_file'].'?'.$this->config['ctrl_id'].'=plugin&'.$this->config['func_id'].'=index&id="+id+"&exec="+func;if(ext){url+="&"+ext};return url;};';
 		echo "\n";
-		echo $this->file_lib->cat(FRAMEWORK."jquery.js");
+		echo $this->file_lib->cat("js/jquery.js");
 		echo "\n";
 	}
 }

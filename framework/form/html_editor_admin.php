@@ -18,7 +18,7 @@ class html_editor_form
 
 	function config()
 	{
-		$html = $GLOBALS['app']->dir_phpok."form/html/html_editor_admin.html";
+		$html = "framework/form/html/html_editor_admin.html";
 		$GLOBALS['app']->view($html,"abs-file");
 	}
 
@@ -54,8 +54,8 @@ class html_editor_form
 		return '2222';
 		$GLOBALS['app']->assign("form_rs",$rs);
 		$GLOBALS['app']->assign('editor_id',$rs['id']);
-		//$file = $this->app->dir_phpok."form/html/editor_from_admin.html";
-		$file = $GLOBALS['app']->dir_phpok.'form/html/ueditor_from_admin.html';
+		//$file = "framework/form/html/editor_from_admin.html";
+		$file = 'framework/form/html/ueditor_from_admin.html';
 		return $GLOBALS['app']->fetch($file,'abs-file');
 	}
 }

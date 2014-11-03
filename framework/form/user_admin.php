@@ -17,7 +17,7 @@ class user_form
 
 	function config()
 	{
-		$file = $GLOBALS['app']->dir_phpok."form/html/user_admin.html";
+		$file = "framework/form/html/user_admin.html";
 		$GLOBALS['app']->view($file,'abs-file');
 	}
 	
@@ -34,7 +34,7 @@ class user_form
 		}
 		$GLOBALS['app']->assign("edit_rs_content",$content);
 		$GLOBALS['app']->assign("edit_rs",$rs);
-		$file = $GLOBALS['app']->dir_phpok."form/html/user_form_admin.html";
+		$file = "framework/form/html/user_form_admin.html";
 		$content = $GLOBALS['app']->fetch($file,'abs-file');
 		$GLOBALS['app']->unassign("rs");
 		$GLOBALS['app']->unassign("rslist");

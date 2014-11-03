@@ -18,4 +18,8 @@ $config["db"]["data"] = "phpok";
 $config["db"]["prefix"] = "qinggan_";
 $config["db"]["debug"] = false;
 
+
+$db_url = 'mysqli://root:123456@localhost/phpok';
+$db_prefix = '';
+
 ?>

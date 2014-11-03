@@ -19,7 +19,7 @@ class text_form
 	//扩属属性配置
 	function config()
 	{
-		$html = $GLOBALS['app']->dir_phpok."form/html/text_admin.html";
+		$html = "framework/form/html/text_admin.html";
 		$GLOBALS['app']->view($html,"abs-file");
 	}
 
@@ -35,7 +35,7 @@ class text_form
 		}
 		$this->app->assign("rs",$rs);
 		$this->app->assign("current_date",date("Y-m-d",$this->app->system_time));
-		$file = $this->app->dir_phpok."form/html/text_format_admin.html";
+		$file = "framework/form/html/text_format_admin.html";
 		$content = $this->app->fetch($file,'abs-file');
 		$this->app->unassign("rs");
 		return $content;

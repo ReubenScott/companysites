@@ -32,7 +32,7 @@ class title_form
 		//可选主题列表
 		$opt_list = $this->app->project_model->get_all_project($site_id,"p.module>0");
 		$this->app->assign("opt_list",$opt_list);
-		$html = $this->app->dir_phpok."form/html/title_admin.html";
+		$html = "framework/form/html/title_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
@@ -67,7 +67,7 @@ class title_form
 			$this->app->assign("opt_rslist",$rslist);
 		}*/
 		$this->app->assign("project_id_btn",$project_id);
-		$file = $this->app->dir_phpok."form/html/title_form_admin.html";
+		$file = "framework/form/html/title_form_admin.html";
 		if($rs["is_multiple"])
 		{
 			$content = $rs["content"] ? explode(",",$rs["content"]) : array();

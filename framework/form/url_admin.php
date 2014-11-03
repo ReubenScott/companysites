@@ -19,7 +19,7 @@ class url_form
 
 	function config()
 	{
-		$file = $this->app->dir_phpok."form/html/url_admin.html";
+		$file = "framework/form/html/url_admin.html";
 		$this->app->view($file,'abs-file');
 	}
 	
@@ -40,7 +40,7 @@ class url_form
 			}
 		}
 		$this->app->assign("edit_rs",$rs);
-		$file = $this->app->dir_phpok."form/html/url_form_admin.html";
+		$file = "framework/form/html/url_form_admin.html";
 		$content = $this->app->fetch($file,'abs-file');
 		return $content;
 	}

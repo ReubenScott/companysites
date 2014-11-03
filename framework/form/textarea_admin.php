@@ -7,30 +7,31 @@
 	Author  : qinggan <qinggan@188.com>
 	Update  : 2013-03-12 17:53
 ***********************************************************/
-if(!defined("APP_SET")){exit("<h1>Access Denied</h1>");}
-class textarea_form
-{
-	function __construct()
-	{
-		global $app;
-		$this->app = $app;
-	}
+if (! defined("APP_SET")) {
+  exit("<h1>Access Denied</h1>");
+}
+class textarea_form{
 
-	function config()
-	{
-		$html = $this->app->dir_phpok."form/html/textarea_admin.html";
-		$this->app->view($html,"abs-file");
-	}
 
-	function format($rs)
-	{
-		$width = $rs['width']>500 ? $rs['width'].'px' : '905px';
-		$html  = '<table style="border:0;margin:0;padding:0" cellpadding="0" cellspacing="0"><tr><td>';
-		$html .= '<textarea name="'.$rs["identifier"].'" id="'.$rs["identifier"].'" phpok_id="textarea" ';
-		$html .= 'style="'.$rs["form_style"].';width:'.$width.';height:'.$rs["height"].'px"';
-		$html .= '>'.$rs["content"].'</textarea>';
-		$html .= "</td></tr></table>";
-		return $html;
-	}
+  function __construct(){
+    global $app;
+    $this->app = $app;
+  }
 
+
+  function config(){
+    $html = "framework/form/html/textarea_admin.html";    
+    $this->app->view($html, "abs-file");
+  }
+
+
+  function format($rs){
+    $width = $rs ['width'] > 500 ? $rs ['width'] . 'px' : '905px';
+    $html = '<table style="border:0;margin:0;padding:0" cellpadding="0" cellspacing="0"><tr><td>';
+    $html .= '<textarea name="' . $rs ["identifier"] . '" id="' . $rs ["identifier"] . '" phpok_id="textarea" ';
+    $html .= 'style="' . $rs ["form_style"] . ';width:' . $width . ';height:' . $rs ["height"] . 'px"';
+    $html .= '>' . $rs ["content"] . '</textarea>';
+    $html .= "</td></tr></table>";
+    return $html;
+  }
 }

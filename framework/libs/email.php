@@ -28,7 +28,7 @@ class email_lib
 	//读取邮件信息
 	function __construct()
 	{
-		include_once($GLOBALS['app']->dir_phpok."engine/phpmailer/class.phpmailer.php");
+		include_once("framework/engine/phpmailer/class.phpmailer.php");
 		//初始化邮件服务器参数
 		$this->smtp_charset = ($GLOBALS['app']->site["email_charset"] == "gbk" && function_exists("iconv")) ? "gbk" : "utf8";
 		$this->smtp_server = $GLOBALS['app']->site["email_server"];

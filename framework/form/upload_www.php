@@ -84,7 +84,7 @@ class upload_form
 		$rs['spam_id'] = $spam_id;
 		$rs['spam'] = $spam;
 		$GLOBALS['app']->assign("upload_rs",$rs);
-		$file = $this->app->dir_phpok."form/html/upload_form_www.html";
+		$file = "framework/form/html/upload_form_www.html";
 		$content = $this->app->fetch($file,'abs-file',false);
 		$this->app->unassign("upload_rs");
 		$this->app->unassign("rslist");

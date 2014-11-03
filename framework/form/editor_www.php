@@ -61,7 +61,7 @@ class editor_form
 			$save_path = '["默认分类"]';
 		}
 		$GLOBALS['app']->assign("save_path",$save_path);
-		$file = $GLOBALS['app']->dir_phpok.'form/html/ueditor_from_www.html';
+		$file = 'framework/form/html/ueditor_from_www.html';
 		return $GLOBALS['app']->fetch($file,'abs-file');
 	}
 }

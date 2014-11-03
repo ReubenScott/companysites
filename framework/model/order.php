@@ -108,7 +108,7 @@ class order_model extends base_model
 
 	function status_list()
 	{
-		$info = xml_to_array(file_get_contents(FRAMEWORK.'system.xml'));
+		$info = xml_to_array(file_get_contents('framework/system.xml'));
 		if($info['orderstatus']) return $info['orderstatus'];
 		return false;
 	}

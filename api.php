@@ -17,7 +17,7 @@ define("ROOT",str_replace("\\","/",dirname(__FILE__))."/");
 //define("ROOT","./");
 
 //定义框架
-define("FRAMEWORK",ROOT."framework/");
+// define("FRAMEWORK",ROOT."framework/");
 
-require_once(FRAMEWORK.'init.php');
+require_once('framework/init.php');
 ?>

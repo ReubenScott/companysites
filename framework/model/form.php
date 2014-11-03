@@ -14,7 +14,7 @@ class form_model extends base_model
 	function __construct()
 	{
 		parent::model();
-		$this->info = xml_to_array(file_get_contents(FRAMEWORK.'system.xml'));
+		$this->info = xml_to_array(file_get_contents('framework/system.xml'));
 	}
 
 	function form_all()

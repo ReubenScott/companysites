@@ -51,7 +51,7 @@ class select_form
 		}
 		$catelist = $this->app->cate_model->root_catelist($site_id);
 		$this->app->assign("catelist",$catelist);
-		$html = $this->app->dir_phpok."form/html/select_admin.html";
+		$html = "framework/form/html/select_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
@@ -99,7 +99,7 @@ class select_form
 			}
 		}
 		$GLOBALS['app']->assign("is_step",$is_step);
-		$file = $GLOBALS['app']->dir_phpok."form/html/select_form_admin.html";
+		$file = "framework/form/html/select_form_admin.html";
 		$GLOBALS['app']->assign("rs",$rs);
 		$GLOBALS['app']->assign("rslist",$rslist);
 		$content = $GLOBALS['app']->fetch($file,'abs-file');

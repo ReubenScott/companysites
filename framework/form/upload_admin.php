@@ -25,7 +25,7 @@ class upload_form
 		//取得附件分类
 		$cate_list = $this->app->res_model->cate_all();
 		$this->app->assign("cate_list",$cate_list);
-		$html = $this->app->dir_phpok."form/html/upload_admin.html";
+		$html = "framework/form/html/upload_admin.html";
 		$this->app->view($html,"abs-file",false);
 	}
 
@@ -91,7 +91,7 @@ class upload_form
 		}
 		$rs["upload_type"]["id"] = $type_id;
 		$this->app->assign("rs",$rs);
-		$file = $this->app->dir_phpok."form/html/upload_form_admin.html";
+		$file = "framework/form/html/upload_form_admin.html";
 		$content = $this->app->fetch($file,'abs-file',false);
 		$this->app->unassign("rs");
 		$this->app->unassign("rslist");

@@ -76,7 +76,7 @@ class tag_model extends base_model
 	//更新主题的Tag信息
 	function update_tag($id,$tag="")
 	{
-		$this->lib("pingyin")->path = FRAMEWORK."libs/pingyin.qdb";
+		$this->lib("pingyin")->path = "framework/libs/pingyin.qdb";
  		$py = iconv("UTF-8","GBK",$tag);
 	 	$py = $this->lib("pingyin")->ChineseToPinyin($py);
 	 	$py = strtolower($py);

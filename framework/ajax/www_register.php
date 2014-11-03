@@ -29,5 +29,5 @@ if($this->tpl->check_exists("register_open"))
 }
 else
 {
-	$this->view(FRAMEWORK."tpl_default/register_open.html","abs-file");
+	$this->view("framework/tpl_default/register_open.html","abs-file");
 }

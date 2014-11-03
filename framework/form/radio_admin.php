@@ -48,7 +48,7 @@ class radio_form
 		//绑定根分类
 		$catelist = $GLOBALS['app']->model('cate')->root_catelist($site_id);
 		$GLOBALS['app']->assign("catelist",$catelist);
-		$html = $GLOBALS['app']->dir_phpok."form/html/radio_admin.html";
+		$html = "framework/form/html/radio_admin.html";
 		$GLOBALS['app']->view($html,"abs-file",false);
 	}
 
@@ -69,7 +69,7 @@ class radio_form
 		}
 		$GLOBALS['app']->assign("rs",$rs);
 		$GLOBALS['app']->assign("rslist",$rslist);
-		$file = $GLOBALS['app']->dir_phpok."form/html/radio_form_admin.html";
+		$file = "framework/form/html/radio_form_admin.html";
 		$content = $GLOBALS['app']->fetch($file,'abs-file');
 		$GLOBALS['app']->unassign("rs");
 		$GLOBALS['app']->unassign("rslist");

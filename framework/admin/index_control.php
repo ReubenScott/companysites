@@ -50,9 +50,9 @@ class index_control extends base_control
 		{
 			if(is_file($value) && basename($value) != "install.lock") $this->lib('file')->rm($value);
 		}
-		$list = $this->lib("file")->ls(FRAMEWORK."config/");
+		$list = $this->lib("file")->ls("framework/config/");
 		if(!$list) $list = array();
-		include(FRAMEWORK."config/config.global.php");
+		include("framework/config/config.global.php");
 		foreach($list AS $key=>$value)
 		{
 			$tmp = basename($value);

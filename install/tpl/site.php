@@ -1,5 +1,5 @@
 <?php include_once(INSTALL_DIR."tpl/head.php");?>
-<script type="text/javascript" src="../framework/jquery.js"></script>
+<script type="text/javascript" src="../js/jquery.js"></script>
 <script type="text/javascript">
 function check_save()
 {

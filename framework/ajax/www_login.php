@@ -28,5 +28,5 @@ if($this->tpl->check_exists("login_open"))
 }
 else
 {
-	$this->view(FRAMEWORK."tpl_default/login_open.html","abs-file");
+	$this->view("framework/tpl_default/login_open.html","abs-file");
 }

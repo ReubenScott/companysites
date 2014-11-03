@@ -113,12 +113,12 @@ class tj_control extends base_control
 		{
 			if($value == "jquery.js")
 			{
-				$content .= file_get_contents(FRAMEWORK."jquery.js");
+				$content .= file_get_contents("js/jquery.js");
 				$content .= "\n\n";
 			}
 			else
 			{
-				$content .= file_get_contents(FRAMEWORK."js/".$value);
+				$content .= file_get_contents("framework/js/".$value);
 				$content .= "\n\n";
 			}
 		}

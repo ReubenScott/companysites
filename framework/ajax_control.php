@@ -30,7 +30,7 @@ class ajax_control extends base_control
 		{
 			$this->json_exit("Ajax目标文件不能为空！");
 		}
-		$ajax_file = FRAMEWORK."ajax/".$this->app_id."_".$filename.".php";
+		$ajax_file = "framework/ajax/".$this->app_id."_".$filename.".php";
 		if(!is_file($ajax_file))
 		{
 			$ajax_file = ROOT."ajax/".$this->app_id."_".$filename.".php";
@@ -74,7 +74,7 @@ class ajax_control extends base_control
 		{
 			exit("Ajax目标文件不能为空！");
 		}
-		$ajax_file = FRAMEWORK."ajax/".$this->app_id."_".$filename.".php";
+		$ajax_file = "framework/ajax/".$this->app_id."_".$filename.".php";
 		if(!file_exists($ajax_file))
 		{
 			$ajax_file = ROOT."ajax/".$this->app_id."_".$filename.".php";

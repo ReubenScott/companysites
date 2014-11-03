@@ -18,14 +18,14 @@ class code_editor_form
 
 	function config()
 	{
-		$html = $this->app->dir_phpok."form/html/code_editor_admin.html";
+		$html = "framework/form/html/code_editor_admin.html";
 		$this->app->view($html,"abs-file");
 	}
 
 	function format($rs)
 	{
 		$this->app->assign("rs",$rs);
-		$file = $this->app->dir_phpok."form/html/code_editor_form_admin.html";
+		$file = "framework/form/html/code_editor_form_admin.html";
 		$content = $this->app->fetch($file,'abs-file');
 		$this->app->unassign("rs");
 		return $content;
